@@ -29,7 +29,7 @@
     services:
     
       WorkerClass:
-        class: demo_worker.DemoApp
+        class: processor.DemoApp
         arguments: [$Mongodb, $Redis, '%batch_size%']
     
       Mongodb:
@@ -47,7 +47,7 @@
           name: '%queue_name%'
     
       OtherWorker:
-        class: demo_worker.OtherApp
+        class: processor.OtherApp
         arguments: ~
     
       LogHandle:

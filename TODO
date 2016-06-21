@@ -2,8 +2,8 @@
 [x] dependency injection
 [x] chain process
 [x] implement services
-[ ] create builder
-[ ] streaming
+[x] streaming
+[ ] build project
 [ ] docker
 [ ] monitor
-[ ] test
+[x] test
