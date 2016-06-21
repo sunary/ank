@@ -1,0 +1,19 @@
+# Compiled python modules.
+.idea
+*.DS_Store
+*.pyc
+
+# Setuptools distribution folder.
+src/*
+env/*
+build/*
+dist/*
+
+# Examples
+tests/log.log
+examples/*/worker/*
+examples/*/log.log
+
+# Python egg metadata, regenerated from source files by setuptools.
+*.egg-info
+*.egg

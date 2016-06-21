@@ -1,0 +1,42 @@
+services:
+
+  WorkerClass:
+    class: processor.TestApp
+    arguments: [$Mongodb, $Redis, '%batch_size%']
+
+  Mongodb:
+    class: utils.my_mongo.Mongodb
+    arguments: ['%mongo_db%', '%mongo_col%', '%mongo_host%', '%mongo_port%']
+
+  Redis:
+    class: redis.client.StrictRedis
+    arguments: ['%redis_host%', '%redis_port%']
+
+  InputQueue:
+    class: queue.queue.Queue
+    arguments:
+      uri: '%queue_uri%'
+      name: '%queue_name%'
+
+  OtherWorker:
+    class: processor.OtherApp
+    arguments: ~
+
+  LogHandle:
+    class: chains.log_handle.LogHandle
+    arguments: ~
+
+  JoinProcessor:
+    class: chains.join_processor.JoinProcessor
+    arguments: '%batch_size%'
+
+  SplitProcessor:
+    class: chains.split_processor.SplitProcessor
+    arguments: ~
+
+
+chains:
+  - WorkerClass
+  - JoinProcessor
+  - LogHandle
+  - OtherWorker

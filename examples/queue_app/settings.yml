@@ -1,0 +1,5 @@
+parameters:
+
+  queue: {'uri': ['amqp://username:password@host:5672/'], 'name': 'ExampleQueue'}
+  batch_size: 100
+

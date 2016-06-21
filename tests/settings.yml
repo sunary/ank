@@ -1,0 +1,15 @@
+parameters:
+
+  mongo_db: raw_data
+  mongo_col: twitter
+
+  mongo_host: localhost
+  mongo_port: 27017
+
+  redis_host: localhost
+  redis_port: 6379
+
+  queue_uri: ['amqp://admin:admin@localhost:15672/']
+  queue_name: InputQueue
+
+  batch_size: 2

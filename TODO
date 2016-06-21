@@ -1,0 +1,9 @@
+[x] base apps
+[x] dependency injection
+[x] chain process
+[x] implement services
+[ ] create builder
+[ ] streaming
+[ ] docker
+[ ] monitor
+[ ] test

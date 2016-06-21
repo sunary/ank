@@ -1,0 +1,19 @@
+services:
+  ExampleApp:
+    class: processor.ExampleApp
+    arguments: ~
+
+  GetMessage:
+    class: chains.get_message.GetMessage
+    arguments:
+      queue_config: '%queue%'
+      batch_size: '%batch_size%'
+
+  LogHandle:
+    class: chains.log_handle.LogHandle
+    arguments: ~
+
+chains:
+  - GetMessage
+  - LogHandle
+  - ExampleApp
