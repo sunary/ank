@@ -18,7 +18,30 @@
     pip install -e git+ssh://git@github.com/sunary/ank.git#egg=ank
     ```
     Your App will run on this virtualenv `worker`.
-* **Create chains (E.g: `WorkerClass`, `OtherWorker`), register it with other ANK's `chains` (E.g `LogHandle`) into `services.yml`.**
+* **Create chains (E.g: `WorkerClass`, `OtherWorker`), register it with other ANK's `chains` (E.g `LogHandle`) into `services.yml`:**
+    * *Example:*
+    ```python
+    from apps._app import App
+
+    class ExampleApp(App):
+    
+        def run(self, process=None):
+            '''
+            Implement this if your App start by this chain
+            Arguments:
+                process: process method, was assign into self._process
+                
+            '''
+            super(TestApp, self).run(process)
+    
+            for i in range(100):
+                self._process(i)
+    
+        def process(self, message=None):
+            # after processed, message will be return for next chain
+            message += 1
+            return message
+    ```
 * **Create services and chains:**
     * *Syntax:*
     ```yaml
@@ -71,7 +94,6 @@
     ```
     ANK will read top-down `chains`, find correspond `services` and get parameters from `settings.yml`.
 * **Generate setting:**
-
      ```shell
      gen_setting
      ```
