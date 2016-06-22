@@ -2,7 +2,7 @@
 
 
 ### Overview: ###
- Python microservices for queue, streaming, REST-API and schedule task.  
+ Python microservices for Queue, Streaming, REST-API and Schedule task.
 
 
 ### Requirements: ###
@@ -10,24 +10,34 @@
 
 
 ### How to use: ###
-* create virtualenv `worker` and install ANK
+* **Create virtualenv `worker` and install ANK:**
 
-    ```
+    ```shell
     virtualenv worker
     source worker/bin/activate
     pip install -e git+ssh://git@github.com/sunary/ank.git#egg=ank
     ```
-* Create App
-* Install requirements into virtualenv `worker`
-
-    ```
-    pip install -r requirements.txt
-    ```
-* Create services and chain:
-    * *services.yml*
+    Your App will run on this virtualenv `worker`.
+* **Create chains (E.g: `WorkerClass`, `OtherWorker`), register it with other ANK's `chains` (E.g `LogHandle`) into `services.yml`.**
+* **Create services and chains:**
+    * *Syntax:*
     ```yaml
     services:
-    
+      Object1:
+        - class: module.name.ClassName
+        - arguments: [$Object, %variable%] 
+      
+      AnkChain2:
+        - class: chains.module_name.Chain
+        - arguments: ~
+        
+    chains:
+      - Object1
+      - AnkChain2
+    ```
+    * *Example:*
+    ```yaml
+    services:
       WorkerClass:
         class: processor.DemoApp
         arguments: [$Mongodb, $Redis, '%batch_size%']
@@ -59,15 +69,15 @@
       - LogHandle
       - OtherWorker
     ```
-* Generate setting:
+    ANK will read top-down `chains`, find correspond `services` and get parameters from `settings.yml`.
+* **Generate setting:**
 
-     ```
+     ```shell
      gen_setting
      ```
-    * *settings.yml*
+    * *Example:*
     ```yaml
     parameters:
-    
       mongo_host: localhost
       mongo_port: 27017
       mongo_db: crawl_db
@@ -81,27 +91,37 @@
       
       batch_size: 100
     ```
-* Generate processor, and run directly:
-    
+    Help you create `settings` template file. Just rename from `_settings.yml` to `settings.yml` and fill in values.
+* **Install requirements of App into virtualenv `worker`:**
+
+    ```shell
+    pip install -r requirements.txt
     ```
+* **Generate processor:**
+    
+    ```shell
     gen_processor
+    ```
+* **Run (Directly, using generated `processor.py`):**
+
+    ```shell
     python _processor.py
     ```
-* Start app (Dependency Injection):
+* **Run (Dependency Injection):**
 
-    ```
+    ```shell
     PYTHONPATH=$(pwd) start_app
     ```
     
 ### Apps: ###
-* **App:** Create Base app
-* **API App:** Create API REST using flask
-* **Schedule App:** Using cronjob time format to set schedule
+* **App:** Normal App.
+* **API App:** REST-API using flask.
+* **Schedule App:** Using crontab-time format to set schedule.
 
 
 ### Chains: ###
-* **LogHandle:** Log every messages
-* **JoinProcessor:** Join messages into one
-* **SplitProcessor:** Split message
-* **GetMessage:** Get messages from queue
-* **PostMessage:** Post message to exchange
+* **LogHandle:** Log every messages.
+* **JoinProcessor:** Join messages into one.
+* **SplitProcessor:** Split message.
+* **GetMessage:** Get messages from queue.
+* **PostMessage:** Post message to exchange.
