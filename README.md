@@ -102,7 +102,7 @@
     ```shell
     gen_processor
     ```
-* **Run (Directly, using generated `processor.py`):**
+* **Run (Directly, using generated `_processor.py`):**
 
     ```shell
     python _processor.py
