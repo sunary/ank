@@ -1,1 +1,3 @@
 - 2015/10/15 -- Initial project
+- 2016/06/21 -- Public project
+- 2016/06/25 -- Upload to pip

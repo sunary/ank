@@ -13,9 +13,10 @@
 * **Create virtualenv `worker` and install ANK:**
 
     ```shell
-    virtualenv worker
-    source worker/bin/activate
-    pip install -e git+ssh://git@github.com/sunary/ank.git#egg=ank
+    $ virtualenv worker
+    $ source worker/bin/activate
+    $ pip install ank
+    $ # or pip install -e git+ssh://git@github.com/sunary/ank.git#egg=ank
     ```
     Your App will run on this virtualenv `worker`.
 * **Create chains (E.g: `WorkerClass`, `OtherWorker`), register it with other ANK's `chains` (E.g `LogHandle`) into `services.yml`:**
@@ -95,7 +96,7 @@
     ANK will read top-down `chains`, find correspond `services` and get parameters from `settings.yml`.
 * **Generate setting:**
      ```shell
-     gen_setting
+     $ gen_setting
      ```
     * *Example:*
     ```yaml
@@ -117,22 +118,22 @@
 * **Install requirements of App into virtualenv `worker`:**
 
     ```shell
-    pip install -r requirements.txt
+    $ pip install -r requirements.txt
     ```
 * **Generate processor:**
     
     ```shell
-    gen_processor
+    $ gen_processor
     ```
 * **Run (Directly, using generated `_processor.py`):**
 
     ```shell
-    python _processor.py
+    $ python _processor.py
     ```
 * **Run (Dependency Injection):**
 
     ```shell
-    PYTHONPATH=$(pwd) start_app
+    $ PYTHONPATH=$(pwd) start_app
     ```
     
 ### Apps: ###

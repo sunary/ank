@@ -9,34 +9,23 @@ from pip.req import parse_requirements
 def __path(filename):
     return os.path.join(os.path.dirname(__file__), filename)
 
-build = 0
-
-if os.path.exists(__path('build.info')):
-    build = open(__path('build.info')).read().strip()
-
-with open('README.md') as fo:
-    readme = fo.read()
-
 with open('LICENSE') as fo:
     license = fo.read()
 
-with open('CHANGES.md') as fo:
-    changes = fo.read()
+version = '1.0.0'
 
-version = '1.0.{0}'.format(build)
-
-install_reqs = parse_requirements('requirements.txt', session=False)
-reqs = [str(ir.req) for ir in install_reqs]
+reqs = ['psutil==3.3.0', 'kombu==3.0.33', 'pymongo==3.2', 'amqp==1.4.9', 'pyyaml==3.11',
+        'redis==2.10.5', 'flask==0.11', 'gevent==1.1.1']
 
 setup(
-    name='ANK - Microservices',
+    name='ANK',
     version=version,
     author='Sunary [Nhat Vo Van]',
     author_email='v2nhat@gmail.com',
     maintainer='Sunary [Nhat Vo Van]',
     maintainer_email='v2nhat@gmail.com',
     description='python microservices',
-    long_description=readme + '\n\n' + changes,
+    long_description='ANK - Microservices.\nSee at: https://github.com/sunary/ank',
     license=license,
     packages=find_packages(exclude=['docs', 'examples', 'tests']),
     install_requires=reqs,
