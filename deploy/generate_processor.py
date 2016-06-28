@@ -4,7 +4,7 @@ __author__ = 'sunary'
 from utils import my_deploy
 
 
-class GenerateProcessor():
+class GenerateProcessor(object):
     '''
     Generate processor.py help you run directly
     '''

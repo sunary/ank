@@ -12,8 +12,7 @@ ENV project project
 WORKDIR /ank/${project}
 COPY . /ank/${project}
 
-RUN pip install -e git+ssh://git@github.com/sunary/ank.git#egg=ank
-RUN pip install -r requirements.txt
+RUN pip install -r ank
 
 ENV PYTHONPATH $PYTHONPATH:/ank/${project}
 

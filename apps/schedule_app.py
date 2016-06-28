@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 class ScheduleApp(App):
     '''
-    schedule process
+    Schedule process using crontab time format
     '''
 
     def __init__(self, crontab_time, start_now=False):

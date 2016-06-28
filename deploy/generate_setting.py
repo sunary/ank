@@ -5,7 +5,7 @@ import yaml
 from utils import my_deploy, my_helper
 
 
-class GenerateSetting():
+class GenerateSetting(object):
     '''
     Generate settings.yml template
     '''

@@ -9,7 +9,7 @@ from utils import my_api
 class APIApp(App):
     '''
     API App
-    add function to extend class to create new API
+    Add function to extend class to create new API
     '''
 
     def __init__(self, host='localhost', port=15372):

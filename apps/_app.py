@@ -7,9 +7,9 @@ from utils import my_helper
 class App(object):
 
     '''
-    start app from run() method
-    receive messages or start process from on_messages_received() method
-    process message(s) in process() method
+    Start app from run() method
+    Receive messages or start process from on_messages_received() method
+    Process message(s) in process() method
     '''
 
     def __init__(self):

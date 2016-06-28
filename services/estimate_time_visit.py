@@ -4,19 +4,20 @@ __author__ = 'sunary'
 from datetime import datetime, timedelta
 
 
-class ActorEstimate():
+class BehaviorEstimate():
     '''
     Estimate next time visit page in REST crawler
     '''
     LENGTH_HISTOGRAM = 50
-    MAX_TIMES_VISIT_PER_DAY = 10
-    MIN_TIMES_VISIT_PER_DAY = 0.2
     CUMULATIVE_DAYS_VISIT = 14
     PERCENT_SUBTRACT = 2.0
-    SCALE_TIMES_VISIT = 3.0
 
-    def __init__(self):
-        self.histogram = [100.0/self.LENGTH_HISTOGRAM]*self.LENGTH_HISTOGRAM
+    def __init__(self, min_times=0.2, max_times=10.0, scale_times=3.0):
+        self.MIN_TIMES_VISIT_PER_DAY = min_times
+        self.MAX_TIMES_VISIT_PER_DAY = max_times
+        self.SCALE_TIMES_VISIT = scale_times
+
+        self.histogram = [100.0/self.LENGTH_HISTOGRAM] * self.LENGTH_HISTOGRAM
         self.average_times_visit_per_day = self.SCALE_TIMES_VISIT
         self.activated_date = None
         self.range_day = 0
@@ -24,33 +25,9 @@ class ActorEstimate():
         self.time_msg = None
         self.date_has_message = None
 
-    def _str_twitter_to_date(self, str_date):
-        '''
-        convert timestamp twitter to datetime
-
-        Examples:
-            >>> ActorEstimate._str_twitter_to_date('Wed Oct 07 15:49:44 +0000 2009')
-            datetime.datetime(2009, 10, 07, 15, 49, 44)
-        '''
-        str_date = str_date.split(' ')
-        del str_date[4]
-        str_date = ' '.join(str_date)
-        return datetime.strptime(str_date, '%a %b %d %H:%M:%S %Y')
-
-    def _str_mongo_to_date(self, str_date):
-        '''
-        convert timestamp mongo to datetime
-
-        Examples:
-            >>> ActorEstimate._str_mongo_to_date('2015-07-17 06:07:22.375866')
-            datetime.datetime(2015, 07, 17, 06, 07, 22)
-        '''
-        str_date = str_date.split('.')[0]
-        return datetime.strptime(str_date, '%Y-%m-%d %H:%M:%S')
-
     def set(self, data):
         '''
-        set estimate data
+        Set estimate data
 
         Args:
             data (dict): {'histogram': , 'activated_date': , 'date_visit': }
@@ -165,9 +142,33 @@ class ActorEstimate():
         self.histogram = new_histogram
         self.LENGTH_HISTOGRAM = new_len_histogram
 
+    @staticmethod
+    def datetime_from_string(str_date, date_format='iso'):
+        '''
+        convert string to datetime
+
+        Examples:
+            >>> BehaviorEstimate.datetime_from_string('2015-07-17 06:07:22.375866')
+            datetime.datetime(2015, 07, 17, 06, 07, 22)
+            >>> BehaviorEstimate.datetime_from_string('Wed Oct 07 15:49:44 +0000 2009')
+            datetime.datetime(2009, 10, 07, 15, 49, 44)
+        '''
+        if date_format == 'iso':
+            return datetime.strptime(str_date, '%Y-%m-%d %H:%M:%S')
+        elif date_format == 'mongo':
+            str_date = str_date.split('.')[0]
+            return datetime.strptime(str_date, '%Y-%m-%d %H:%M:%S')
+        elif date_format == 'twitter':
+            str_date = str_date.split(' ')
+            del str_date[4]
+            str_date = ' '.join(str_date)
+            return datetime.strptime(str_date, '%a %b %d %H:%M:%S %Y')
+
+        return None
+
 
 if __name__ == '__main__':
-    actor = ActorEstimate()
+    actor = BehaviorEstimate()
     actor.set({})
     actor.has_messages(datetime(2015, 6, 3))
     print actor.get()['next_crawl_time']

@@ -6,7 +6,7 @@ from builder.environment import Environment
 from builder.git import Git
 
 
-class BuildProject():
+class BuildProject(object):
     '''
     Clone project from source, and setup environment
     '''

@@ -4,7 +4,7 @@ __author__ = 'sunary'
 from utils import my_cmd
 
 
-class Environment():
+class Environment(object):
     '''
     Create virtualenv then install requirements
     '''

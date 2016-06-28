@@ -8,7 +8,7 @@ from deploy.daemon import Daemon
 from utils import my_deploy, my_helper
 
 
-class DependencyInjection():
+class DependencyInjection(object):
 
     def __init__(self):
         self.logger = my_helper.init_logger(self.__class__.__name__)

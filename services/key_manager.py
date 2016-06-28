@@ -3,16 +3,15 @@ __author__ = 'sunary'
 
 import time
 from datetime import datetime, timedelta
-from utils.my_mongo import Mongodb
 
 
-class KeyManager():
+class KeyManager(object):
 
-    HEARTBEAT_TIME = 10
-    SCREEN_TIME = 15 * 60
+    def __init__(self, mongo, heart_beat=10, screen=15*60):
+        self.mongo = mongo
 
-    def __init__(self):
-        self.mongo = Mongodb()
+        self.HEARTBEAT_TIME = heart_beat
+        self.SCREEN_TIME = screen
 
     def get(self, group=None):
         spec = {}

@@ -4,7 +4,7 @@ __author__ = 'sunary'
 from pymongo import MongoClient, ReturnDocument
 
 
-class Mongodb():
+class Mongodb(object):
 
     def __init__(self, db, col, host='127.0.0.1', port=27017, username=None, password=None):
         if username and password:
