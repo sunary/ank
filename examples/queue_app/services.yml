@@ -3,8 +3,8 @@ services:
     class: processor.ExampleApp
     arguments: ~
 
-  GetMessage:
-    class: chains.get_message.GetMessage
+  RabbitMqConsumer:
+    class: chains.rabbitmq_consumer.RabbitMqConsumer
     arguments:
       queue_config: '%queue%'
       batch_size: '%batch_size%'
@@ -14,6 +14,6 @@ services:
     arguments: ~
 
 chains:
-  - GetMessage
+  - RabbitMqConsumer
   - LogHandle
   - ExampleApp

@@ -5,12 +5,12 @@ from apps._app import App
 from queue.queue import Queue
 
 
-class PostMessage(App):
+class RabbitMqProducer(App):
     '''
-    Join messages from previous processor
+    Post message(s) to queue
     '''
     def __init__(self, config):
-        super(PostMessage, self).__init__()
+        super(RabbitMqProducer, self).__init__()
 
         self.queue = Queue(config)
 
@@ -20,3 +20,5 @@ class PostMessage(App):
     def process(self, messages=None):
         if messages:
             self.queue.post(messages)
+
+        return messages

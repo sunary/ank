@@ -7,12 +7,9 @@ from kombu.mixins import ConsumerMixin
 import kombu
 
 
-class GetMessage(App, ConsumerMixin):
-
+class RabbitMqConsumer(App, ConsumerMixin):
     '''
-    Consumer process,
-    process one message,
-    messages were received from queue by on_messages_received() method
+    Messages were received from queue by on_messages_received() method
     '''
 
     def __init__(self, queue_config, batch_size=100):
