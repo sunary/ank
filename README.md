@@ -2,7 +2,7 @@
 
 
 ### Overview: ###
- Python microservices for Queue, Streaming, REST-API and Schedule task.
+ Python microservices for Queue(RabbitMQ, Kafka), Streaming, REST-API and Schedule task.
 
 
 ### Requirements: ###
@@ -73,12 +73,6 @@
       Redis:
         class: redis.client.StrictRedis
         arguments: ['%redis_host%', '%redis_port%']
-    
-      InputQueue:
-        class: queue.queue.Queue
-        arguments:
-          uri: '%queue_uri%'
-          name: '%queue_name%'
     
       OtherWorker:
         class: processor.OtherApp
