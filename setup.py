@@ -12,7 +12,7 @@ def __path(filename):
 with open('LICENSE') as fo:
     license = fo.read()
 
-version = '1.0.1'
+version = '1.1.0'
 
 reqs = ['psutil==3.3.0', 'kombu==3.0.33', 'pymongo==3.2', 'amqp==1.4.9', 'pyyaml==3.11',
         'redis==2.10.5', 'flask==0.11', 'gevent==1.1.1']

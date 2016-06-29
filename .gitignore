@@ -6,6 +6,7 @@
 # Setuptools distribution folder.
 src/*
 env/*
+ANK*/
 build/*
 dist/*
 
