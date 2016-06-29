@@ -5,7 +5,7 @@ from apps._app import App
 try:
     from kafka import KafkaConsumer
 except:
-    raise 'kafka not founded'
+    raise 'kafka-python not founded'
 
 
 class KafkaAnkConsumer(App):
