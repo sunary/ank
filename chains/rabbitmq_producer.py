@@ -2,17 +2,24 @@ __author__ = 'sunary'
 
 
 from apps._app import App
-from queue.queue import Queue
+from queue.rabbit_mqueue import Queue
 
 
 class RabbitMqProducer(App):
     '''
-    Post message(s) to queue
+    Push message(s) to queue
     '''
-    def __init__(self, config):
+    def __init__(self, uri, name):
+        '''
+        Args:
+            uri: list of uri connections.
+            name: queue name, end by 'Exchange' is exchange.
+        Examples:
+            >>> Queue(uri=['amqp://username:password@host:5672/'], name='ExampleExchange')
+        '''
         super(RabbitMqProducer, self).__init__()
 
-        self.queue = Queue(config)
+        self.queue = Queue(uri, name)
 
     def run(self, process=None):
         self.logger.info('Start ...')

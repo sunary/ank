@@ -3,7 +3,12 @@ __author__ = 'sunary'
 
 class KVService(object):
 
-    def __init__(self, redis, expire):
+    def __init__(self, redis, expire=60*84600):
+        '''
+        Args:
+            redis: redis.client.StrictRedis
+            expire: expire time (seconds).
+        '''
         self.redis = redis
         self.expire = expire
 

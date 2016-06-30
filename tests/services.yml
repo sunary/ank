@@ -13,7 +13,7 @@ services:
     arguments: ['%redis_host%', '%redis_port%']
 
   InputQueue:
-    class: queue.queue.Queue
+    class: queue.rabbit_mqueue.Queue
     arguments:
       uri: '%queue_uri%'
       name: '%queue_name%'

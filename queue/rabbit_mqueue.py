@@ -11,14 +11,14 @@ from utils import my_helper
 logger = my_helper.init_logger(__name__)
 
 
-class Message():
+class Message(object):
 
     def __init__(self):
         self.body = None
         self.tag = None
 
 
-class QueueConnection():
+class QueueConnection(object):
 
     def __init__(self, uri):
         '''
@@ -64,7 +64,7 @@ class QueueConnection():
         self._connection.release()
 
 
-class Queue():
+class Queue(object):
 
     def __init__(self, uri, name):
         '''
@@ -171,7 +171,7 @@ class Queue():
 
 class ConsumerQueue(kombu.mixins.ConsumerMixin):
 
-    def __init__(self, uri, name, pefetch_count=100):
+    def __init__(self, uri, name, prefetch_count=100):
         '''
         Sample Consumer receiver message from queue
         Args:
@@ -191,23 +191,23 @@ class ConsumerQueue(kombu.mixins.ConsumerMixin):
 
         self.queue = kombu.Queue(name)
 
-        self.prefetch_count = pefetch_count
+        self.prefetch_count = prefetch_count
 
     def get_consumers(self, Consumer, channel):
         consumer = Consumer(queues=[self.queue], callbacks=[self.on_message_received])
         consumer.qos(prefetch_count=self.prefetch_count)
         return [consumer,]
 
-    def on_message_received(self, payload, message):
+    def on_message_received(self, payloads, messages):
         try:
-            # do something with payload
+            # do something with payloads
             process_successfully = True
 
             if process_successfully:
-                message.ack()
+                messages.ack()
             else:
-                message.requeue()
+                messages.requeue()
         except Exception as e:
             logger.error('Message received: %s' % e)
 
-            message.requeue()
+            messages.requeue()

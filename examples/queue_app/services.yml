@@ -6,14 +6,22 @@ services:
   RabbitMqConsumer:
     class: chains.rabbitmq_consumer.RabbitMqConsumer
     arguments:
-      queue_config: '%queue%'
+      uri: '%queue_consumer_uri%'
+      name: '%queue_consumer_name%'
       batch_size: '%batch_size%'
 
   LogHandle:
     class: chains.log_handle.LogHandle
     arguments: ~
 
+  RabbitMqProducer:
+    class: chains.rabbitmq_consumer.RabbitMqConsumer
+    arguments:
+      uri: '%queue_producer_uri%'
+      name: '%queue_producer_name%'
+
 chains:
   - RabbitMqConsumer
   - LogHandle
   - ExampleApp
+  - RabbitMqProducer

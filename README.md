@@ -2,7 +2,7 @@
 
 
 ### Overview: ###
- Python microservices for Queue(RabbitMQ, Kafka), Streaming, REST-API and Schedule task.
+ Python Microservices for Queue services(*rabbitMQ*, *Kafka*, *zeroMQ*), Streaming, REST-API and Schedule task.
 
 
 ### Requirements: ###
@@ -140,5 +140,5 @@
 * **LogHandle:** Log every messages.
 * **JoinProcessor:** Join messages into one.
 * **SplitProcessor:** Split message.
-* **GetMessage:** Get messages from queue.
-* **PostMessage:** Post message to exchange.
+* **XXXConsumer:** Get messages from queue.
+* **XXXProducer:** Push message to queue.

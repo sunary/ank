@@ -7,10 +7,16 @@ from datetime import datetime, timedelta
 
 class KeyManager(object):
 
-    def __init__(self, mongo, heart_beat=10, screen=15*60):
+    def __init__(self, mongo, heartbeat=10, screen=15*60):
+        '''
+        Args:
+            mongo: utils.my_mongo.Mongodb
+            heartbeat: heartbeat time (seconds).
+            screen: screen time (seconds).
+        '''
         self.mongo = mongo
 
-        self.HEARTBEAT_TIME = heart_beat
+        self.HEARTBEAT_TIME = heartbeat
         self.SCREEN_TIME = screen
 
     def get(self, group=None):
