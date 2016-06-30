@@ -21,7 +21,13 @@ class Message():
 class QueueConnection():
 
     def __init__(self, uri):
-        self.uri = uri
+        '''
+        Args:
+            uri: list of uri connections.
+        Examples:
+            >>> QueueConnection(['amqp://username:password@host:5672/'])
+        '''
+        self.uri = ';'.join(uri)
         self.connect()
 
     def connect(self):
@@ -60,17 +66,17 @@ class QueueConnection():
 
 class Queue():
 
-    def __init__(self, config):
+    def __init__(self, uri, name):
         '''
+        Args:
+            uri: list of uri connections.
+            name: queue name, end by 'Exchange' is exchange.
         Examples:
-            >>> Queue({
-            ... 'uri': ['amqp://username:password@host:5672/'],
-            ... 'name': 'ExampleQueue'
-            ... })
+            >>> Queue(uri=['amqp://username:password@host:5672/'], name='ExampleQueue')
         '''
-        self.queue_name = config.get('name')
+        self.queue_name = name
         self.is_exchange = self.queue_name.endswith('Exchange')
-        self.queue_connection = QueueConnection(';'.join(config.get('uri')))
+        self.queue_connection = QueueConnection(uri)
         self.channel = self.queue_connection.channel()
         self.simple_queue = None
 
@@ -165,25 +171,27 @@ class Queue():
 
 class ConsumerQueue(kombu.mixins.ConsumerMixin):
 
-    def __init__(self, config):
+    def __init__(self, uri, name, pefetch_count=100):
         '''
-        Sample App receiver message from queue
+        Sample Consumer receiver message from queue
+        Args:
+            uri: list of uri connections.
+            name: queue name.
+            prefetch_count: prefetch count.
         Examples:
-            >>> ConsumerQueue({
-            ... 'uri': ['amqp://username:password@host:5672/'],
-            ... 'name': 'ExampleQueue',
-            ... 'prefetch_count': 100
-            ... })
+            >>> ConsumerQueue(uri=['amqp://username:password@host:5672/'],
+            ... name='ExampleQueue',
+            ... prefetch_count=100)
         '''
 
-        self.queue_connection = QueueConnection(';'.join(config.get('uri')))
+        self.queue_connection = QueueConnection(uri)
         self.queue_connection.connect()
 
         self.connection = self.queue_connection._connection
 
-        self.queue = kombu.Queue(config.get('name'))
+        self.queue = kombu.Queue(name)
 
-        self.prefetch_count = config.get('prefetch_count', 100)
+        self.prefetch_count = pefetch_count
 
     def get_consumers(self, Consumer, channel):
         consumer = Consumer(queues=[self.queue], callbacks=[self.on_message_received])
@@ -192,7 +200,7 @@ class ConsumerQueue(kombu.mixins.ConsumerMixin):
 
     def on_message_received(self, payload, message):
         try:
-            # do something ...
+            # do something with payload
             process_successfully = True
 
             if process_successfully:
