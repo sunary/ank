@@ -2,21 +2,22 @@ __author__ = 'sunary'
 
 
 from apps._app import App
-try:
-    from kafka import KafkaProducer
-except:
-    raise 'kafka-python not founded'
 
 
 class KafkaAnkProducer(App):
     '''
-    Post message(s) to queue
+    Push message(s) to queue
     '''
 
-    def __init__(self, queue_config, topic):
+    def __init__(self, producer, topic):
+        '''
+        Args:
+            producer: kafka.KafkaProducer
+            topic: subscriber topic
+        '''
         super(KafkaAnkProducer, self).__init__()
 
-        self.producer = KafkaProducer(queue_config)
+        self.producer = producer
         self.topic = topic
 
     def process(self, messages=None):
