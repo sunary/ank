@@ -23,17 +23,14 @@ class RabbitMqConsumer(App, ConsumerQueue):
         '''
 
         App.__init__(self)
+        ConsumerQueue.__init__(self, uri, name, batch_size)
 
         self.prefetch_count = batch_size
-        ConsumerQueue.__init__(self, uri, name, self.pefetch_count)
 
     def run(self, process=None):
         App.run(self, process)
 
     def on_message_received(self, payloads, messages):
-        if self.prefetch_count == 1:
-            messages = [messages]
-
         try:
             status = self._process(payloads)
 
@@ -44,7 +41,9 @@ class RabbitMqConsumer(App, ConsumerQueue):
                 for msg in messages:
                     msg.requeue()
         except Exception as e:
+            status = 'Error'
             self.logger.error(e)
+
             for msg in messages:
                 msg.requeue()
 
