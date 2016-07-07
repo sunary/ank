@@ -2,7 +2,7 @@
 
 
 ### Overview: ###
- Python Microservices for Queue services(*rabbitMQ*, *Kafka*, *zeroMQ*), Streaming, REST-API and Schedule task.
+ Python Microservices for Queue services (*rabbitMQ*, *Kafka*, *zeroMQ*), Streaming, REST-API and Schedule task.
 
 
 ### Requirements: ###
@@ -124,7 +124,7 @@
     ```shell
     $ python _processor.py
     ```
-* **Run (Dependency Injection):**
+* **Run (daemon):**
 
     ```shell
     $ PYTHONPATH=$(pwd) start_app
