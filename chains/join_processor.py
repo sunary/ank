@@ -14,9 +14,9 @@ class JoinProcessor(App):
         self.batch_size = batch_size
         self.messages = []
 
-    def run(self):
+    def run(self, process=None):
         self.logger.info('Start ...')
 
-    def process(self, messages):
-        self.logger.info('Join')
+    def process(self, messages=None):
+
         return messages

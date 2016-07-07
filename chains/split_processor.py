@@ -13,5 +13,5 @@ class SplitProcessor(App):
         self.logger.info('Start ...')
 
     def process(self, messages=None):
-        self.logger.info('Split')
+
         return messages
