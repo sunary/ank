@@ -1,8 +1,10 @@
 __author__ = 'sunary'
 
 
+import os, sys
+sys.path.append(os.getcwd())
+
 import importlib
-import os
 from chains.chain_processor import ChainProcessor
 from deploy.daemon import Daemon
 from utils import my_deploy, my_helper

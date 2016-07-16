@@ -127,7 +127,7 @@
 * **Run (daemon):**
 
     ```shell
-    $ PYTHONPATH=$(pwd) start_app
+    $ start_app
     ```
     
 ### Apps: ###

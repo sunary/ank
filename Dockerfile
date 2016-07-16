@@ -15,6 +15,7 @@ COPY . /ank/${project}
 RUN pip install -r ank
 
 ENV PYTHONPATH $PYTHONPATH:/ank/${project}
+RUN pip install -r /ank/${project}/requirements.txt
 
 ENV PORT 15372
 EXPOSE 15372
