@@ -26,7 +26,7 @@ class Mongodb(object):
 
     def change_collection(self, col_name):
         if self.cols_accept and col_name not in self.cols_accept:
-            raise 'new collection is not registered'
+            raise Exception('new collection is not registered')
 
         self.collection = self._db[col_name]
 

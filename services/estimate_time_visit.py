@@ -171,4 +171,4 @@ if __name__ == '__main__':
     actor = BehaviorEstimate()
     actor.set({})
     actor.has_messages(datetime(2015, 6, 3))
-    print actor.get()['next_crawl_time']
+    print(actor.get()['next_crawl_time'])

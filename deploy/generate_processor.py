@@ -99,7 +99,7 @@ class GenerateProcessor(object):
 
 def main():
     generate_processor = GenerateProcessor()
-    print generate_processor.process()
+    print(generate_processor.process())
 
 
 if __name__ == '__main__':

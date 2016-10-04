@@ -6,7 +6,8 @@
 
 
 ### Requirements: ###
-* Python 2.7
+* Python 2.x
+* Python 3.x
 
 
 ### How to use: ###

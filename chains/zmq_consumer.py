@@ -5,7 +5,7 @@ from apps._app import App
 try:
     import zmq
 except:
-    raise 'not founded pyzmq'
+    raise Exception('not founded pyzmq')
 
 
 class ZeroMqConsumer(App):

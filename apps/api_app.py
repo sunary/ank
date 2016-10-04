@@ -1,7 +1,7 @@
 __author__ = 'sunary'
 
 
-from apps._app import App
+from ._app import App
 from flask import Flask
 from utils import my_api
 

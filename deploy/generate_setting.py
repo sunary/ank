@@ -60,7 +60,7 @@ class GenerateSetting(object):
 
 def main():
     generate_setting = GenerateSetting()
-    print generate_setting.process()
+    print(generate_setting.process())
 
 
 if __name__ == '__main__':

@@ -74,9 +74,9 @@ class DependencyInjection(object):
 def main():
     daemon = Daemon('daemon.pid')
     daemon.start()
-    print os.getpid()
+    print(os.getpid())
     di = DependencyInjection()
-    print di.start()
+    print(di.start())
 
 
 if __name__ == '__main__':

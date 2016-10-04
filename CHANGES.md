@@ -3,3 +3,4 @@
 - 2016/06/25 -- Upload to pip
 - 2016/06/29 -- Add kafka
 - 2016/06/30 -- Add zeroMQ
+- 2016/10/04 -- Support python3

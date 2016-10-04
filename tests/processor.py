@@ -12,12 +12,12 @@ class TestApp(App):
     def run(self, process=None):
         super(TestApp, self).run(process)
 
-        print 'Start chain'
+        print('Start chain')
         for i in range(100):
             self._process((i, i + 1))
 
     def process(self, message=None):
-        print 'Demo worker {}'.format(message)
+        print('Demo worker {}'.format(message))
         return message
 
 
@@ -27,8 +27,8 @@ class OtherApp(App):
         super(App, self).__init__()
 
     def run(self, process=None):
-        print 'From other worker'
+        print('From other worker')
 
     def process(self, message=None):
-        print 'Other worker {}'.format(message)
+        print('Other worker {}'.format(message))
         return None

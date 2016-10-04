@@ -30,5 +30,5 @@ class Environment(object):
 
 if __name__ == '__main__':
     env = Environment('project')
-    print env.create('worker')
-    print env.remove('worker')
+    print(env.create('worker'))
+    print(env.remove('worker'))

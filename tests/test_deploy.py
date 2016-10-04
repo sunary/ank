@@ -11,18 +11,18 @@ class TestDeploy(unittest.TestCase):
 
     def test_di(self):
         di = DependencyInjection()
-        print '\n\n## Dependency Injection:'
+        print('\n\n## Dependency Injection:')
         di.start()
 
     def test_gen_processor(self):
         generate_processor = GenerateProcessor()
-        print '\n\n## Generate Processor:'
-        print generate_processor.process()
+        print('\n\n## Generate Processor:')
+        print(generate_processor.process())
 
     def test_gen_setting(self):
         generate_setting = GenerateSetting()
-        print '\n\n## Generate Setting:'
-        print generate_setting.process()
+        print('\n\n## Generate Setting:')
+        print(generate_setting.process())
 
 
 if __name__ == '__main__':

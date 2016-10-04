@@ -51,7 +51,7 @@ class CrontabTimeReader():
         self.minute, self.hour, self.day, self.month, self.day_of_week =\
             self.normalized_value(time_str[0]), self.normalized_value(time_str[1]), self.normalized_value(time_str[2]), self.normalized_value(time_str[3]), self.normalized_value(time_str[4])
 
-        print self.minute, self.hour, self.day, self.month, self.day_of_week
+        print(self.minute, self.hour, self.day, self.month, self.day_of_week)
 
     def normalized_value(self, value):
         ret_value = []
@@ -123,6 +123,6 @@ class CrontabTimeReader():
 
 if __name__ == '__main__':
     timer_reader = CrontabTimeReader('55 23 2,4,6 3 *')
-    print timer_reader.get_next_time()
+    print(timer_reader.get_next_time())
     timer_reader = CrontabTimeReader('0 2,3 * * 0-5')
-    print timer_reader.get_next_time()
+    print(timer_reader.get_next_time())

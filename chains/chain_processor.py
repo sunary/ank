@@ -45,6 +45,6 @@ class ChainProcessor(object):
 
             except Exception as e:
                 self.logger.error('Error when run process {}: {}'.format(processor_name, e))
-                raise e
+                raise Exception
 
         return messages

@@ -13,6 +13,6 @@ class ExampleApp(App):
         super(ExampleApp, self).run(process)
 
     def process(self, messages=None):
-        print messages
+        print(messages)
 
         return messages
