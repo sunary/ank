@@ -37,6 +37,7 @@ class KeyManager(object):
     def heartbeat(self, id, delay=None):
         if delay is None:
             delay = self.HEARTBEAT_TIME
+
         self.mongo.update({'_id': id}, {'available_in': datetime.utcnow() + timedelta(seconds=self.SCREEN_TIME + delay),
                                         'updated_at': datetime.utcnow()})
 
@@ -60,6 +61,7 @@ class KeyManager(object):
         if group:
             update_doc.update({'group': group})
             return self.mongo.update({'group': group + '-report'}, update_doc)
+
         elif id:
             update_doc.update({'group': group})
             return self.mongo.update({'_id': id}, update_doc)

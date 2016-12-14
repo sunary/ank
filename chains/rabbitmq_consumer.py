@@ -41,9 +41,9 @@ class RabbitMqConsumer(App, ConsumerQueue):
                 for msg in messages:
                     msg.requeue()
         except Exception as e:
-            status = 'Error'
-            self.logger.error(e)
+            self.logger.error('Error when {} message {}'.format('ack' if status else 'requeue', e))
 
+            status = 'ERROR'
             for msg in messages:
                 msg.requeue()
 

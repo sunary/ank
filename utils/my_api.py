@@ -77,6 +77,7 @@ def get_options():
 
         for field in request.form:
             options[field] = str(request.form.get(field))
+
     elif request.method == 'GET':
         for field in request.args:
             options[field] = str(request.args.get(field))

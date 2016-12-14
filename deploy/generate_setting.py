@@ -24,9 +24,8 @@ class GenerateSetting(object):
         # read old settings
         try:
             setting_loader = my_deploy.loader('settings', 'parameters')
-        except Exception as e:
-            setting_loader = {}
-            self.logger.error(e)
+        except IOError as e:
+            raise IOError('settings.yml not found')
 
         for key, value in setting_loader.iteritems():
             if self.setting_parameters.get(key, '') is None:

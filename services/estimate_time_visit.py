@@ -19,6 +19,7 @@ class BehaviorEstimate():
 
         self.histogram = [100.0/self.LENGTH_HISTOGRAM] * self.LENGTH_HISTOGRAM
         self.average_times_visit_per_day = self.SCALE_TIMES_VISIT
+
         self.activated_date = None
         self.range_day = 0
         self.date_visit = [{'date': datetime(2015, 1, 1), 'times_visit': 0} for _ in range(self.CUMULATIVE_DAYS_VISIT + 6)]
@@ -58,6 +59,7 @@ class BehaviorEstimate():
 
         if not self.activated_date or self.activated_date > self.time_msg:
             self.activated_date = self.date_has_message
+
         elif self.range_day < self.CUMULATIVE_DAYS_VISIT:
             self.range_day = (self.time_msg - self.activated_date).days
             self.range_day = self.CUMULATIVE_DAYS_VISIT if self.range_day > self.CUMULATIVE_DAYS_VISIT else self.range_day
@@ -72,10 +74,12 @@ class BehaviorEstimate():
                     self.date_visit[i]['date'] = self.date_has_message
                     self.date_visit[i]['times_visit'] = 1
                     break
+
         self._update()
 
     def _update(self):
         total_visit = 0
+
         for i in range(len(self.date_visit)):
             if self.date_visit[i]['date'] < self.date_has_message and self.date_visit[i]['date'] >= (self.date_has_message - timedelta(days=self.CUMULATIVE_DAYS_VISIT)):
                 total_visit += self.date_visit[i]['times_visit']
@@ -90,6 +94,7 @@ class BehaviorEstimate():
 
         self.average_times_visit_per_day = self.MAX_TIMES_VISIT_PER_DAY if (self.average_times_visit_per_day > self.MAX_TIMES_VISIT_PER_DAY)\
             else self.average_times_visit_per_day
+
         self.average_times_visit_per_day = self.MIN_TIMES_VISIT_PER_DAY if (self.average_times_visit_per_day < self.MIN_TIMES_VISIT_PER_DAY)\
             else self.average_times_visit_per_day
 
@@ -108,12 +113,13 @@ class BehaviorEstimate():
         num_unit = 0
         order_histogram = self._order_histogram()
         probability_visit = 0
+
         while probability_visit < 1:
             num_unit += 1
             probability_visit += self.histogram[order_histogram]*self.average_times_visit_per_day/100
             order_histogram = (order_histogram + 1) % self.LENGTH_HISTOGRAM
 
-        return datetime.today() + timedelta(minutes=num_unit*24*60/self.LENGTH_HISTOGRAM)
+        return datetime.today() + timedelta(minutes=num_unit * 24*60 / self.LENGTH_HISTOGRAM)
 
     def _order_histogram(self):
         '''
@@ -124,13 +130,15 @@ class BehaviorEstimate():
         '''
         if not self.time_msg:
             self.time_msg = datetime.utcnow()
-        minutes = self.time_msg.hour*60 + self.time_msg.minute
-        return minutes*self.LENGTH_HISTOGRAM/(24*60)
+
+        minutes = self.time_msg.hour * 60 + self.time_msg.minute
+
+        return minutes * self.LENGTH_HISTOGRAM / (24*60)
 
     def _change_len_histogram(self, new_len_histogram):
         new_histogram = [0]*new_len_histogram
         for i in range(len(new_histogram)):
-            new_histogram[i] = self.histogram[int(round(i*self.LENGTH_HISTOGRAM*1.0/new_len_histogram))]
+            new_histogram[i] = self.histogram[int(round(i * self.LENGTH_HISTOGRAM*1.0 / new_len_histogram))]
 
         sum_new_histogram = 0
         for i in range(len(new_histogram)):
@@ -161,6 +169,7 @@ class BehaviorEstimate():
         elif date_format == 'twitter':
             str_date = str_date.split(' ')
             del str_date[4]
+
             str_date = ' '.join(str_date)
             return datetime.strptime(str_date, '%a %b %d %H:%M:%S %Y')
 

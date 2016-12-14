@@ -76,7 +76,7 @@ class GenerateProcessor(object):
         object_name = self.service_loader[str_class]['class']
         class_dir, class_name = my_deploy.class_name_extract(object_name)
 
-        str_import = 'from %s import %s' % (class_dir, class_name)
+        str_import = 'from {} import {}'.format(class_dir, class_name)
         if str_import not in self.import_libs:
             self.import_libs.append(str_import)
 
@@ -86,7 +86,7 @@ class GenerateProcessor(object):
         if object_arguments[0] is None:
             object_arguments = ['']
 
-        str_deliver = '%s = %s(%s)' % (self.generate_class_name(class_name), class_name, ', '.join(object_arguments))
+        str_deliver = '{} = {}({})'.format(self.generate_class_name(class_name), class_name, ', '.join(object_arguments))
 
         if str_deliver not in self.implement_classes:
             self.implement_classes.append(str_deliver)

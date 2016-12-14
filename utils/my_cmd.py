@@ -29,7 +29,7 @@ def run_cmd(cmd, **kwargs):
                 'message': result}
     except Exception as e:
         return {'success': False,
-                'message': 'Error when execute command: %s' % cmd,
+                'message': 'Error when execute command: {}'.format(cmd),
                 'detail': str(e)}
 
 
