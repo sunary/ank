@@ -1,10 +1,10 @@
 __author__ = 'sunary'
 
 
-from apps._app import App
+from apps.app import BaseApp
 
 
-class KafkaAnkConsumer(App):
+class KafkaAnkConsumer(BaseApp):
     '''
     Messages were received from consumer.subscribe
     '''

@@ -1,11 +1,11 @@
 __author__ = 'sunary'
 
 
-from apps._app import App
-from queue.rabbit_mqueue import ConsumerQueue
+from apps.app import BaseApp
+from queues.rabbit_mqueue import ConsumerQueue
 
 
-class RabbitMqConsumer(App, ConsumerQueue):
+class RabbitMqConsumer(BaseApp, ConsumerQueue):
     '''
     Messages were received from queue by on_messages_received() method
     '''
@@ -22,13 +22,13 @@ class RabbitMqConsumer(App, ConsumerQueue):
             ... prefetch_count=100)
         '''
 
-        App.__init__(self)
+        BaseApp.__init__(self)
         ConsumerQueue.__init__(self, uri, name, batch_size)
 
         self.prefetch_count = batch_size
 
     def run(self, process=None):
-        App.run(self, process)
+        BaseApp.run(self, process)
 
     def on_message_received(self, payloads, messages):
         try:

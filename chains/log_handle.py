@@ -1,10 +1,10 @@
 __author__ = 'sunary'
 
 
-from apps._app import App
+from apps.app import BaseApp
 
 
-class LogHandle(App):
+class LogHandle(BaseApp):
 
     def __init__(self):
         super(LogHandle, self).__init__()

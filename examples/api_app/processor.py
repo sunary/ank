@@ -2,7 +2,7 @@ __author__ = 'sunary'
 
 
 from examples.api_app.endpoint import ExampleAPI
-from apps._base_app import BaseApp
+from apps.app import BaseApp
 
 
 class ExampleApp(BaseApp):

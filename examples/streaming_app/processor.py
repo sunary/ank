@@ -2,12 +2,12 @@
 __author__ = 'sunary'
 
 
-from apps._app import App
+from apps.app import BaseApp
 import tweepy
 from tweepy.streaming import StreamListener, json
 
 
-class TwitterSpout(App):
+class TwitterSpout(BaseApp):
 
     def __init__(self, key):
         self.key = key

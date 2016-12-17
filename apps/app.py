@@ -4,7 +4,7 @@ __author__ = 'sunary'
 from utils import my_helper
 
 
-class NormalApp(object):
+class BaseApp(object):
 
     '''
     Start app from run() method

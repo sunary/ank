@@ -1,10 +1,10 @@
 __author__ = 'sunary'
 
 
-from apps._app import App
+from apps.app import BaseApp
 
 
-class ExampleApp(App):
+class ExampleApp(BaseApp):
 
     def __init__(self):
         super(ExampleApp, self).__init__()

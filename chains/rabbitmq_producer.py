@@ -1,11 +1,11 @@
 __author__ = 'sunary'
 
 
-from apps._app import App
-from queue.rabbit_mqueue import Queue
+from apps.app import BaseApp
+from queues.rabbit_mqueue import Queue
 
 
-class RabbitMqProducer(App):
+class RabbitMqProducer(BaseApp):
     '''
     Push message(s) to queue
     '''

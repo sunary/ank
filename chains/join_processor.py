@@ -1,10 +1,10 @@
 __author__ = 'sunary'
 
 
-from apps._app import App
+from apps.app import BaseApp
 
 
-class JoinProcessor(App):
+class JoinProcessor(BaseApp):
     '''
     Join messages from previous processor
     '''

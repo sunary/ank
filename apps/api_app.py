@@ -1,12 +1,12 @@
 __author__ = 'sunary'
 
 
-from ._app import App
+from apps.app import BaseApp
 from flask import Flask
 from utils import my_api
 
 
-class APIApp(App):
+class APIApp(BaseApp):
     '''
     API App
     Add function to extend class to create new API

@@ -1,14 +1,14 @@
 __author__ = 'sunary'
 
 
-from apps._app import App
+from apps.app import BaseApp
 try:
     import zmq
 except:
     raise Exception('not founded pyzmq')
 
 
-class ZeroMqProducer(App):
+class ZeroMqProducer(BaseApp):
     '''
     Push message(s) to queue
     '''

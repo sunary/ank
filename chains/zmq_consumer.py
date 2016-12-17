@@ -1,14 +1,14 @@
 __author__ = 'sunary'
 
 
-from apps._app import App
+from apps.app import BaseApp
 try:
     import zmq
 except:
     raise Exception('not founded pyzmq')
 
 
-class ZeroMqConsumer(App):
+class ZeroMqConsumer(BaseApp):
     '''
     Messages were received from sock.recv
     '''

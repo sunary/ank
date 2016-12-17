@@ -1,10 +1,10 @@
 __author__ = 'sunary'
 
 
-from apps._app import App
+from apps.app import BaseApp
 
 
-class KafkaAnkProducer(App):
+class KafkaAnkProducer(BaseApp):
     '''
     Push message(s) to queue
     '''

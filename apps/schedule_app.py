@@ -2,11 +2,11 @@ __author__ = 'sunary'
 
 
 import time
-from apps._app import App
+from apps.app import BaseApp
 from datetime import datetime, timedelta
 
 
-class ScheduleApp(App):
+class ScheduleApp(BaseApp):
     '''
     Schedule process using crontab time format
     '''

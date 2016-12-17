@@ -1,10 +1,10 @@
 __author__ = 'sunary'
 
 
-from apps._app import App
+from apps.app import BaseApp
 
 
-class SplitProcessor(App):
+class SplitProcessor(BaseApp):
 
     def __init__(self):
         super(SplitProcessor, self).__init__()

@@ -1,13 +1,13 @@
 __author__ = 'sunary'
 
 
-from apps._app import App
+from apps.app import BaseApp
 
 
-class TestApp(App):
+class TestApp(BaseApp):
 
     def __init__(self, mongo, redis, batch_size, *wagrs):
-        super(App, self).__init__()
+        super(BaseApp, self).__init__()
 
     def run(self, process=None):
         super(TestApp, self).run(process)
@@ -21,10 +21,10 @@ class TestApp(App):
         return message
 
 
-class OtherApp(App):
+class OtherApp(BaseApp):
 
     def __init__(self, *wagrs):
-        super(App, self).__init__()
+        super(BaseApp, self).__init__()
 
     def run(self, process=None):
         print('From other worker')
