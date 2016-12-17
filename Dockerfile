@@ -1,23 +1,17 @@
-FROM ubuntu:14.04
-MAINTAINER Nhat Vo Van <v2nhat@gmail.com>
 
-RUN apt-get update && apt-get install -y \
-        git \
-        libpq-dev \
-        python-dev \
-        python-pip
+FROM sunary/python-2.7-alpine:0.1
+MAINTAINER Nhat Vo Van "v2nhat@gmail.com"
 
-ENV project project
+#addition apk for image
+RUN apk --update add py-pip libffi-dev openssl-dev
+RUN apk --update add gettext gcc libpq python-dev git && rm -rf /var/cache/apk/*
 
-WORKDIR /ank/${project}
-COPY . /ank/${project}
+RUN pip install --upgrade pip
 
-RUN pip install -r ank
+RUN mkdir -p /srv/logs
+WORKDIR /srv/ank
+RUN pip install -r requirements.txt
 
-ENV PYTHONPATH $PYTHONPATH:/ank/${project}
-RUN pip install -r /ank/${project}/requirements.txt
-
-ENV PORT 15372
-EXPOSE 15372
-
-CMD ["start_app"]
+ADD . ./
+ENTRYPOINT []
+CMD []
