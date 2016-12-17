@@ -4,6 +4,6 @@
 [x] implement services
 [x] streaming
 [ ] build project
-[ ] docker
+[x] docker
 [ ] monitor
 [x] test
