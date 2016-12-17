@@ -11,21 +11,12 @@
 
 
 ### How to use: ###
-* **Create virtualenv `worker` and install ANK:**
-
-    ```shell
-    $ virtualenv worker
-    $ source worker/bin/activate
-    $ pip install ank
-    $ # or pip install -e git+ssh://git@github.com/sunary/ank.git#egg=ank
-    ```
-    Your App will run on this virtualenv `worker`.
-* **Create chains (E.g: `WorkerClass`, `OtherWorker`), register it with other ANK's `chains` (E.g `LogHandle`) into `services.yml`:**
+* **Edit app (processor.py):**
     * *Example:*
     ```python
-    from apps._app import App
+    from apps.app import BaseApp
 
-    class ExampleApp(App):
+    class ExampleApp(BaseApp):
     
         def run(self, process=None):
             '''
@@ -44,7 +35,7 @@
             message += 1
             return message
     ```
-* **Create services and chains:**
+* **Edit services and chains (services.yml):**
     * *Syntax:*
     ```yaml
     services:
@@ -89,9 +80,9 @@
       - OtherWorker
     ```
     ANK will read top-down `chains`, find correspond `services` and get parameters from `settings.yml`.
-* **Generate setting:**
+* **Generate and edit setting (settings.yml):**
      ```shell
-     $ gen_setting
+     $ ank -s
      ```
     * *Example:*
     ```yaml
@@ -110,25 +101,25 @@
       batch_size: 100
     ```
     Help you create `settings` template file. Just rename from `_settings.yml` to `settings.yml` and fill in values.
-* **Install requirements of App into virtualenv `worker`:**
+* **Build microservice (create docker image):**
 
     ```shell
-    $ pip install -r requirements.txt
+    $ ank -b
     ```
-* **Generate processor:**
+* **Generate processor (_processor.py):**
     
     ```shell
-    $ gen_processor
+    $ ank -p
     ```
-* **Run (Directly, using generated `_processor.py`):**
+* **Edit and test microservice (test_service.py):**
 
     ```shell
-    $ python _processor.py
+    $ ank -r
     ```
-* **Run (daemon):**
+* **Run microservice:**
 
     ```shell
-    $ start_app
+    $ ank -r
     ```
     
 ### Apps: ###
@@ -141,5 +132,5 @@
 * **LogHandle:** Log every messages.
 * **JoinProcessor:** Join messages into one.
 * **SplitProcessor:** Split message.
-* **XXXConsumer:** Get messages from queue.
-* **XXXProducer:** Push message to queue.
+* **---Consumer:** Get messages from queue.
+* **---Producer:** Push message to queue.
