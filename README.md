@@ -114,7 +114,7 @@
 * **Edit and test microservice (test_service.py):**
 
     ```shell
-    $ ank -r
+    $ ank -t -f test-settings.yml
     ```
 * **Run microservice:**
 

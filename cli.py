@@ -74,7 +74,7 @@ class TestService(unittest.TestCase):
     def test_something(self):
         self.assertEqual(True, False)
 
-    def test_service(self):
+    def test_function(self):
         service = {0}()
 
         message = None # Need initialize variable
@@ -91,7 +91,7 @@ class TestService(unittest.TestCase):
             print('generate _processor.py before run this test')
 
     def test_chain(self):
-        dependency_injection.main()
+        dependency_injection.main('settings.yml') # replace your test setting file
 
 
 if __name__ == '__main__':
@@ -155,8 +155,8 @@ def create_setting():
     generate_setting.main()
 
 
-def create_processor():
-    generate_processor.main()
+def create_processor(file_setting):
+    generate_processor.main(file_setting)
 
 
 def test():
@@ -171,7 +171,7 @@ def build():
     print my_cmd.run_cmd(['docker', 'build', '.'])['message']
 
 
-def main(options):
+def main(options=None):
     parser = ArgumentParser(prog='Ank Microservices')
 
     parser.add_argument('-c', '--create', dest='create', type=str,
@@ -198,6 +198,8 @@ def main(options):
 
     args = parser.parse_args()
 
+    file_setting = args.file_setting if args.file_setting else 'settings.yml'
+
     if args.create:
         baseapp = 'BaseApp'
         if args.app and args.app in ['BaseApp', 'APIApp', 'ScheduleApp']:
@@ -205,15 +207,13 @@ def main(options):
 
         create(args.create, baseapp)
     elif args.app:
-        print('Using command: ank -c NameApp -a BaseApp to create new microservice')
+        print('Using command: "ank -c NameApp -a BaseApp" to create new microservice')
     elif args.setting:
         create_setting()
     elif args.processor:
-        create_processor()
+        create_processor(file_setting)
     elif args.test:
         test()
-    elif args.file_setting:
-        print('Using command: ank -t -f test-settings.yml to test microservice with setting file is test-settings.yml')
     elif args.run:
         run()
     elif args.build:

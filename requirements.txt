@@ -1,6 +1,6 @@
 psutil==3.3.0
 kombu==3.0.33
-pymongo==3.2
+pymongo==3.4.0
 amqp==1.4.9
 pyyaml==3.11
 redis==2.10.5

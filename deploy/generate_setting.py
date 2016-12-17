@@ -16,14 +16,14 @@ class GenerateSetting(object):
         self.setting_parameters = {}
 
     def process(self):
-        self.service_loader = my_deploy.loader('services', 'services')
-        chain_loader = my_deploy.loader('services', 'chains')
+        self.service_loader = my_deploy.loader('services.yml', 'services')
+        chain_loader = my_deploy.loader('services.yml', 'chains')
         for process_name in chain_loader:
             self.from_class(process_name)
 
         # read old settings
         try:
-            setting_loader = my_deploy.loader('settings', 'parameters')
+            setting_loader = my_deploy.loader('settings.yml', 'parameters')
         except IOError as e:
             raise IOError('settings.yml not found')
 

@@ -1,7 +1,8 @@
 __author__ = 'sunary'
 
 
-import os, sys
+import os
+import sys
 sys.path.append(os.getcwd())
 
 import importlib
@@ -15,12 +16,12 @@ class DependencyInjection(object):
     def __init__(self):
         self.logger = my_helper.init_logger(self.__class__.__name__)
 
-    def start(self):
-        self.service_loader = my_deploy.loader('services', 'services')
-        self.setting_loader = my_deploy.loader('settings', 'parameters')
+    def start(self, file_setting='settings.yml'):
+        self.service_loader = my_deploy.loader('services.yml', 'services')
+        self.setting_loader = my_deploy.loader(file_setting, 'parameters')
 
         chain_processor = ChainProcessor()
-        chain_loader = my_deploy.loader('services', 'chains')
+        chain_loader = my_deploy.loader('services.yml', 'chains')
         for process_name in chain_loader:
             self.logger.info('processor: {}'.format(process_name))
             processor = self.get_class(process_name)
@@ -71,12 +72,12 @@ class DependencyInjection(object):
         return _class(*parameters)
 
 
-def main():
+def main(file_setting=None):
     daemon = Daemon('daemon.pid')
     daemon.start()
     print(os.getpid())
     di = DependencyInjection()
-    print(di.start())
+    print(di.start(file_setting))
 
 
 if __name__ == '__main__':

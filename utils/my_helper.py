@@ -2,10 +2,11 @@
 __author__ = 'sunary'
 
 
-def init_logger(name, log_level=None, log_file='log.log'):
-    import logging
-    import logging.handlers
+import logging
+import logging.handlers
 
+
+def init_logger(name, log_level=None, log_file=None):
     logger = logging.getLogger(name)
 
     if log_level:
@@ -15,8 +16,11 @@ def init_logger(name, log_level=None, log_file='log.log'):
 
     formatter = logging.Formatter('%(asctime)s %(levelname)s %(name)s: %(message)s')
 
+    if not log_file:
+        log_file = '{}.log'.format(name)
+
     if log_file:
-        fh = logging.handlers.RotatingFileHandler(log_file, maxBytes=2 * 1024 * 1024, backupCount=3)
+        fh = logging.handlers.RotatingFileHandler(log_file, maxBytes=2 * 1024*1024, backupCount=3)
         fh.setFormatter(formatter)
         logger.addHandler(fh)
     else:
@@ -28,8 +32,7 @@ def init_logger(name, log_level=None, log_file='log.log'):
 
 
 if __name__ == '__main__':
-    import logging
-    logger = init_logger('test', logging.INFO, None, 'v2nhat@gmail.com')
+    logger = init_logger('test', logging.INFO)
     logger.info('info')
     logger.debug('debug')
     logger.warning('warning')

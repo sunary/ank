@@ -13,14 +13,14 @@ class GenerateProcessor(object):
         self.import_libs = ['from chains.chain_processor import ChainProcessor']
         self.implement_classes = ['chain_processor = ChainProcessor()']
 
-    def process(self, author='ank'):
-        self.service_loader = my_deploy.loader('services', 'services')
-        self.setting_loader = my_deploy.loader('settings', 'parameters')
+    def process(self, file_setting='settings.yml'):
+        self.service_loader = my_deploy.loader('services.yml', 'services')
+        self.setting_loader = my_deploy.loader(file_setting, 'parameters')
 
-        str_processor = "__author__ = '%s'\n\n" % (author)
+        str_processor = "__author__ = 'ank_generator'\n\n"
 
         implement_workers = []
-        chain_loader = my_deploy.loader('services', 'chains')
+        chain_loader = my_deploy.loader('services.yml', 'chains')
         for process_name in chain_loader:
             implement_workers.append(self.get_class(process_name))
 
@@ -97,9 +97,9 @@ class GenerateProcessor(object):
         return my_deploy.get_deliver_from_class(class_name)
 
 
-def main():
+def main(file_setting='settings.yml'):
     generate_processor = GenerateProcessor()
-    print(generate_processor.process())
+    print(generate_processor.process(file_setting))
 
 
 if __name__ == '__main__':

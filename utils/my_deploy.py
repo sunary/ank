@@ -5,7 +5,7 @@ import yaml
 
 
 def loader(file_name, object_name):
-    with open('{}.yml'.format(file_name), 'r') as fo:
+    with open(file_name, 'r') as fo:
         service_loader = yaml.load(fo)
         return service_loader[object_name]
 
