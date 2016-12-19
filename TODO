@@ -3,7 +3,8 @@
 [x] chain process
 [x] implement services
 [x] streaming
-[ ] build project
+[x] build project
 [x] docker
 [ ] monitor
+[ ] services management
 [x] test
