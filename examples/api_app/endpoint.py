@@ -2,15 +2,14 @@ __author__ = 'sunary'
 
 
 from apps.api_app import APIApp
-from utils import my_api
+from utilities import my_api
 
 
 class ExampleAPI(APIApp):
-    '''
-    Examples:
-        localhost:15372/add?a=1&b=2
-        localhost:15372/sub?a=5&b=3
-    '''
+
+    def __init__(self, host='localhost', port=5372):
+        super(ExampleAPI, self).__init__(host, port)
+
     def add(self, params):
         a = int(params.get('a'))
         b = int(params.get('b'))

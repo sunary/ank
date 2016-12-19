@@ -11,5 +11,5 @@ class ExampleApp(BaseApp):
         pass
 
     def run(self, process=None):
-        api_app = ExampleAPI(host='localhost', port=15372)
+        api_app = ExampleAPI(host='localhost', port=5372)
         api_app.run()

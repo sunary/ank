@@ -2,7 +2,7 @@ __author__ = 'ank'
 
 from chains.chain_processor import ChainProcessor
 from processor import ExampleApp
-from utils.my_mongo import Mongodb
+from utilities.my_mongo import Mongodb
 
 chain_processor = ChainProcessor()
 _mongodb = Mongodb('raw_data', 'twitter', 'localhost', 27017)
