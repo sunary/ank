@@ -6,7 +6,7 @@
 # Setuptools distribution folder.
 src/*
 env/*
-ANK*/
+ank.egg-info/
 build/*
 dist/*
 

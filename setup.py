@@ -3,7 +3,7 @@ __author__ = 'sunary'
 
 import os
 from setuptools import setup, find_packages
-from utils import VERSION
+from ank import VERSION
 
 
 def __path(filename):
@@ -30,6 +30,6 @@ setup(
     packages=find_packages(exclude=['docs', 'examples', 'tests']),
     install_requires=reqs,
     entry_points={
-        'console_scripts': ['ank = cli:test']
+        'console_scripts': ['ank = ank.cli:main']
     },
 )

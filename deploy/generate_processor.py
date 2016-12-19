@@ -1,7 +1,7 @@
 __author__ = 'sunary'
 
 
-from utils import my_deploy
+from utilities import my_deploy
 
 
 class GenerateProcessor(object):

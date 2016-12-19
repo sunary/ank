@@ -59,7 +59,7 @@
         arguments: [$Mongodb, $Redis, '%batch_size%']
     
       Mongodb:
-        class: utils.my_mongo.Mongodb
+        class: utilities.my_mongo.Mongodb
         arguments: ['%mongo_db%', '%mongo_col%', '%mongo_host%', '%mongo_port%']
     
       Redis:

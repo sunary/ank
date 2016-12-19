@@ -1,8 +1,10 @@
 psutil==3.3.0
-kombu==3.0.33
-pymongo==3.4.0
-amqp==1.4.9
-pyyaml==3.11
-redis==2.10.5
 flask==0.11
+pyyaml==3.11
+pymongo==3.4.0
+redis==2.10.5
 gevent==1.1.1
+kombu==3.0.33
+amqp==1.4.9
+pyzmq==1.4.9
+kafka-python==0.9.5

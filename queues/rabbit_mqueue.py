@@ -5,7 +5,7 @@ import amqp
 import kombu
 import kombu.mixins
 import time
-from utils import my_helper
+from utilities import my_helper
 
 
 logger = my_helper.init_logger(__name__)

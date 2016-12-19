@@ -5,7 +5,7 @@ from apps.app import BaseApp
 try:
     import zmq
 except:
-    raise Exception('not founded pyzmq')
+    raise Exception('pyzqm not found')
 
 
 class ZeroMqProducer(BaseApp):

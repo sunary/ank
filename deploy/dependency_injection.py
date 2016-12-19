@@ -8,7 +8,7 @@ sys.path.append(os.getcwd())
 import importlib
 from chains.chain_processor import ChainProcessor
 from deploy.daemon import Daemon
-from utils import my_deploy, my_helper
+from utilities import my_deploy, my_helper
 
 
 class DependencyInjection(object):

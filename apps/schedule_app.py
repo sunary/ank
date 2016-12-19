@@ -20,7 +20,7 @@ class ScheduleApp(BaseApp):
         super(ScheduleApp, self).run(process)
 
         if self.start_now:
-            self._run()
+            self.process()
 
         while True:
             time.sleep(60)
@@ -31,10 +31,6 @@ class ScheduleApp(BaseApp):
             second_to_wait = (next_time - datetime.utcnow()).total_seconds()
             time.sleep(second_to_wait)
             self.process()
-
-    def _run(self):
-
-        raise NotImplementedError
 
     def process(self, messages=None):
 

@@ -2,7 +2,7 @@ __author__ = 'sunary'
 
 
 import yaml
-from utils import my_deploy, my_helper
+from utilities import my_deploy, my_helper
 
 
 class GenerateSetting(object):

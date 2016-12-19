@@ -2,7 +2,7 @@ __author__ = 'ank'
 
 from chains.chain_processor import ChainProcessor
 from processor import TestApp
-from utils.my_mongo import Mongodb
+from utilities.my_mongo import Mongodb
 from redis.client import StrictRedis
 from chains.join_processor import JoinProcessor
 from chains.log_handle import LogHandle
