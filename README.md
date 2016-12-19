@@ -11,6 +11,13 @@
 
 
 ### How to use: ###
+* **Install:**
+    * From github:
+        - clone this project: `git clone git@github.com:sunary/ank.git`
+        - install: `python setup.py install`
+    * From pypi:
+        - not yet submit
+
 * **Edit app (processor.py):**
     * *Example:*
     ```python
