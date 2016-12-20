@@ -1,0 +1,8 @@
+services:
+  ScheduleExample:
+    class: processor.ScheduleExample
+    arguments: ['%crontab_time%', '%start_now%']
+
+
+chains:
+  - ScheduleExample
