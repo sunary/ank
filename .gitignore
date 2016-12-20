@@ -9,6 +9,7 @@ env/*
 ank.egg-info/
 build/*
 dist/*
+queues.rabbit_mqueue.log
 
 # Examples
 tests/log.log
