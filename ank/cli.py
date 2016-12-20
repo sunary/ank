@@ -205,7 +205,7 @@ chains:
 services:
   {0}:
     class: processor.{0}
-    arguments: ['%crontab_time%', '%start_new%']
+    arguments: ['%crontab_time%', '%start_now%']
 
 
 chains:
@@ -222,14 +222,16 @@ def settings_template(baseapp):
 
     elif baseapp == 'APIApp':
         return '''
-host: localhost
-port: {0}
+parameters:
+  host: localhost
+  port: {0}
         '''.format(API_DEFAULT_PORT)
 
     elif baseapp == 'ScheduleApp':
         return '''
-crontab_time: '0 0 * * 5'
-start_now: True
+parameters:
+  crontab_time: '0 0 * * 5'
+  start_now: True
         '''
 
     else:
