@@ -16,7 +16,7 @@
         - clone this project: `git clone git@github.com:sunary/ank.git`
         - install: `python setup.py install`
     * From pypi:
-        - not yet submit
+        - `pip install ank`
 
 * **Edit app (processor.py):**
     * *Example:*
