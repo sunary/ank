@@ -166,6 +166,8 @@ RUN apk --update add gettext gcc libpq python-dev git && rm -rf /var/cache/apk/*
 RUN pip install --upgrade pip
 
 RUN mkdir -p /srv/logs
+RUN mkdir -p /srv/{0}
+ADD . /srv/{0}
 WORKDIR /srv/{0}
 RUN pip install -r requirements.txt
 
