@@ -17,6 +17,13 @@
         - install: `python setup.py install`
     * From pypi:
         - `pip install ank`
+        
+* **Create new Service:**
+    ```shell
+    $ ank -c TestService`
+    $ cd TestService
+    ```
+    then continue using below commands
 
 * **Edit app (processor.py):**
     * *Example:*
@@ -108,22 +115,24 @@
       batch_size: 100
     ```
     Help you create `settings` template file. Just rename from `_settings.yml` to `settings.yml` and fill in values.
-* **Build microservice (create docker image):**
+* **Build Service (create docker image):**
 
     ```shell
     $ ank -b
+    docker run --entrypoint /bin/sh docker_image_id
     ```
+    
 * **Generate processor (_processor.py):**
     
     ```shell
     $ ank -p
     ```
-* **Edit and test microservice (test_service.py):**
+* **Edit and test Service (test_service.py):**
 
     ```shell
     $ ank -t -f test-settings.yml
     ```
-* **Run microservice:**
+* **Run Service:**
 
     ```shell
     $ ank -r
