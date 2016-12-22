@@ -171,7 +171,6 @@ ADD . /srv/{0}
 WORKDIR /srv/{0}
 RUN pip install -r requirements.txt
 
-ADD . ./
 ENTRYPOINT []
 CMD []
     '''.format(prj_name)
