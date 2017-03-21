@@ -10,7 +10,7 @@ except:
 
 class ZeroMqConsumer(BaseApp):
     '''
-    Messages were received from sock.recv
+    Message was received from sock.recv
     '''
 
     def __init__(self, uri, topic):
@@ -29,6 +29,6 @@ class ZeroMqConsumer(BaseApp):
             message = self.sock.recv()
             self._process(message)
 
-    def process(self, messages=None):
+    def process(self, message=None):
 
-        return messages
+        return message

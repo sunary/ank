@@ -22,6 +22,6 @@ class BaseApp(object):
 
         return messages
 
-    def process(self, messages=None):
+    def process(self, message=None):
 
-        return messages
+        return message

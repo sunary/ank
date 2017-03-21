@@ -6,7 +6,7 @@ from apps.app import BaseApp
 
 class KafkaAnkProducer(BaseApp):
     '''
-    Push message(s) to queue
+    Push message to queue
     '''
 
     def __init__(self, producer, topic):
@@ -20,7 +20,7 @@ class KafkaAnkProducer(BaseApp):
         self.producer = producer
         self.topic = topic
 
-    def process(self, messages=None):
-        self.producer.send(self.topic, messages)
+    def process(self, message=None):
+        self.producer.send(self.topic, message)
 
-        return messages
+        return message

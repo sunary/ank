@@ -1,6 +1,6 @@
 __author__ = 'sunary'
 
-VERSION = '1.2.1'
+VERSION = '1.3.0'
 API_DEFAULT_PORT = '5372'
 
 from apps import app, api_app, schedule_app

@@ -10,8 +10,8 @@ class LogHandle(BaseApp):
         super(LogHandle, self).__init__()
 
     def run(self, process=None):
-        self.logger.info('Start ...')
+        self.logger.info('Start {}'.format(self.__class__.__name__))
 
-    def process(self, messages=None):
-        self.logger.info(messages)
-        return messages
+    def process(self, message=None):
+        self.logger.info(message)
+        return message

@@ -12,7 +12,7 @@ def __path(filename):
 with open('LICENSE') as fo:
     license = fo.read()
 
-reqs = ['psutil==3.3.0', 'kombu==3.0.33', 'pymongo==3.4.0', 'amqp==1.4.9', 'pyyaml==3.11',
+reqs = ['pika==0.10.0', 'pymongo==3.4.0', 'amqp==1.4.9', 'pyyaml==3.11',
         'redis==2.10.5', 'flask==0.11', 'gevent==1.1.1']
 
 setup(
@@ -25,7 +25,7 @@ setup(
     description='Python Microservices',
     long_description='ank - Microservices.<br>See at: https://github.com/sunary/ank',
     license=license,
-    keywords='ank, microservice, rabbitMQ, kafka, zeroMQ, queue, stream',
+    keywords='ank, microservice, rabbitMQ, kafka, zeroMQ, queue, streaming',
     url='https://github.com/sunary/ank',
     packages=find_packages(exclude=['docs', 'examples', 'tests']),
     install_requires=reqs,

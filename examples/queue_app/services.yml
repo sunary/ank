@@ -3,25 +3,25 @@ services:
     class: processor.ExampleApp
     arguments: ~
 
-  RabbitMqConsumer:
-    class: chains.rabbitmq_consumer.RabbitMqConsumer
+  RabbitmqConsumer:
+    class: chains.rabbitmq_consumer.RabbitmqConsumer
     arguments:
       uri: '%queue_consumer_uri%'
-      name: '%queue_consumer_name%'
-      batch_size: '%batch_size%'
+      queue: '%queue_consumer_name%'
 
   LogHandle:
     class: chains.log_handle.LogHandle
     arguments: ~
 
-  RabbitMqProducer:
-    class: chains.rabbitmq_consumer.RabbitMqConsumer
+  RabbitmqProducer:
+    class: chains.rabbitmq_consumer.RabbitmqConsumer
     arguments:
       uri: '%queue_producer_uri%'
-      name: '%queue_producer_name%'
+      exchange: '%exchange_producer_name%'
+      routing_key: '%routing_key_name%'
 
 chains:
-  - RabbitMqConsumer
+  - RabbitmqConsumer
   - LogHandle
   - ExampleApp
-  - RabbitMqProducer
+  - RabbitmqProducer

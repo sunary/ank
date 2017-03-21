@@ -3,8 +3,11 @@ __author__ = 'sunary'
 
 
 from apps.app import BaseApp
-import tweepy
-from tweepy.streaming import StreamListener, json
+try:
+    import tweepy
+    from tweepy.streaming import StreamListener, json
+except ImportError:
+    raise ImportError('No module named tweepy')
 
 
 class TwitterSpout(BaseApp):

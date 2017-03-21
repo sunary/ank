@@ -32,12 +32,12 @@ class ScheduleApp(BaseApp):
             time.sleep(second_to_wait)
             self.process()
 
-    def process(self, messages=None):
+    def process(self, message=None):
 
-        return messages
+        return message
 
 
-class CrontabTimeReader():
+class CrontabTimeReader(object):
 
     def __init__(self, time_str):
         time_str = time_str.split(' ')

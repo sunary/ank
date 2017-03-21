@@ -107,7 +107,7 @@ class {0}(ScheduleApp):
     def run(self, process=None):
         super(ScheduleApp, self).run(process)
 
-    def process(self, messages=None):
+    def process(self, message=None):
         print('Now is %s' % (datetime.now()))
         '''.format(prj_name)
 

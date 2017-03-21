@@ -4,13 +4,13 @@ __author__ = 'sunary'
 from apps.app import BaseApp
 try:
     import zmq
-except:
-    raise Exception('pyzqm not found')
+except ImportError:
+    raise ImportError('No module named zmq')
 
 
 class ZeroMqProducer(BaseApp):
     '''
-    Push message(s) to queue
+    Push message to queue
     '''
 
     def __init__(self, uri, topic):
@@ -22,7 +22,7 @@ class ZeroMqProducer(BaseApp):
         self.sock.bind(uri)
         self.sock.setsockopt(zmq.PULL, topic)
 
-    def process(self, messages=None):
-        self.sock.send(messages)
+    def process(self, message=None):
+        self.sock.send(message)
 
-        return messages
+        return message

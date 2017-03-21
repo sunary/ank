@@ -1,0 +1,5 @@
+2017-03-21 07:50:11,891 INFO DependencyInjection: processor: WorkerClass
+2017-03-21 07:50:12,575 INFO DependencyInjection: processor: JoinProcessor
+2017-03-21 07:50:12,577 INFO DependencyInjection: processor: LogHandle
+2017-03-21 07:50:12,578 INFO DependencyInjection: processor: OtherWorker
+2017-03-21 07:50:12,578 INFO DependencyInjection: processor: SplitProcessor

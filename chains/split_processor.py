@@ -10,8 +10,8 @@ class SplitProcessor(BaseApp):
         super(SplitProcessor, self).__init__()
 
     def run(self, process=None):
-        self.logger.info('Start ...')
+        self.logger.info('Start {}'.format(self.__name__))
 
-    def process(self, messages=None):
+    def process(self, message=None):
 
-        return messages
+        return message

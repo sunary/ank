@@ -6,7 +6,7 @@ from apps.app import BaseApp
 
 class KafkaAnkConsumer(BaseApp):
     '''
-    Messages were received from consumer.subscribe
+    Message was received from consumer.subscribe
     '''
 
     def __init__(self, consumer, topic):
@@ -28,6 +28,6 @@ class KafkaAnkConsumer(BaseApp):
         for message in self.consumer:
             self._process(message)
 
-    def process(self, messages=None):
+    def process(self, message=None):
 
-        return messages
+        return message

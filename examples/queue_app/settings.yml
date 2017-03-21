@@ -1,7 +1,8 @@
 parameters:
 
-  queue_consumer_uri: ['amqp://username:password@host:5672/']
+  queue_consumer_uri: 'amqp://guest:guest@localhost:5672'
   queue_consumer_name: 'ExampleQueue'
-  batch_size: 100
-  queue_consumer_uri: ['amqp://username:password@host:5672/']
-  queue_consumer_name: 'ExampleExchange'
+
+  queue_consumer_uri: 'amqp://guest:guest@localhost:5672'
+  exchange_producer_name: 'ExampleExchange'
+  routing_key_name: 'ExchangeToQueue'

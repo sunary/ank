@@ -148,5 +148,5 @@
 * **LogHandle:** Log every messages.
 * **JoinProcessor:** Join messages into one.
 * **SplitProcessor:** Split message.
-* **---Consumer:** Get messages from queue.
+* **---Consumer:** Get message from queue.
 * **---Producer:** Push message to queue.

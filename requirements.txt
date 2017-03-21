@@ -4,7 +4,6 @@ pyyaml==3.11
 pymongo==3.4.0
 redis==2.10.5
 gevent==1.1.1
-kombu==3.0.33
-amqp==1.4.9
+pika==0.10.0
 pyzmq==1.4.9
 kafka-python==0.9.5
