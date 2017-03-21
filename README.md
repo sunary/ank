@@ -109,8 +109,9 @@
       redis_host: localhost
       redis_port: 6379
       
-      queue_uri: ['amqp://admin:admin@localhost:15672/']
-      queue_name: InputQueue
+      queue_uri: 'amqp://admin:admin@localhost:5672/'
+      exchange_name: InputExchange
+      routing_key: ExchangeToQueue
       
       batch_size: 100
     ```
