@@ -5,3 +5,4 @@
 - 2016/06/30 -- Add zeroMQ
 - 2016/10/04 -- Support python3
 - 2016/12/17 -- Generate template, docker
+- 2017/03/20 -- Using pika for rabbitMQ
