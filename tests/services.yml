@@ -2,7 +2,7 @@
 services:
 
   WorkerClass:
-    class: processor.TestApp
+    class: processor.FirstApp
     arguments: [$Mongodb, $Redis, '%batch_size%']
 
   Mongodb:
@@ -12,6 +12,18 @@ services:
   Redis:
     class: redis.client.StrictRedis
     arguments: ['%redis_host%', '%redis_port%']
+
+  SecondWorker:
+    class: processor.SecondApp
+    arguments: ~
+
+  ConditionalWorker:
+    class: processor.ConditionalWorker
+    arguments: ~
+
+  ThirdWorker:
+    class: processor.ThirdApp
+    arguments: ~
 
   OtherWorker:
     class: processor.OtherApp
@@ -34,5 +46,8 @@ chains:
   - WorkerClass
   - JoinProcessor
   - LogHandle
-  - OtherWorker
+  - SecondWorker
   - SplitProcessor
+  - ConditionalWorker
+  - [ThirdWorker, OtherWorker]
+  - LogHandle

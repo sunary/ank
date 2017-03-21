@@ -18,8 +18,13 @@ class GenerateSetting(object):
     def process(self):
         self.service_loader = my_deploy.loader('services.yml', 'services')
         chain_loader = my_deploy.loader('services.yml', 'chains')
+
         for process_name in chain_loader:
-            self.from_class(process_name)
+            if isinstance(process_name, list):
+                for proc in process_name:
+                    self.from_class(proc)
+            else:
+                self.from_class(process_name)
 
         # read old settings
         try:

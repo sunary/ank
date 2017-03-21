@@ -22,14 +22,29 @@ class DependencyInjection(object):
 
         chain_processor = ChainProcessor()
         chain_loader = my_deploy.loader('services.yml', 'chains')
-        for process_name in chain_loader:
-            self.logger.info('processor: {}'.format(process_name))
-            processor = self.get_class(process_name)
-            chain_processor.add_processor(processor)
 
-        chain_processor.run()
+        for process_name in chain_loader:
+            if isinstance(process_name, list):
+                self.logger.info('processors: [{}]'.format(', '.join(process_name)))
+
+                processors = []
+                for proc in process_name:
+                    processors.append(self.get_class(proc))
+
+                chain_processor.add_processor(processors)
+            else:
+                self.logger.info('processor: {}'.format(process_name))
+
+                processor = self.get_class(process_name)
+                chain_processor.add_processor(processor)
+
+        chain_processor.methods[0][0].run(chain_processor.process)
 
     def get_object(self, argument):
+        '''
+        Args:
+            argument: list: [..., data_type]
+        '''
         argument = my_deploy.normalize_service_argument(argument)
 
         if argument[-1] == 'dict':

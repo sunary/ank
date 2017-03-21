@@ -22,7 +22,14 @@ class GenerateProcessor(object):
         implement_workers = []
         chain_loader = my_deploy.loader('services.yml', 'chains')
         for process_name in chain_loader:
-            implement_workers.append(self.get_class(process_name))
+            if isinstance(process_name, list):
+                class_names = []
+                for proc in process_name:
+                    class_names.append(self.get_class(proc))
+
+                implement_workers.append(class_names)
+            else:
+                implement_workers.append(self.get_class(process_name))
 
         for lib in self.import_libs:
             str_processor += lib + '\n'
@@ -32,7 +39,10 @@ class GenerateProcessor(object):
             str_processor += implement + '\n'
 
         for worker in implement_workers:
-            str_processor += 'chain_processor.add_processor(%s)\n' % worker
+            if isinstance(worker, list):
+                str_processor += 'chain_processor.add_processor([%s])\n' % ', '.join(worker)
+            else:
+                str_processor += 'chain_processor.add_processor(%s)\n' % worker
 
         str_processor += '%s.run(chain_processor.process)' % implement_workers[0]
 
@@ -44,6 +54,8 @@ class GenerateProcessor(object):
     def get_object(self, argument):
         '''
         Detect object(dict, variable, object) and return string of object
+        Args:
+            argument: list: [..., data_type]
         '''
         argument = my_deploy.normalize_service_argument(argument)
         if argument[-1] == 'dict':
@@ -55,10 +67,13 @@ class GenerateProcessor(object):
                     dict_argument[key] = self.setting_loader[value[0]]
 
             return str(dict_argument)
+
         elif argument[-1] == 'object':
             return str(self.get_class(argument[0]))
+
         elif argument[-1] == 'variable':
             variable = self.setting_loader[argument[0]]
+
             if hasattr(variable, '__iter__'):
                 variable = ["'" + x + "'" if type(x) is str else str(x) for x in variable]
                 return str(variable)
