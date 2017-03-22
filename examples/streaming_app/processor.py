@@ -2,7 +2,7 @@
 __author__ = 'sunary'
 
 
-from apps.app import BaseApp
+from base_apps.pipe_app import PipeApp
 try:
     import tweepy
     from tweepy.streaming import StreamListener, json
@@ -10,18 +10,16 @@ except ImportError:
     raise ImportError('No module named tweepy')
 
 
-class TwitterSpout(BaseApp):
+class TwitterSpout(PipeApp):
 
-    def __init__(self, key):
+    def init_app(self, key):
         self.key = key
 
         self.listener = StreamListener()
         self.listener.on_data = self.on_messages_received
         self.listener.on_error = self.on_error
 
-    def run(self, process=None):
-        super(TwitterSpout, self).run(process)
-
+    def start(self):
         auth = tweepy.OAuthHandler(self.key['consumer_key'], self.key['consumer_secret'])
         auth.set_access_token(self.key['access_token'], self.key['access_token_secret'])
 
@@ -30,7 +28,7 @@ class TwitterSpout(BaseApp):
 
     def on_messages_received(self, messages):
         messages = json.loads(messages)
-        self._process(messages)
+        self.chain_process(messages)
 
         return True
 

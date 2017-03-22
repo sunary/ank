@@ -1,6 +1,6 @@
 __author__ = 'ank_generator'
 
-from chains.chain_processor import ChainProcessor
+from deploy.chain_processor import ChainProcessor
 from processor import ExampleApp
 from utilities.my_mongo import Mongodb
 

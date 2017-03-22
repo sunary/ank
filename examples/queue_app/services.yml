@@ -4,17 +4,17 @@ services:
     arguments: ~
 
   RabbitmqConsumer:
-    class: chains.rabbitmq_consumer.RabbitmqConsumer
+    class: apps.rabbitmq_consumer.RabbitmqConsumer
     arguments:
       uri: '%queue_consumer_uri%'
       queue: '%queue_consumer_name%'
 
   LogHandle:
-    class: chains.log_handle.LogHandle
+    class: apps.log_app.LogApp
     arguments: ~
 
   RabbitmqProducer:
-    class: chains.rabbitmq_consumer.RabbitmqConsumer
+    class: app.rabbitmq_consumer.RabbitmqProducer
     arguments:
       uri: '%queue_producer_uri%'
       exchange: '%exchange_producer_name%'
@@ -22,6 +22,6 @@ services:
 
 chains:
   - RabbitmqConsumer
-  - LogHandle
+  - LogApp
   - ExampleApp
   - RabbitmqProducer

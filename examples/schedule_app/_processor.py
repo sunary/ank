@@ -1,6 +1,6 @@
 __author__ = 'ank_generator'
 
-from chains.chain_processor import ChainProcessor
+from deploy.chain_processor import ChainProcessor
 from processor import ScheduleExample
 
 chain_processor = ChainProcessor()

@@ -1,16 +1,16 @@
 __author__ = 'sunary'
 
 
-from apps.app import BaseApp
+from base_apps.pipe_app import PipeApp
 
 
-class ExampleApp(BaseApp):
+class ExampleApp(PipeApp):
 
-    def __init__(self):
-        super(ExampleApp, self).__init__()
+    def init_app(self):
+        pass
 
-    def run(self, process=None):
-        super(ExampleApp, self).run(process)
+    def start(self):
+        pass
 
     def process(self, messages=None):
         print(messages)

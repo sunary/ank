@@ -2,14 +2,14 @@ __author__ = 'sunary'
 
 
 from examples.api_app.endpoint import ExampleAPI
-from apps.app import BaseApp
+from base_apps.pipe_app import PipeApp
 
 
-class ExampleApp(BaseApp):
+class ExampleApp(PipeApp):
 
-    def __init__(self, mongo):
-        pass
+    def init_app(self, mongo):
+        self.mongo = mongo
 
-    def run(self, process=None):
+    def start(self):
         api_app = ExampleAPI(host='localhost', port=5372)
         api_app.run()

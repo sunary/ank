@@ -9,7 +9,7 @@ services:
       access_token_secret: '%access_token_secret%'
 
   LogHandle:
-    class: chains.log_handle.LogHandle
+    class: apps.log_app.LogApp
     arguments: ~
 
 chains:
