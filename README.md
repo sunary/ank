@@ -113,7 +113,7 @@
 
     ```shell
     $ ank -b
-    docker run --entrypoint /bin/sh docker_image_id
+    $ docker run --entrypoint /bin/sh docker_image_id
     ```
     
 * **Generate processor (_processor.py):**
