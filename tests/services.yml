@@ -29,25 +29,25 @@ services:
     class: processor.OtherApp
     arguments: ~
 
-  LogHandle:
-    class: chains.log_handle.LogHandle
+  LogApp:
+    class: apps.log_app.LogApp
     arguments: ~
 
   JoinProcessor:
-    class: chains.join_processor.JoinProcessor
+    class: apps.join_app.JoinApp
     arguments: '%batch_size%'
 
   SplitProcessor:
-    class: chains.split_processor.SplitProcessor
+    class: apps.split_app.SplitApp
     arguments: ~
 
 
 chains:
   - WorkerClass
   - JoinProcessor
-  - LogHandle
+  - LogApp
   - SecondWorker
   - SplitProcessor
   - ConditionalWorker
   - [ThirdWorker, OtherWorker]
-  - LogHandle
+  - LogApp

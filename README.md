@@ -2,7 +2,7 @@
 
 
 ### Overview: ###
- Python Microservices for Queue services (*rabbitMQ*, *Kafka*, *zeroMQ*), Streaming, REST-API and Schedule task.
+ Python Microservices Streaming, REST-API and Schedule task using queue message(rabbitMQ, zeromq, kafka)
 
 
 ### Requirements: ###
@@ -28,27 +28,18 @@
 * **Edit app (processor.py):**
     * *Example:*
     ```python
-    from apps.app import BaseApp
+    from base_apps.pipe_app import PipeApp
 
-    class ExampleApp(BaseApp):
+    class ExampleApp(PipeApp):
     
-        def run(self, process=None):
-            '''
-            Implement this if your App start by this chain
-            Arguments:
-                process: process method, was assign into self._process
-                
-            '''
-            super(TestApp, self).run(process)
-    
+        def start(self, process=None):
             for i in range(100):
-                self._process(i)
+                self.chain_process(i)
     
         def process(self, message=None):
-            # after processed, message will be return for next chain
-            message += 1
-            return message
+            return message + 1
     ```
+    
 * **Edit services and chains (services.yml):**
     * *Syntax:*
     ```yaml
@@ -58,7 +49,7 @@
         - arguments: [$Object, %variable%] 
       
       AnkChain2:
-        - class: chains.module_name.Chain
+        - class: apps.module_name.BuildinApps
         - arguments: ~
         
     chains:
@@ -68,8 +59,8 @@
     * *Example:*
     ```yaml
     services:
-      WorkerClass:
-        class: processor.DemoApp
+      StartApp:
+        class: processor.StartApp
         arguments: [$Mongodb, $Redis, '%batch_size%']
     
       Mongodb:
@@ -80,20 +71,21 @@
         class: redis.client.StrictRedis
         arguments: ['%redis_host%', '%redis_port%']
     
-      OtherWorker:
+      OtherApp:
         class: processor.OtherApp
         arguments: ~
     
-      LogHandle:
-        class: chains.log_handle.LogHandle
+      LogApp:
+        class: apps.log_app.LogApp
         arguments: ~
     
     chains:
-      - WorkerClass
-      - LogHandle
-      - OtherWorker
+      - StartClass
+      - LogApp
+      - OtherApp
     ```
     ANK will read top-down `chains`, find correspond `services` and get parameters from `settings.yml`.
+    
 * **Generate and edit setting (settings.yml):**
      ```shell
      $ ank -s
@@ -116,6 +108,7 @@
       batch_size: 100
     ```
     Help you create `settings` template file. Just rename from `_settings.yml` to `settings.yml` and fill in values.
+    
 * **Build Service (create docker image):**
 
     ```shell
@@ -139,15 +132,15 @@
     $ ank -r
     ```
     
-### Apps: ###
-* **App:** Normal App.
-* **API App:** REST-API using flask.
-* **Schedule App:** Using crontab-time format to set schedule.
+### Base Apps: ###
+* **PipeApp:** Pipeline App.
+* **APIApp:** REST-API using flask.
+* **ScheduleApp:** Using crontab-time format to set schedule.
 
 
-### Chains: ###
-* **LogHandle:** Log every messages.
-* **JoinProcessor:** Join messages into one.
-* **SplitProcessor:** Split message.
+### Build in Apps: ###
+* **LogApp:** Log every messages.
+* **JoinApp:** Join messages into one.
+* **SplitApp:** Split message.
 * **---Consumer:** Get message from queue.
 * **---Producer:** Push message to queue.

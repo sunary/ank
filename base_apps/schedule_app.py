@@ -2,23 +2,20 @@ __author__ = 'sunary'
 
 
 import time
-from apps.app import BaseApp
+from base_apps.pipe_app import PipeApp
 from datetime import datetime, timedelta
 
 
-class ScheduleApp(BaseApp):
+class ScheduleApp(PipeApp):
     '''
     Schedule process using crontab time format
     '''
 
-    def __init__(self, crontab_time, start_now=False):
-        super(ScheduleApp, self).__init__()
+    def init_app(self, crontab_time=None, start_now=False):
         self.crontab_reader = CrontabTimeReader(crontab_time)
         self.start_now = start_now
 
-    def run(self, process=None):
-        super(ScheduleApp, self).run(process)
-
+    def start(self):
         if self.start_now:
             self.process()
 

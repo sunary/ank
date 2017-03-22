@@ -1,15 +1,15 @@
 __author__ = 'sunary'
 
 
-from apps.app import BaseApp
+from base_apps.pipe_app import PipeApp
 
 
-class LogHandle(BaseApp):
+class LogApp(PipeApp):
 
-    def __init__(self):
-        super(LogHandle, self).__init__()
+    def init_app(self):
+        pass
 
-    def run(self, process=None):
+    def start(self):
         self.logger.info('Start {}'.format(self.__class__.__name__))
 
     def process(self, message=None):

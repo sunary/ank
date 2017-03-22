@@ -1,26 +1,22 @@
 __author__ = 'sunary'
 
 
-from apps.app import BaseApp
+from base_apps.pipe_app import PipeApp
 from flask import Flask
 from utilities import my_api
 
 
-class APIApp(BaseApp):
+class APIApp(PipeApp):
     '''
     API App
     Add function to extend class to create new API
     '''
 
-    def __init__(self, host='localhost', port=5372, **kwargs):
-        super(APIApp, self).__init__()
-
+    def init_app(self, host='localhost', port=5372, **kwargs):
         self.host = host
         self.port = port
 
-    def run(self, process=None):
-        super(APIApp, self).run(process)
-
+    def start(self):
         flask_app = Flask(__name__)
 
         @flask_app.route('/')

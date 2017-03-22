@@ -1,26 +1,27 @@
 __author__ = 'sunary'
 
 
-from apps.app import BaseApp
+from base_apps.pipe_app import PipeApp
 try:
     import zmq
 except ImportError:
     raise ImportError('No module named zmq')
 
 
-class ZeroMqProducer(BaseApp):
+class ZeroMqProducer(PipeApp):
     '''
     Push message to queue
     '''
 
-    def __init__(self, uri, topic):
-        super(ZeroMqProducer, self).__init__()
-
+    def init_app(self, uri=None, topic=None):
         context = zmq.Context()
 
         self.sock = context.socket(zmq.PUSH)
         self.sock.bind(uri)
         self.sock.setsockopt(zmq.PULL, topic)
+
+    def start(self):
+        self.logger.info('Start {}'.format(self.__class__.__name__))
 
     def process(self, message=None):
         self.sock.send(message)

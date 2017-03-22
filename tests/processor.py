@@ -1,30 +1,30 @@
 __author__ = 'sunary'
 
 
-from apps.app import BaseApp
+from base_apps.pipe_app import PipeApp
 
 
-class FirstApp(BaseApp):
+class FirstApp(PipeApp):
 
-    def __init__(self, mongo, redis, batch_size, *args):
-        super(BaseApp, self).__init__()
+    def init_app(self, mongo=None, redis=None, batch_size=None):
+        self.mongo = mongo
+        self.redis = redis
+        self.batch_size = batch_size
 
-    def run(self, process=None):
-        super(FirstApp, self).run(process)
-
+    def start(self):
         print('Start chain')
         for i in range(100):
-            self._process((i, i + 1))
+            self.chain_process((i, i + 1))
 
     def process(self, message=None):
         print('Demo worker {}'.format(message))
         return message
 
 
-class SecondApp(BaseApp):
+class SecondApp(PipeApp):
 
-    def __init__(self, *args):
-        super(BaseApp, self).__init__()
+    def init_app(self, *args):
+        pass
 
     def run(self, process=None):
         print('From 2nd worker')
@@ -34,10 +34,10 @@ class SecondApp(BaseApp):
         return message
 
 
-class ConditionalWorker(BaseApp):
+class ConditionalWorker(PipeApp):
 
-    def __init__(self, *args):
-        super(BaseApp, self).__init__()
+    def init_app(self, *args):
+        pass
 
     def run(self, process=None):
         print('From conditional worker')
@@ -47,10 +47,10 @@ class ConditionalWorker(BaseApp):
         return message, (False, True)
 
 
-class ThirdApp(BaseApp):
+class ThirdApp(PipeApp):
 
-    def __init__(self, *agrs):
-        super(BaseApp, self).__init__()
+    def init_app(self, *agrs):
+        pass
 
     def run(self, process=None):
         print('From 3rd worker')
@@ -60,10 +60,10 @@ class ThirdApp(BaseApp):
         return str(message) + ' pass ThirdApp'
 
 
-class OtherApp(BaseApp):
+class OtherApp(PipeApp):
 
-    def __init__(self, *args):
-        super(BaseApp, self).__init__()
+    def init_app(self, *args):
+        pass
 
     def run(self, process=None):
         print('From other worker')

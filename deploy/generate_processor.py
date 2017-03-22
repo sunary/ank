@@ -10,7 +10,7 @@ class GenerateProcessor(object):
     '''
 
     def __init__(self):
-        self.import_libs = ['from chains.chain_processor import ChainProcessor']
+        self.import_libs = ['from deploy.chain_processor import ChainProcessor']
         self.implement_classes = ['chain_processor = ChainProcessor()']
 
     def process(self, file_setting='settings.yml'):

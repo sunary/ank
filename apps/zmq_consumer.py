@@ -1,33 +1,29 @@
 __author__ = 'sunary'
 
 
-from apps.app import BaseApp
+from base_apps.pipe_app import PipeApp
 try:
     import zmq
 except:
     raise Exception('pyzqm not found')
 
 
-class ZeroMqConsumer(BaseApp):
+class ZeroMqConsumer(PipeApp):
     '''
     Message was received from sock.recv
     '''
 
-    def __init__(self, uri, topic):
-        super(ZeroMqConsumer, self).__init__()
-
+    def init_app(self, uri=None, topic=None):
         context = zmq.Context()
 
         self.sock = context.socket(zmq.PULL)
         self.sock.bind(uri)
         self.sock.setsockopt(zmq.PULL, topic)
 
-    def run(self, process=None):
-        super(ZeroMqConsumer, self).run(process)
-
+    def start(self):
         while True:
             message = self.sock.recv()
-            self._process(message)
+            self.chain_process(message)
 
     def process(self, message=None):
 

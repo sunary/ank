@@ -1,24 +1,25 @@
 __author__ = 'sunary'
 
 
-from apps.app import BaseApp
+from base_apps.pipe_app import PipeApp
 
 
-class KafkaAnkProducer(BaseApp):
+class KafkaAnkProducer(PipeApp):
     '''
     Push message to queue
     '''
 
-    def __init__(self, producer, topic):
+    def init_app(self, producer, topic):
         '''
         Args:
             producer: kafka.KafkaProducer
             topic: subscriber topic
         '''
-        super(KafkaAnkProducer, self).__init__()
-
         self.producer = producer
         self.topic = topic
+
+    def start(self):
+        self.logger.info('Start {}'.format(self.__class__.__name__))
 
     def process(self, message=None):
         self.producer.send(self.topic, message)

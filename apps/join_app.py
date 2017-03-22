@@ -1,20 +1,18 @@
 __author__ = 'sunary'
 
 
-from apps.app import BaseApp
+from base_apps.pipe_app import PipeApp
 
 
-class JoinProcessor(BaseApp):
+class JoinApp(PipeApp):
     '''
     Join messages from previous processor
     '''
-    def __init__(self, batch_size=100):
-        super(JoinProcessor, self).__init__()
-
+    def init_app(self, batch_size=None):
         self.batch_size = batch_size
         self.messages = []
 
-    def run(self, process=None):
+    def start(self):
         self.logger.info('Start {}'.format(self.__class__.__name__))
 
     def process(self, message=None):

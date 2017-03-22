@@ -1,15 +1,15 @@
 __author__ = 'sunary'
 
 
-from apps.app import BaseApp
+from base_apps.pipe_app import PipeApp
 import pika
 
 
-class RabbitmqProducer(BaseApp):
+class RabbitmqProducer(PipeApp):
     '''
     Push message to queue
     '''
-    def __init__(self, uri, exchange, routing_key):
+    def init_app(self, uri=None, exchange=None, routing_key=None):
         '''
         Args:
             uri: uri connections.
@@ -20,14 +20,12 @@ class RabbitmqProducer(BaseApp):
             ... exchange='ExampleExchange',
             ... routing_key='ExchangeToQueue')
         '''
-        super(RabbitmqProducer, self).__init__()
-
         self.exchange = exchange
         self.routing_key = routing_key
         self.connection = pika.BlockingConnection(pika.URLParameters(uri))
         self.channel = self.connection.channel()
 
-    def run(self, process=None):
+    def start(self):
         self.logger.info('Start {}'.format(self.__class__.__name__))
 
     def process(self, message=None):

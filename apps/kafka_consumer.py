@@ -1,32 +1,28 @@
 __author__ = 'sunary'
 
 
-from apps.app import BaseApp
+from base_apps.pipe_app import PipeApp
 
 
-class KafkaAnkConsumer(BaseApp):
+class KafkaAnkConsumer(PipeApp):
     '''
     Message was received from consumer.subscribe
     '''
 
-    def __init__(self, consumer, topic):
+    def ini_app(self, consumer=None, topic=None):
         '''
         Args:
             consumer: kafka.KafkaConsumer
             topic: subscriber topic
         '''
-        super(KafkaAnkConsumer, self).__init__()
-
         self.consumer = consumer
         self.topic = topic
 
-    def run(self, process=None):
-        super(KafkaAnkConsumer, self).run(process)
-
+    def start(self):
         self.consumer.subscribe(self.topic)
 
         for message in self.consumer:
-            self._process(message)
+            self.chain_process(message)
 
     def process(self, message=None):
 

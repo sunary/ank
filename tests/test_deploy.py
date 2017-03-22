@@ -8,7 +8,9 @@ from deploy.generate_setting import GenerateSetting
 
 
 class TestDeploy(unittest.TestCase):
-
+    '''
+    To run this test, copy services.yml, settings.yml and processor.py to root folder
+    '''
     def test_di(self):
         di = DependencyInjection()
         print('\n\n## Dependency Injection:')

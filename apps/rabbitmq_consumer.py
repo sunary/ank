@@ -1,16 +1,16 @@
 __author__ = 'sunary'
 
 
-from apps.app import BaseApp
+from base_apps.pipe_app import PipeApp
 import pika
 
 
-class RabbitmqConsumer(BaseApp):
+class RabbitmqConsumer(PipeApp):
     '''
     Message was received from queue by on_messages_received() method
     '''
 
-    def __init__(self, uri, queue):
+    def init_app(self, uri=None, queue=None):
         '''
         Args:
             uri: uri connections.
@@ -19,15 +19,19 @@ class RabbitmqConsumer(BaseApp):
             >>> RabbitmqConsumer(uri='amqp://username:password@host:5672',
             ... queue='ExampleQueue')
         '''
-        BaseApp.__init__(self)
         connection = pika.BlockingConnection(pika.URLParameters(uri))
         channel = connection.channel()
-        channel.basic_consume(self.process, queue=queue, no_ack=True)
+        channel.basic_consume(self.call_back, queue=queue, no_ack=True)
 
         channel.start_consuming()
 
-    def run(self, process=None):
-        BaseApp.run(self, process)
+    def start(self):
+        self.logger.info('Start {}'.format(self.__class__.__name__))
 
-    def process(self, ch, method, properties, message):
+    def call_back(self, ch, method, properties, message):
+
+        return self.process(message)
+
+    def process(self, message):
+
         return message

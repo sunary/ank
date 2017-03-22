@@ -6,7 +6,7 @@ import sys
 sys.path.append(os.getcwd())
 
 import importlib
-from chains.chain_processor import ChainProcessor
+from deploy.chain_processor import ChainProcessor
 from deploy.daemon import Daemon
 from utilities import my_deploy, my_helper
 

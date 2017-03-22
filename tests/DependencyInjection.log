@@ -1,0 +1,16 @@
+2017-03-22 16:50:17,967 INFO DependencyInjection: processor: WorkerClass
+2017-03-22 16:50:18,564 INFO DependencyInjection: processor: JoinProcessor
+2017-03-22 16:50:18,566 INFO DependencyInjection: processor: LogApp
+2017-03-22 16:52:38,666 INFO DependencyInjection: processor: WorkerClass
+2017-03-22 16:52:39,114 INFO DependencyInjection: processor: JoinProcessor
+2017-03-22 16:52:39,115 INFO DependencyInjection: processor: LogApp
+2017-03-22 16:52:39,117 INFO DependencyInjection: processor: SecondWorker
+2017-03-22 16:52:39,118 INFO DependencyInjection: processor: SplitProcessor
+2017-03-22 16:53:28,443 INFO DependencyInjection: processor: WorkerClass
+2017-03-22 16:53:28,886 INFO DependencyInjection: processor: JoinProcessor
+2017-03-22 16:53:28,887 INFO DependencyInjection: processor: LogApp
+2017-03-22 16:53:28,887 INFO DependencyInjection: processor: SecondWorker
+2017-03-22 16:53:28,887 INFO DependencyInjection: processor: SplitProcessor
+2017-03-22 16:53:28,895 INFO DependencyInjection: processor: ConditionalWorker
+2017-03-22 16:53:28,896 INFO DependencyInjection: processors: [ThirdWorker, OtherWorker]
+2017-03-22 16:53:28,897 INFO DependencyInjection: processor: LogApp
