@@ -32,7 +32,7 @@
 
     class ExampleApp(PipeApp):
     
-        def start(self, process=None):
+        def start(self):
             for i in range(100):
                 self.chain_process(i)
     
@@ -134,7 +134,7 @@
     
 ### Base Apps: ###
 * **PipeApp:** Pipeline App.
-* **APIApp:** REST-API using flask.
+* **APIApp:** REST-API inteface using flask.
 * **ScheduleApp:** Using crontab-time format to set schedule.
 
 
