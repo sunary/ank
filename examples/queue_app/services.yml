@@ -9,7 +9,7 @@ services:
       uri: '%queue_consumer_uri%'
       queue: '%queue_consumer_name%'
 
-  LogHandle:
+  LogApp:
     class: apps.log_app.LogApp
     arguments: ~
 

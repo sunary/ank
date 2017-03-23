@@ -3,6 +3,6 @@ parameters:
   queue_consumer_uri: 'amqp://guest:guest@localhost:5672'
   queue_consumer_name: 'ExampleQueue'
 
-  queue_consumer_uri: 'amqp://guest:guest@localhost:5672'
+  queue_producer_uri: 'amqp://guest:guest@localhost:5672'
   exchange_producer_name: 'ExampleExchange'
   routing_key_name: 'ExchangeToQueue'
