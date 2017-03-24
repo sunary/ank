@@ -1,7 +1,7 @@
 
 services:
 
-  WorkerClass:
+  FirstApp:
     class: processor.FirstApp
     arguments: [$Mongodb, $Redis, '%batch_size%']
 
@@ -13,41 +13,41 @@ services:
     class: redis.client.StrictRedis
     arguments: ['%redis_host%', '%redis_port%']
 
-  SecondWorker:
-    class: processor.SecondApp
+  PrintApp:
+    class: processor.PrintApp
     arguments: ~
 
-  ConditionalWorker:
-    class: processor.ConditionalWorker
+  ConditionalApp:
+    class: processor.ConditionalApp
     arguments: ~
 
-  ThirdWorker:
-    class: processor.ThirdApp
+  OddApp:
+    class: processor.OddApp
     arguments: ~
 
-  OtherWorker:
-    class: processor.OtherApp
+  EvenApp:
+    class: processor.EvenApp
     arguments: ~
 
   LogApp:
     class: apps.log_app.LogApp
     arguments: ~
 
-  JoinProcessor:
+  JoinApp:
     class: apps.join_app.JoinApp
     arguments: '%batch_size%'
 
-  SplitProcessor:
+  SplitApp:
     class: apps.split_app.SplitApp
     arguments: ~
 
 
 chains:
-  - WorkerClass
-  - JoinProcessor
-  - LogApp
-  - SecondWorker
-  - SplitProcessor
-  - ConditionalWorker
-  - [ThirdWorker, OtherWorker]
-  - LogApp
+  - FirstApp
+#  - LogApp
+  - JoinApp
+#  - LogApp
+  - SplitApp
+  - ConditionalApp
+  - [EvenApp, OddApp]
+  - PrintApp

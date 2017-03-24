@@ -2,6 +2,7 @@ __author__ = 'sunary'
 
 
 from base_apps.pipe_app import PipeApp
+from deploy.chain_processor import CONTENT_KEY
 
 
 class JoinApp(PipeApp):
@@ -10,7 +11,7 @@ class JoinApp(PipeApp):
     '''
     def init_app(self, batch_size=None):
         self.batch_size = batch_size
-        self.messages = []
+        self.stored_messages = {CONTENT_KEY: []}
 
     def start(self):
         self.logger.info('Start {}'.format(self.__class__.__name__))

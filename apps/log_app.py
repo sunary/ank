@@ -14,5 +14,4 @@ class LogApp(PipeApp):
 
     def process(self, message=None):
         self.logger.info(message)
-
         return message

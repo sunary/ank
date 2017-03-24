@@ -3,7 +3,39 @@
 
 ### Overview: ###
  Python Microservices Streaming, REST-API and Schedule task using queue message(rabbitMQ, zeromq, kafka)
-
+ Each processor is a chain, put it together to make a pipeline.
+ 
+ 
+### Support chain model:
+* 1 - 1:
+    ```
+    processor - processor
+    ```
+* 1 - n:
+    ```
+             /  processor
+    processor - processor
+             \  processor
+    ```
+* n - 1:
+    ```
+    processor \
+    processor - processor # get message at the first processor only
+    processor /
+    ```
+* join message:
+    ```
+    message \
+    message - [message, message, message]
+    message /
+    ```
+* split message:
+    ```
+                                / message
+    [message, message, message] - message
+                                \ message
+    ```
+    
 
 ### Requirements: ###
 * Python 2.x
@@ -37,7 +69,19 @@
                 self.chain_process(i)
     
         def process(self, message=None):
-            return message + 1
+            '''
+            Args:
+                message: {'content': (*) 'content of message',
+                          'flags': (list|tuple) 'define next process will be use'}
+                              raise TypeError if you don't declare this in return of before braching-processor
+                              if 'flags' == False: stop chain
+                              if 'flags' == [True, True]: process both in next braching-processors
+                              if 'flags' == [True, False]: process 1st processor in next braching-processors
+                              if 'flags' == [False, True]: process 1st processor in next braching-processors
+                              if 'flags' == [False, False]: stop chain
+                          is None: stop chain
+            '''
+            return message['content'] + 1
     ```
     
 * **Edit services and chains (services.yml):**
@@ -82,6 +126,8 @@
     chains:
       - StartClass
       - LogApp
+      - OtherApp
+      - [OddApp, EvenApp] # will be processed depend on key `flags`
       - OtherApp
     ```
     ANK will read top-down `chains`, find correspond `services` and get parameters from `settings.yml`.

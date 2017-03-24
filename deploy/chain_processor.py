@@ -5,6 +5,10 @@ from utilities import my_helper
 import copy
 
 
+CONTENT_KEY = 'content'
+FLAGS_KEY = 'flags'
+
+
 class ChainProcessor(object):
     '''
     Run chain processors
@@ -39,63 +43,64 @@ class ChainProcessor(object):
         _message = copy.deepcopy(message)
         chain_methods = chain_methods or self.methods
 
-        for i, mthd in enumerate(chain_methods):
+        for i, (current_processor, current_method) in enumerate(chain_methods):
             if _message is None:
                 return None
 
-            processor, method = mthd
-            if isinstance(processor, list):
-                try:
-                    _message, flags = _message
-                except TypeError:
-                    raise TypeError('message type must be tuple2: (message_value, flags)')
+            if isinstance(current_processor, (list, tuple)):
+                print _message
+                if not _message.get(FLAGS_KEY) or not isinstance(_message[FLAGS_KEY], (list, tuple)):
+                    raise TypeError("message must to have FLAGS_KEY attribute with type is list or tuple")
 
-                if isinstance(flags, (tuple, list)):
-                    for j, status in enumerate(flags):
-                        if status:
-                            processor_name = processor[j].__class__.__name__
-                            self.logger.info('Run processor: {}'.format(processor_name))
+                temp_message = copy.deepcopy(_message)
+                first_message = None
+                for j, status in enumerate(temp_message[FLAGS_KEY]):
+                    if status:
+                        processor_name = current_processor[j].__class__.__name__
+                        self.logger.info('Run processor: {}'.format(processor_name))
 
-                            try:
-                                _message = method[j](_message)
-                                break
-                            except Exception as e:
-                                self.logger.error('Error when run process {}: {}'.format(processor_name, e))
-                                raise Exception('Error when run process {}: {}'.format(processor_name, e))
-                else:
-                    processor_name = processor[j].__class__.__name__
-                    self.logger.info('Run processor: {}'.format(processor_name))
-                    try:
-                        _message = method[0](_message)
-                    except Exception as e:
-                        self.logger.error('Error when run process {}: {}'.format(processor_name, e))
-                        raise Exception('Error when run process {}: {}'.format(processor_name, e))
+                        try:
+                            _message.pop(FLAGS_KEY)
+                            if first_message is None:
+                                first_message = current_method[j](_message)
+                            else:
+                                current_method[j](_message)
+                        except Exception as e:
+                            _log = '{} when run process {}: {}'.format(type(e).__name__, processor_name, e)
+                            self.logger.error(_log)
+                            raise Exception(_log)
+
+                if first_message is None:
+                    # no processor was processed
+                    return None
+
+                _message = first_message
 
             else:
-                processor_name = processor.__class__.__name__
+                processor_name = current_processor.__class__.__name__
                 self.logger.info('Run processor: {}'.format(processor_name))
 
                 try:
-                    if processor_name == 'JoinProcessor':
-                        processor.messages.append(_message)
+                    if processor_name == 'JoinApp':
+                        current_processor.stored_messages[CONTENT_KEY].append(_message[CONTENT_KEY])
 
                         # get chunk batch_size
-                        if len(processor.messages) >= processor.batch_size:
-                            _message = method(processor.messages)
-                            processor.messages = []
+                        if len(current_processor.stored_messages[CONTENT_KEY]) >= current_processor.batch_size:
+                            _message = copy.deepcopy(current_processor.stored_messages)
+                            current_processor.stored_messages[CONTENT_KEY] = []
                         else:
-                            _message = None
+                            return None
 
-                    elif processor_name == 'SplitProcessor':
-                        _list_messages = copy.deepcopy(_message)
+                    elif processor_name == 'SplitApp':
+                        # print _message
+                        for msg in _message[CONTENT_KEY]:
+                            print self.process({CONTENT_KEY: msg}, chain_methods=self.methods[i + 1:])
 
-                        for msg in _list_messages:
-                            _message = self.process(msg, chain_methods=self.methods[i + 1:])
-
-                        return _message
+                        return None
                     else:
-                        _message = method(_message)
+                        _message = current_method(_message)
 
                 except Exception as e:
-                    self.logger.error('Error when run process {}: {}'.format(processor_name, e))
-                    raise Exception('Error when run process {}: {}'.format(processor_name, e))
+                    _log = '{} when run process {}: {}'.format(type(e).__name__, processor_name, e)
+                    self.logger.error(_log)
+                    raise Exception(_log)

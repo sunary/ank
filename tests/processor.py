@@ -14,60 +14,70 @@ class FirstApp(PipeApp):
     def start(self):
         print('Start chain')
         for i in range(100):
-            self.chain_process((i, i + 1))
+            print '---start'
+            self.chain_process({'content': i})
+            print '---end'
 
     def process(self, message=None):
-        print('Demo worker {}'.format(message))
+        print('start app {}'.format(message))
         return message
 
 
-class SecondApp(PipeApp):
+class PrintApp(PipeApp):
 
     def init_app(self, *args):
         pass
 
     def run(self, process=None):
-        print('From 2nd worker')
+        print('From print app')
 
     def process(self, message=None):
-        print('After join {}'.format(message))
+        print('print only {}'.format(message))
         return message
 
 
-class ConditionalWorker(PipeApp):
+class ConditionalApp(PipeApp):
 
     def init_app(self, *args):
         pass
 
     def run(self, process=None):
-        print('From conditional worker')
+        print('From conditional app')
 
     def process(self, message=None):
-        print('After split {}'.format(message))
-        return message, (False, True)
+        print('condition check {}'.format(message))
+
+        if message['content'] % 2:
+            message.update({'flags': [False, True]})
+        else:
+            message.update({'flags': [True, False]})
+
+        return message
 
 
-class ThirdApp(PipeApp):
+class OddApp(PipeApp):
 
     def init_app(self, *agrs):
         pass
 
     def run(self, process=None):
-        print('From 3rd worker')
+        print('From odd app')
 
     def process(self, message=None):
-        print('3rd worker {}'.format(message))
-        return str(message) + ' pass ThirdApp'
+        print('odd {}'.format(message))
+        message['content'] = (message['content'] + 1)/2
+        return message
 
 
-class OtherApp(PipeApp):
+class EvenApp(PipeApp):
 
     def init_app(self, *args):
         pass
 
     def run(self, process=None):
-        print('From other worker')
+        print('From even app')
 
     def process(self, message=None):
-        print('Never pass 3rd worker {}'.format(message))
-        return str(message) + ' pass OtherApp'
+        print('even {}'.format(message))
+        message['content'] /= 2
+        return message
