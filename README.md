@@ -23,6 +23,12 @@
     processor - processor
     processor /
     ```
+* n - n:
+    ```
+    processor - processor    processor - processor    processor - processor
+    processor - processor    processor /              processor < 
+    processor - processor    processor - processor    processor - processor
+    ```
 * join message:
     ```
     message \
