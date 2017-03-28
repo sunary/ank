@@ -53,28 +53,20 @@ class ChainProcessor(object):
                     raise TypeError("message must to have FLAGS_KEY attribute with type is list or tuple")
 
                 temp_message = copy.deepcopy(_message)
-                first_message = None
+                _message.pop(FLAGS_KEY)
                 for j, status in enumerate(temp_message[FLAGS_KEY]):
                     if status:
                         processor_name = current_processor[j].__class__.__name__
                         self.logger.info('Run processor: {}'.format(processor_name))
 
                         try:
-                            _message.pop(FLAGS_KEY)
-                            if first_message is None:
-                                first_message = self.process(_message, chain_methods=self.methods[i + 1:])
-                            else:
-                                self.process(_message, chain_methods=self.methods[i + 1:])
+                            self.process(_message, chain_methods=self.methods[i + 1:])
                         except Exception as e:
                             _log = '{} when run process {}: {}'.format(type(e).__name__, processor_name, e)
                             self.logger.error(_log)
                             raise Exception(_log)
 
-                if first_message is None:
-                    # no processor was processed
-                    return None
-
-                _message = first_message
+                return None
 
             else:
                 processor_name = current_processor.__class__.__name__
