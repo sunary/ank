@@ -20,7 +20,7 @@
 * n - 1:
     ```
     processor \
-    processor - processor # get message at the first processor only
+    processor - processor # return message at the first processor only
     processor /
     ```
 * join message:

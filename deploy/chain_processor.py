@@ -62,9 +62,9 @@ class ChainProcessor(object):
                         try:
                             _message.pop(FLAGS_KEY)
                             if first_message is None:
-                                first_message = current_method[j](_message)
+                                first_message = self.process(_message, chain_methods=self.methods[i + 1:])
                             else:
-                                current_method[j](_message)
+                                self.process(_message, chain_methods=self.methods[i + 1:])
                         except Exception as e:
                             _log = '{} when run process {}: {}'.format(type(e).__name__, processor_name, e)
                             self.logger.error(_log)
@@ -92,9 +92,8 @@ class ChainProcessor(object):
                             return None
 
                     elif processor_name == 'SplitApp':
-                        # print _message
                         for msg in _message[CONTENT_KEY]:
-                            print self.process({CONTENT_KEY: msg}, chain_methods=self.methods[i + 1:])
+                            self.process({CONTENT_KEY: msg}, chain_methods=self.methods[i + 1:])
 
                         return None
                     else:
