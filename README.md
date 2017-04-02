@@ -13,9 +13,9 @@
     ```
 * 1 - n:
     ```
-             /  processor
+              / processor
     processor - processor
-             \  processor
+              \ processor
     ```
 * n - 1:
     ```
