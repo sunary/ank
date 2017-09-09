@@ -28,6 +28,7 @@ setup(
     keywords='ank, microservice, rabbitMQ, kafka, zeroMQ, queue, streaming',
     url='https://github.com/sunary/ank',
     packages=find_packages(exclude=['docs', 'examples', 'tests']),
+    package_data={'templates': ['*.tpy']},
     install_requires=reqs,
     entry_points={
         'console_scripts': ['ank = ank.cli:main']
