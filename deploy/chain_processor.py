@@ -60,7 +60,7 @@ class ChainProcessor(object):
                         self.logger.info('Run processor: {}'.format(processor_name))
 
                         try:
-                            self.process(_message, chain_methods=self.methods[i + 1:])
+                            self.process(_message, chain_methods=chain_methods[i + 1:])
                         except Exception as e:
                             _log = '{} when run process {}: {}'.format(type(e).__name__, processor_name, e)
                             self.logger.error(_log)
@@ -85,7 +85,7 @@ class ChainProcessor(object):
 
                     elif processor_name == 'SplitApp':
                         for msg in _message[CONTENT_KEY]:
-                            self.process({CONTENT_KEY: msg}, chain_methods=self.methods[i + 1:])
+                            self.process({CONTENT_KEY: msg}, chain_methods=chain_methods[i + 1:])
 
                         return None
                     else:
