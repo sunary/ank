@@ -1,0 +1,3 @@
+parameters:
+  host: localhost
+  port: {0}

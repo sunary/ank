@@ -9,6 +9,9 @@ from ank import VERSION, API_DEFAULT_PORT
 from utilities import my_cmd
 
 
+CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
+
+
 def create(prj_name, baseapp):
     if not os.path.exists(prj_name):
         os.makedirs(prj_name)
@@ -40,178 +43,49 @@ def create(prj_name, baseapp):
 
 def processor_template(prj_name, baseapp):
     if baseapp == 'BaseApp':
-        return '''
-from ank.apps.app import BaseApp
-
-
-class {0}(BaseApp):
-
-    def __init__(self, agrs, **kwagrs):
-        super({0}, self).__init__()
-
-    def run(self, process=None):
-        super({0}, self).run(process)
-
-    def process(message=None):
-        return message
-
-        '''.format(prj_name)
+        with open(os.path.join(CURRENT_PATH, '../templates/baseapp_processor.tpy'), 'r') as of:
+            return of.read().format(prj_name)
 
     elif baseapp == 'APIApp':
-        endpoint_content = '''
-from ank.apps.api_app import APIApp
-from ank.utilities import my_api
+        with open(os.path.join(CURRENT_PATH, '../templates/apiapp_endpoint.tpy'), 'r') as of:
+            endpoint_content = of.read().format(prj_name, API_DEFAULT_PORT)
 
-
-class {0}Endpoint(APIApp):
-
-    def __init__(self, host='localhost', port={1}):
-        super({0}Endpoint, self).__init__(host, port)
-
-    def hello(self, params):
-        # host:port/hello?name=YourInput
-        your_input = params.get('name')
-        return my_api.success(message='Hello: %s' % (your_input))
-
-        '''.format(prj_name, API_DEFAULT_PORT)
-
-        with open('{}/endpoint.py'.format(prj_name), 'w') as create_file:
+        with open(os.path.join(CURRENT_PATH, '{}/endpoint.py'.format(prj_name)), 'w') as create_file:
             create_file.write(endpoint_content)
 
-        return '''
-from endpoint import {0}Endpoint
-from ank.apps.app import BaseApp
-
-
-class {0}(BaseApp):
-
-    def __init__(self, agrs, **kwagrs):
-        super({0}, self).__init__()
-
-    def run(self, process=None):
-        api_app = {0}Endpoint(host='localhost', port={1})
-        api_app.run()
-        '''.format(prj_name, API_DEFAULT_PORT)
+        with open(os.path.join(CURRENT_PATH, '../templates/apiapp_processor.tpy'), 'r') as of:
+            return of.read().format(prj_name, API_DEFAULT_PORT)
 
     elif baseapp == 'ScheduleApp':
-        return '''
-from ank.apps.schedule_app import ScheduleApp
-from datetime import datetime
-
-
-class {0}(ScheduleApp):
-
-    def __init__(self, crontab_time, start_now=False, **kwargs):
-        super({0}, self).__init__(crontab_time, start_now)
-
-    def run(self, process=None):
-        super(ScheduleApp, self).run(process)
-
-    def process(self, message=None):
-        print('Now is %s' % (datetime.now()))
-        '''.format(prj_name)
+        with open(os.path.join(CURRENT_PATH, '../templates/scheduleapp_processor.tpy'), 'r') as of:
+            return of.read().format(prj_name)
 
     else:
         raise Exception('{} not found'.format(baseapp))
 
 
 def unittest_template(prj_name):
-    return '''
-import os
-import unittest
-from ank.deploy import dependency_injection
-from processor import {0}
-
-
-class TestService(unittest.TestCase):
-
-    def test_something(self):
-        self.assertEqual(True, False)
-
-    def test_function(self):
-        service = {0}()
-
-        message = None # Need initialize variable
-        expected_result = None # Need initialize variable
-
-        output_service = service.process(message)
-
-        self.assertEqual(output_service, expected_result)
-
-    def test_chain_processor(self):
-        if os.path.exists('_processor.py'):
-            import _processor
-        else:
-            print('generate _processor.py before run this test')
-
-    def test_chain(self):
-        dependency_injection.main('settings.yml') # replace your test setting file
-
-
-if __name__ == '__main__':
-    unittest.main()
-
-    '''.format(prj_name)
+    with open(os.path.join(CURRENT_PATH, '../templates/unittest.tpy'), 'r') as of:
+        return of.read().format(prj_name).format(prj_name)
 
 
 def docker_template(prj_name):
-    return '''
-FROM alpine:3.3
-MAINTAINER Developer "name@company.com"
-
-#addition apk for image
-RUN apk --update add py-pip libffi-dev openssl-dev
-RUN apk --update add gettext gcc libpq python-dev git && rm -rf /var/cache/apk/*
-
-RUN pip install --upgrade pip
-
-RUN mkdir -p /srv/logs
-RUN mkdir -p /srv/{0}
-ADD . /srv/{0}
-WORKDIR /srv/{0}
-RUN pip install -r requirements.txt
-
-ENTRYPOINT []
-CMD []
-    '''.format(prj_name)
+    with open(os.path.join(CURRENT_PATH, '../templates/docker.tpy'), 'r') as of:
+        return of.read().format(prj_name).format(prj_name)
 
 
 def services_template(prj_name, baseapp):
     if baseapp == 'BaseApp':
-        return '''
-services:
-  {0}:
-    class: processor.{0}
-    arguments: ~
-
-
-chains:
-  - {0}
-    '''.format(prj_name)
+        with open(os.path.join(CURRENT_PATH, '../templates/baseapp_services.tpy'), 'r') as of:
+            return of.read().format(prj_name)
 
     elif baseapp == 'APIApp':
-        return '''
-services:
-  {0}:
-    class: processor.{0}
-    arguments: ['%host%', '%port%']
-
-
-chains:
-  - {0}
-        '''.format(prj_name)
+        with open(os.path.join(CURRENT_PATH, '../templates/apiapp_services.tpy'), 'r') as of:
+            return of.read().format(prj_name)
 
     elif baseapp == 'ScheduleApp':
-        return '''
-services:
-  {0}:
-    class: processor.{0}
-    arguments: ['%crontab_time%', '%start_now%']
-
-
-chains:
-  - {0}
-        '''.format(prj_name)
+        with open(os.path.join(CURRENT_PATH, '../templates/scheduleapp_services.tpy'), 'r') as of:
+            return of.read().format(prj_name)
 
     else:
         raise Exception('{} not found'.format(baseapp))
@@ -219,41 +93,24 @@ chains:
 
 def settings_template(baseapp):
     if baseapp == 'BaseApp':
-        return ''
+        with open(os.path.join(CURRENT_PATH, '../templates/baseapp_settings.tpy'), 'r') as of:
+            return of.read()
 
     elif baseapp == 'APIApp':
-        return '''
-parameters:
-  host: localhost
-  port: {0}
-        '''.format(API_DEFAULT_PORT)
+        with open(os.path.join(CURRENT_PATH, '../templates/apiapp_settings.tpy'), 'r') as of:
+            return of.read().format(API_DEFAULT_PORT)
 
     elif baseapp == 'ScheduleApp':
-        return '''
-parameters:
-  crontab_time: '0 0 * * 5'
-  start_now: True
-        '''
+        with open(os.path.join(CURRENT_PATH, '../templates/scheduleapp_settings.tpy'), 'r') as of:
+            return of.read()
 
     else:
         raise Exception('{} not found'.format(baseapp))
 
 
 def readme_template(prj_name):
-    return '''
-## {0}:
-Service descriptions
-
-
-# generator:
-- generate template settings.yml: `ank -s`
-- generate _processor.py: `ank -p`
-
-# deploy:
-- build: `ank -b`
-- test: `ank -t -f test-settings.yml`
-- run: `ank -r`
-    '''.format(prj_name)
+    with open(os.path.join(CURRENT_PATH, '../templates/readme.tpy'), 'r') as of:
+        return of.read().format(prj_name)
 
 
 def create_setting():

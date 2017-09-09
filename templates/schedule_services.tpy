@@ -1,0 +1,8 @@
+services:
+  {0}:
+    class: processor.{0}
+    arguments: ['%crontab_time%', '%start_now%']
+
+
+chains:
+  - {0}

@@ -1,0 +1,13 @@
+from ank.apps.api_app import APIApp
+from ank.utilities import my_api
+
+
+class {0}Endpoint(APIApp):
+
+    def __init__(self, host='localhost', port={1}):
+        super({0}Endpoint, self).__init__(host, port)
+
+    def hello(self, params):
+        # host:port/hello?name=YourInput
+        your_input = params.get('name')
+        return my_api.success(message='Hello: %s' % (your_input))

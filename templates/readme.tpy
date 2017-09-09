@@ -1,0 +1,12 @@
+## {0}:
+Service descriptions
+
+
+# generator:
+- generate template settings.yml: `ank -s`
+- generate _processor.py: `ank -p`
+
+# deploy:
+- build: `ank -b`
+- test: `ank -t -f test-settings.yml`
+- run: `ank -r`

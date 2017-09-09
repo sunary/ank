@@ -1,0 +1,17 @@
+FROM alpine:3.3
+MAINTAINER Developer "name@company.com"
+
+#addition apk for image
+RUN apk --update add py-pip libffi-dev openssl-dev
+RUN apk --update add gettext gcc libpq python-dev git && rm -rf /var/cache/apk/*
+
+RUN pip install --upgrade pip
+
+RUN mkdir -p /srv/logs
+RUN mkdir -p /srv/{0}
+ADD . /srv/{0}
+WORKDIR /srv/{0}
+RUN pip install -r requirements.txt
+
+ENTRYPOINT []
+CMD []
