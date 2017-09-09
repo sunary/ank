@@ -4,7 +4,7 @@ from deploy.chain_processor import ChainProcessor
 from apps.rabbitmq_consumer import RabbitmqConsumer
 from apps.log_app import LogApp
 from processor import ExampleApp
-from app.rabbitmq_consumer import RabbitmqProducer
+from apps.rabbitmq_producer import RabbitmqProducer
 
 chain_processor = ChainProcessor()
 _rabbitmq_consumer = RabbitmqConsumer({'queue': 'ExampleQueue', 'uri': 'amqp://guest:guest@localhost:5672'})
