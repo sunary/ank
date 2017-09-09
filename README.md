@@ -58,7 +58,7 @@
         
 * **Create new Service:**
     ```shell
-    $ ank -c TestService`
+    $ ank -c TestService
     $ cd TestService
     ```
     then continue using below commands

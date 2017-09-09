@@ -99,5 +99,6 @@ def success(return_json={}, status_code=200, message=None):
 
     return json.jsonify(return_json)
 
+
 def is_success(api_json):
     return api_json.get('ok') or api_json.get('status_code') == 200

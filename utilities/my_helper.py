@@ -8,12 +8,12 @@ import logging.handlers
 
 
 def init_logger(name, log_level=None, log_file=None):
-    logger = logging.getLogger(name)
+    _logger = logging.getLogger(name)
 
     if log_level:
-        logger.setLevel(log_level)
+        _logger.setLevel(log_level)
     else:
-        logger.setLevel(logging.INFO)
+        _logger.setLevel(logging.INFO)
 
     formatter = logging.Formatter('%(asctime)s %(levelname)s %(name)s: %(message)s')
 
@@ -27,13 +27,13 @@ def init_logger(name, log_level=None, log_file=None):
 
         fh = logging.handlers.RotatingFileHandler(log_file, maxBytes=2 * 1024*1024, backupCount=3)
         fh.setFormatter(formatter)
-        logger.addHandler(fh)
+        _logger.addHandler(fh)
     # else:
     #     sh = logging.StreamHandler()
     #     sh.setFormatter(formatter)
     #     logger.addHandler(sh)
 
-    return logger
+    return _logger
 
 
 if __name__ == '__main__':
