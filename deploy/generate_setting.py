@@ -45,7 +45,7 @@ class GenerateSetting(object):
     def from_object(self, argument):
         argument = my_deploy.normalize_service_argument(argument)
         if argument[-1] == 'dict':
-            for key, value in argument[0].iteritems():
+            for key, value in argument[0].items():
                 if value[-1] == 'object':
                     self.from_class(value[0])
                 elif value[-1] == 'variable':
