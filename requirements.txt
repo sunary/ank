@@ -5,5 +5,5 @@ pymongo==3.4.0
 redis==2.10.5
 gevent==1.1.1
 pika==0.10.0
-pyzmq==1.4.9
+pyzmq==16.0.2
 kafka-python==0.9.5
