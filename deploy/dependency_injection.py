@@ -49,7 +49,7 @@ class DependencyInjection(object):
 
         if argument[-1] == 'dict':
             dict_argument = {}
-            for key, value in argument[0].iteritems():
+            for key, value in argument[0].items():
                 if value[-1] == 'object':
                     dict_argument[key] = self.get_class(value[0])
                 elif value[-1] == 'variable':

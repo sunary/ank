@@ -22,7 +22,7 @@ def normalize_service_argument(argument):
     if isinstance(argument, dict):
         dict_argument = {}
 
-        for key, value in argument.iteritems():
+        for key, value in argument.items():
             if value.startswith('$'):
                 dict_argument[key] = [value[1:], 'object']
             elif value.startswith('%') and value.endswith('%'):
@@ -61,7 +61,7 @@ def get_deliver_from_class(class_name):
     '''
     import string
 
-    alphabeta_uppercase = string.uppercase
+    alphabeta_uppercase = string.ascii_uppercase
     splited_text = []
     last_position = 0
     for i in range(1, len(class_name)):

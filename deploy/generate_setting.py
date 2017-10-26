@@ -32,7 +32,7 @@ class GenerateSetting(object):
         except IOError as e:
             raise IOError('settings.yml not found')
 
-        for key, value in setting_loader.iteritems():
+        for key, value in setting_loader.items():
             if self.setting_parameters.get(key, '') is None:
                 self.setting_parameters[key] = value
 

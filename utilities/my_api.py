@@ -72,7 +72,7 @@ def get_options():
         get_json = request.get_json()
 
         if get_json:
-            for k, v in get_json.iteritems():
+            for k, v in get_json.items():
                 options[k] = str(v)
 
         for field in request.form:

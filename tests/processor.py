@@ -14,9 +14,9 @@ class FirstApp(PipeApp):
     def start(self):
         print('Start chain')
         for i in range(100):
-            print '---start'
+            print('---start')
             self.chain_process({'content': i})
-            print '---end'
+            print('---end')
 
     def process(self, message=None):
         print('start app {}'.format(message))

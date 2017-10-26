@@ -48,7 +48,6 @@ class ChainProcessor(object):
                 return None
 
             if isinstance(current_processor, (list, tuple)):
-                print _message
                 if not _message.get(FLAGS_KEY) or not isinstance(_message[FLAGS_KEY], (list, tuple)):
                     raise TypeError("message must to have FLAGS_KEY attribute with type is list or tuple")
 
