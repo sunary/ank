@@ -108,7 +108,8 @@ class GenerateProcessor(object):
 
         return self.generate_class_name(class_name)
 
-    def generate_class_name(self, class_name):
+    @staticmethod
+    def generate_class_name(class_name):
         return my_deploy.get_deliver_from_class(class_name)
 
 

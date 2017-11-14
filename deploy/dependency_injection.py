@@ -75,7 +75,8 @@ class DependencyInjection(object):
 
         return processor
 
-    def load_class(self, class_full_name, parameters):
+    @staticmethod
+    def load_class(class_full_name, parameters):
         module_name, class_name = my_deploy.class_name_extract(class_full_name)
         module = importlib.import_module(module_name)
 

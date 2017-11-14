@@ -61,17 +61,16 @@ def get_deliver_from_class(class_name):
     '''
     import string
 
-    alphabeta_uppercase = string.ascii_uppercase
-    splited_text = []
+    split_text = []
     last_position = 0
     for i in range(1, len(class_name)):
-        if class_name[i] in alphabeta_uppercase:
-            splited_text.append(class_name[last_position:i].lower())
+        if class_name[i] in string.ascii_uppercase:
+            split_text.append(class_name[last_position:i].lower())
             last_position = i
 
-    splited_text.append(class_name[last_position:len(class_name)].lower())
+        split_text.append(class_name[last_position:len(class_name)].lower())
 
-    return '_' + '_'.join(splited_text)
+    return '_' + '_'.join(split_text)
 
 
 if __name__ == '__main__':
