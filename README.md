@@ -2,7 +2,7 @@
 
 
 ### Overview: ###
- Python Microservices Streaming, REST-API and Schedule task using queue message(rabbitMQ, zeromq, kafka)
+ Python Microservices Streaming, REST-API and Schedule task using queue message(rabbitMQ, zeroMQ, kafka)
  Each processor is a chain, put it together to make a pipeline.
  
  
@@ -31,15 +31,15 @@
     ```
 * join message:
     ```
-    message \
-    message - [message, message, message]
-    message /
+    message1 \
+    message2 - [message1, message2, message3]
+    message3 /
     ```
 * split message:
     ```
-                                / message
-    [message, message, message] - message
-                                \ message
+                                   / message1
+    [message1, message2, message3] - message2
+                                   \ message3
     ```
     
 
@@ -79,11 +79,11 @@
             Args:
                 message: {'content': (*) 'content of message',
                           'flags': (list|tuple) 'define next process will be use'}
-                              raise TypeError if you don't declare this in return of before braching-processor
-                              if 'flags' == [True, True]: process both in next braching-processors
-                              if 'flags' == [True, False]: process 1st processor in next braching-processors
-                              if 'flags' == [False, True]: process 1st processor in next braching-processors
-                              if 'flags' == [False, False]: stop chain
+                              raise TypeError if you don't declare this in return of before branching-processor
+                              if 'flags' == [True, True]: process both in next branching-processors
+                              if 'flags' == [True, False]: process 1st processor in next branching-processors
+                              if 'flags' == [False, True]: process 2nd processor in next branching-processors
+                              if 'flags' == [False, False]: no processor, stop chain
                           is None: stop chain
             '''
             return message['content'] + 1
@@ -185,7 +185,7 @@
     
 ### Base Apps: ###
 * **PipeApp:** Pipeline App.
-* **APIApp:** REST-API inteface using flask.
+* **APIApp:** REST-API interface using flask.
 * **ScheduleApp:** Using crontab-time format to set schedule.
 
 

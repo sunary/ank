@@ -35,11 +35,11 @@ class PipeApp(object):
         Args:
             message: {'content': (*) 'content of message',
                       'flags': (list|tuple) 'define next process will be use'}
-                          raise TypeError if you don't declare this in return of before braching-processor
-                          if 'flags' == [True, True]: process both in next braching-processors
-                          if 'flags' == [True, False]: process 1st processor in next braching-processors
-                          if 'flags' == [False, True]: process 1st processor in next braching-processors
-                          if 'flags' == [False, False]: stop chain
+                          raise TypeError if you don't declare this in return of before branching-processor
+                          if 'flags' == [True, True]: process both in next branching-processors
+                          if 'flags' == [True, False]: process 1st processor in next branching-processors
+                          if 'flags' == [False, True]: process 2nd processor in next branching-processors
+                          if 'flags' == [False, False]: no processor, stop chain
                       is None: stop chain
         '''
         return message
