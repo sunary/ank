@@ -1,10 +1,14 @@
 __author__ = 'sunary'
 
 
+import os
 from base_apps.pipe_app import PipeApp
 from flask import Flask
 from utilities import my_api
 
+
+def is_production():
+    return os.environ.get('ENV', 'dev').lower == 'production'
 
 class APIApp(PipeApp):
     '''
@@ -36,4 +40,4 @@ class APIApp(PipeApp):
                 return my_api.failed(return_json={'detail': str(e)}, status_code=404,
                                      message='The requested url does not exist')
 
-        flask_app.run(host=self.host, port=self.port, debug=True)
+        flask_app.run(host=self.host, port=self.port, debug=not is_production())

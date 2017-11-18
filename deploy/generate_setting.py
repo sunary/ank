@@ -16,8 +16,20 @@ class GenerateSetting(object):
         self.setting_parameters = {}
 
     def process(self):
-        self.service_loader = my_deploy.loader('services.yml', 'services')
-        chain_loader = my_deploy.loader('services.yml', 'chains')
+        try:
+            self.service_loader = my_deploy.loader('services.yml', 'services')
+        except IOError:
+            self.logger.error('IOError: file \'services.yml\' not found')
+            raise IOError('file \'services.yml\' not found')
+        except KeyError:
+            self.logger.error('KeyError: \'services\'')
+            raise KeyError('services')
+
+        try:
+            chain_loader = my_deploy.loader('services.yml', 'chains')
+        except KeyError:
+            self.logger.error('KeyError: \'chains\'')
+            raise KeyError('chains')
 
         for process_name in chain_loader:
             if isinstance(process_name, list):
@@ -29,8 +41,12 @@ class GenerateSetting(object):
         # read old settings
         try:
             setting_loader = my_deploy.loader('settings.yml', 'parameters')
-        except IOError as e:
+        except IOError:
+            self.logger.error('IOError: file \'settings.yml\' not found')
             raise IOError('settings.yml not found')
+        except KeyError:
+            self.logger.error('KeyError: \'parameters\'')
+            raise KeyError('parameters')
 
         for key, value in setting_loader.items():
             if self.setting_parameters.get(key, '') is None:

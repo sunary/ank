@@ -21,7 +21,11 @@ class ChainProcessor(object):
         self.methods = []
 
     def run(self):
-        self.methods[0][0].run(self.process())
+        if self.methods:
+            self.methods[0][0].run(self.process())
+        else:
+            self.logger.error('KeyError: methods empty')
+            raise KeyError('methods empty')
 
     def add_processor(self, processor, method='process'):
         '''
@@ -49,7 +53,9 @@ class ChainProcessor(object):
 
             if isinstance(current_processor, (list, tuple)):
                 if not _message.get(FLAGS_KEY) or not isinstance(_message[FLAGS_KEY], (list, tuple)):
-                    raise TypeError("message must to have FLAGS_KEY attribute with type is list or tuple")
+                    _log_msg = 'message must to have FLAGS_KEY attribute with type is list or tuple'
+                    self.logger.error('TypeError ' + _log_msg)
+                    raise TypeError(_log_msg)
 
                 temp_message = copy.deepcopy(_message)
                 _message.pop(FLAGS_KEY)
@@ -61,9 +67,10 @@ class ChainProcessor(object):
                         try:
                             self.process(_message, chain_methods=chain_methods[i + 1:])
                         except Exception as e:
-                            _log = '{} when run process {}: {}'.format(type(e).__name__, processor_name, e)
-                            self.logger.error(_log)
-                            raise Exception(_log)
+                            _log_msg = 'when run process {}'.format(processor_name)
+                            self.logger.error(type(e).__name__ + ' ' + _log_msg)
+                            self.logger.error(e)
+                            raise type(e)(_log_msg + '\n' + str(e))
 
                 return None
 
@@ -91,6 +98,7 @@ class ChainProcessor(object):
                         _message = current_method(_message)
 
                 except Exception as e:
-                    _log = '{} when run process {}: {}'.format(type(e).__name__, processor_name, e)
-                    self.logger.error(_log)
-                    raise Exception(_log)
+                    _log_msg = 'when run process {}'.format(processor_name)
+                    self.logger.error(type(e).__name__ + ' ' + _log_msg)
+                    self.logger.error(e)
+                    raise type(e)(_log_msg + '\n' + str(e))

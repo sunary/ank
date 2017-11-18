@@ -13,5 +13,4 @@ class SplitApp(PipeApp):
         self.logger.info('Start {}'.format(self.__class__.__name__))
 
     def process(self, message=None):
-
         return message

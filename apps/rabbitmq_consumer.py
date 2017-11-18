@@ -29,9 +29,7 @@ class RabbitmqConsumer(PipeApp):
         self.logger.info('Start {}'.format(self.__class__.__name__))
 
     def call_back(self, ch, method, properties, message):
-
         return self.process(message)
 
     def process(self, message):
-
         return message

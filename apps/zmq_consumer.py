@@ -26,5 +26,4 @@ class ZeroMqConsumer(PipeApp):
             self.chain_process(message)
 
     def process(self, message=None):
-
         return message

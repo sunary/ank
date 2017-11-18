@@ -14,14 +14,14 @@ class ScheduleApp(PipeApp):
     def init_app(self, crontab_time=None, start_now=False):
         self.crontab_reader = CrontabTimeReader(crontab_time)
         self.start_now = start_now
+        self.logger.info('crontad time after extract: %s', self.crontab_reader)
 
     def start(self):
         if self.start_now:
             self.process()
-
-        while True:
             time.sleep(60)
 
+        while True:
             next_time = self.crontab_reader.get_next_time()
             self.logger.info('sleep to %s' % next_time)
 
@@ -39,14 +39,15 @@ class CrontabTimeReader(object):
     def __init__(self, time_str):
         time_str = time_str.split(' ')
 
-        assert len(time_str) == 5, 'Cronjob time need 5 fields'
+        assert len(time_str) == 5, 'Crontab time much have 5 fields'
+        self.minute = self.extract_value(time_str[0])
+        self.hour = self.extract_value(time_str[1])
+        self.day = self.extract_value(time_str[2])
+        self.month = self.extract_value(time_str[3])
+        self.day_of_week = self.extract_value(time_str[3])
 
-        self.minute, self.hour, self.day, self.month, self.day_of_week =\
-            self.normalized_value(time_str[0]), self.normalized_value(time_str[1]), self.normalized_value(time_str[2]), self.normalized_value(time_str[3]), self.normalized_value(time_str[4])
-
-        print(self.minute, self.hour, self.day, self.month, self.day_of_week)
-
-    def normalized_value(self, value):
+    @staticmethod
+    def extract_value(value):
         ret_value = []
         if '-' in value:
             value = value.split('-')
@@ -106,12 +107,19 @@ class CrontabTimeReader(object):
                 if d > combine_day_now:
                     return now.replace(month=d[0], day=d[1], hour=combine_time[0][0], minute=combine_time[0][1])
 
-            return now.replace(year=now.year + 1, month=combine_day[0][0], day=combine_day[0][1], hour=combine_time[0][0], minute=combine_time[0][1])
+            return now.replace(year=now.year + 1, month=combine_day[0][0],
+                               day=combine_day[0][1], hour=combine_time[0][0], minute=combine_time[0][1])
         elif self.day_of_week != '*':
-            num_day = min(map(lambda x: x - now.weekday() if x > now.weekday() else x + 7 - now.weekday(), self.day_of_week))
+            num_day = min(map(lambda x: x - now.weekday() if x > now.weekday()
+                                                          else x + 7 - now.weekday(), self.day_of_week))
             return (now + timedelta(hours=24 * num_day)).replace(hour=combine_time[0][0], minute=combine_time[0][1])
         else:
             return (now + timedelta(hours=24)).replace(hour=combine_time[0][0], minute=combine_time[0][1])
+
+    def __str__(self):
+        return 'minute: {}, hour: {}, day: {}, month: {}, day of week: {}'.format(
+            self.day, self.hour, self.day, self.month, self.day_of_week
+        )
 
 
 if __name__ == '__main__':
