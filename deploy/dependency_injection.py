@@ -8,20 +8,20 @@ sys.path.append(os.getcwd())
 import importlib
 from deploy.chain_processor import ChainProcessor
 from deploy.daemon import Daemon
-from utilities import my_deploy, my_helper
+from utils import naming_services, logger, config_handle
 
 
 class DependencyInjection(object):
 
     def __init__(self):
-        self.logger = my_helper.init_logger(self.__class__.__name__)
+        self.logger = logger.init_logger(self.__class__.__name__)
 
     def start(self, file_setting='settings.yml'):
-        self.service_loader = my_deploy.loader('services.yml', 'services')
-        self.setting_loader = my_deploy.loader(file_setting, 'parameters')
+        self.service_loader = config_handle.load('services.yml', 'services')
+        self.setting_loader = config_handle.load(file_setting, 'parameters')
 
         chain_processor = ChainProcessor()
-        chain_loader = my_deploy.loader('services.yml', 'chains')
+        chain_loader = config_handle.load('services.yml', 'chains')
 
         for process_name in chain_loader:
             if isinstance(process_name, list):
@@ -41,11 +41,11 @@ class DependencyInjection(object):
         chain_processor.methods[0][0].run(chain_processor.process)
 
     def get_object(self, argument):
-        '''
+        """
         Args:
             argument: list: [..., data_type]
-        '''
-        argument = my_deploy.normalize_service_argument(argument)
+        """
+        argument = naming_services.normalize_service_argument(argument)
 
         if argument[-1] == 'dict':
             dict_argument = {}
@@ -77,7 +77,7 @@ class DependencyInjection(object):
 
     @staticmethod
     def load_class(class_full_name, parameters):
-        module_name, class_name = my_deploy.class_name_extract(class_full_name)
+        module_name, class_name = naming_services.class_name_extract(class_full_name)
         module = importlib.import_module(module_name)
 
         _class = getattr(module, class_name)

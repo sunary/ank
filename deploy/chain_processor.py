@@ -1,7 +1,7 @@
 __author__ = 'sunary'
 
 
-from utilities import my_helper
+from utils import logger
 import copy
 
 
@@ -10,13 +10,13 @@ FLAGS_KEY = 'flags'
 
 
 class ChainProcessor(object):
-    '''
+    """
     Run chain processors
     Output of a processor will be input of the next processor
-    '''
+    """
 
     def __init__(self):
-        self.logger = my_helper.init_logger(self.__class__.__name__)
+        self.logger = logger.init_logger(self.__class__.__name__)
 
         self.methods = []
 
@@ -28,9 +28,9 @@ class ChainProcessor(object):
             raise KeyError('methods empty')
 
     def add_processor(self, processor, method='process'):
-        '''
+        """
         add processor(s) and method(n) into chain
-        '''
+        """
         if isinstance(processor, list):
             list_methods = []
             for proc in processor:
@@ -41,9 +41,9 @@ class ChainProcessor(object):
             self.methods.append((processor, getattr(processor, method)))
 
     def process(self, message=None, chain_methods=None):
-        '''
+        """
         Process chain depend methods registered
-        '''
+        """
         _message = copy.deepcopy(message)
         chain_methods = chain_methods or self.methods
 

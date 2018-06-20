@@ -1,26 +1,26 @@
 __author__ = 'sunary'
 
 
-from utilities import my_deploy
+from utils import naming_services, config_handle
 
 
 class GenerateProcessor(object):
-    '''
+    """
     Generate processor.py help you run directly
-    '''
+    """
 
     def __init__(self):
         self.import_libs = ['from deploy.chain_processor import ChainProcessor']
         self.implement_classes = ['chain_processor = ChainProcessor()']
 
     def process(self, file_setting='settings.yml'):
-        self.service_loader = my_deploy.loader('services.yml', 'services')
-        self.setting_loader = my_deploy.loader(file_setting, 'parameters')
+        self.service_loader = config_handle.load('services.yml', 'services')
+        self.setting_loader = config_handle.load(file_setting, 'parameters')
 
         str_processor = "__author__ = 'ank_generator'\n\n"
 
         implement_workers = []
-        chain_loader = my_deploy.loader('services.yml', 'chains')
+        chain_loader = config_handle.load('services.yml', 'chains')
         for process_name in chain_loader:
             if isinstance(process_name, list):
                 class_names = []
@@ -52,12 +52,12 @@ class GenerateProcessor(object):
         return str_processor
 
     def get_object(self, argument):
-        '''
+        """
         Detect object(dict, variable, object) and return string of object
         Args:
             argument: list: [..., data_type]
-        '''
-        argument = my_deploy.normalize_service_argument(argument)
+        """
+        argument = naming_services.normalize_service_argument(argument)
         if argument[-1] == 'dict':
             dict_argument = {}
             for key, value in argument[0].items():
@@ -85,11 +85,11 @@ class GenerateProcessor(object):
         return None
 
     def get_class(self, str_class):
-        '''
+        """
         Create coding from class: _class = Class(*parameters)
-        '''
+        """
         object_name = self.service_loader[str_class]['class']
-        class_dir, class_name = my_deploy.class_name_extract(object_name)
+        class_dir, class_name = naming_services.class_name_extract(object_name)
 
         str_import = 'from {} import {}'.format(class_dir, class_name)
         if str_import not in self.import_libs:
@@ -110,7 +110,7 @@ class GenerateProcessor(object):
 
     @staticmethod
     def generate_class_name(class_name):
-        return my_deploy.get_deliver_from_class(class_name)
+        return naming_services.get_deliver_from_class(class_name)
 
 
 def main(file_setting='settings.yml'):

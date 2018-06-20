@@ -5,7 +5,7 @@ from ank.utilities import my_api
 class {0}Endpoint(APIApp):
 
     def __init__(self, host='localhost', port={1}):
-        super({0}Endpoint, self).__init__(host, port)
+        super({0}Endpoint, self).__init__(host=host, port=port)
 
     def hello(self, params):
         # host:port/hello?name=YourInput

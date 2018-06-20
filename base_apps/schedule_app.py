@@ -7,11 +7,16 @@ from datetime import datetime, timedelta
 
 
 class ScheduleApp(PipeApp):
-    '''
+    """
     Schedule process using crontab time format
-    '''
+    """
 
-    def init_app(self, crontab_time=None, start_now=False):
+    def init_app(self, crontab_time='', start_now=False):
+        """
+        Args:
+            crontab_time (string): cronjob time format
+            start_now (bool): is start after init
+        """
         self.crontab_reader = CrontabTimeReader(crontab_time)
         self.start_now = start_now
         self.logger.info('crontad time after extract: %s', self.crontab_reader)

@@ -6,7 +6,7 @@ import os
 from argparse import ArgumentParser
 from deploy import generate_processor, generate_setting, dependency_injection
 from ank import VERSION, API_DEFAULT_PORT
-from utilities import my_cmd
+from utils import cmd_helpers
 
 
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -131,7 +131,7 @@ def run():
 
 
 def build():
-    print my_cmd.run_cmd(['docker', 'build', '.'])['message']
+    print cmd_helpers.run_cmd(['docker', 'build', '.'])['message']
 
 
 def main(options=None):

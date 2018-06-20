@@ -12,8 +12,7 @@ def __path(filename):
 with open('LICENSE') as fo:
     license = fo.read()
 
-reqs = ['pika==0.10.0', 'pymongo==3.4.0', 'amqp==1.4.9', 'pyyaml==3.11',
-        'redis==2.10.5', 'flask==0.11', 'gevent==1.1.1']
+reqs = ['pyyaml==3.12']
 
 setup(
     name='ank',
@@ -22,10 +21,11 @@ setup(
     author_email='v2nhat@gmail.com',
     maintainer='Sunary [Nhat Vo Van]',
     maintainer_email='v2nhat@gmail.com',
-    description='Python Microservices',
-    long_description='ank - Microservices.<br>See at: https://github.com/sunary/ank',
+    description='Python Streaming System',
+    long_description='ank - Python Streaming System, distribute tasks and more.' +
+                     '<br>See at: https://github.com/sunary/ank',
     license=license,
-    keywords='ank, microservice, rabbitMQ, kafka, zeroMQ, queue, streaming',
+    keywords='ank, streaming, microservice, pipeline',
     url='https://github.com/sunary/ank',
     packages=find_packages(exclude=['docs', 'examples', 'tests']),
     package_data={'templates': ['*.tpy']},

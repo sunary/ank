@@ -1,0 +1,6 @@
+parameters:
+
+  range_from: 20
+  range_to: 100
+
+  batch_size: 2

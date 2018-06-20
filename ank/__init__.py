@@ -1,7 +1,7 @@
 __author__ = 'sunary'
 
 
-VERSION = '1.4.4'
+VERSION = '1.5'
 API_DEFAULT_PORT = '5372'
 
 
@@ -10,4 +10,4 @@ from apps import join_app, split_app, log_app
 from apps import kafka_consumer, kafka_producer, rabbitmq_consumer, rabbitmq_producer, zmq_consumer, zmq_producer
 from deploy import chain_processor
 # from deploy import dependency_injection, generate_processor, generate_setting
-from utilities import my_cmd, my_api, my_deploy, my_helper, my_mongo
+from utils import cmd_helpers, api_helpers, naming_services, logger, mongo

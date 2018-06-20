@@ -2,21 +2,31 @@ __author__ = 'sunary'
 
 
 import os
+from ank import API_DEFAULT_PORT
 from base_apps.pipe_app import PipeApp
-from flask import Flask
-from utilities import my_api
+try:
+    from flask import Flask
+except ImportError:
+    ImportError('flask not found')
+from utils import api_helpers
 
 
 def is_production():
     return os.environ.get('ENV', 'dev').lower == 'production'
 
+
 class APIApp(PipeApp):
-    '''
+    """
     API App
     Add function to extend class to create new API
-    '''
+    """
 
-    def init_app(self, host='localhost', port=5372, **kwargs):
+    def init_app(self, host='localhost', port=API_DEFAULT_PORT, **kwargs):
+        """
+        Args:
+             host (string): RestAPI host, default 'localhost'
+             port (int): RestAPI host, default API_DEFAULT_PORT=5372
+        """
         self.host = host
         self.port = port
 
@@ -25,19 +35,19 @@ class APIApp(PipeApp):
 
         @flask_app.route('/')
         def index():
-            return 'Welcome!'
+            return 'Hello world!'
 
-        @my_api.crossdomain(origin='*')
-        @flask_app.route('/<method>', methods=['GET', 'POST'])
+        @api_helpers.crossdomain(origin='*')
+        @flask_app.route('/api/<method>', methods=['GET', 'POST'])
         def _(method):
             try:
-                params = my_api.get_options()
+                params = api_helpers.get_options()
                 method = getattr(self, method)
                 return method(params)
             except Exception as e:
                 self.logger.error(e)
 
-                return my_api.failed(return_json={'detail': str(e)}, status_code=404,
-                                     message='The requested url does not exist')
+                return api_helpers.failed(return_json={'detail': str(e)}, status_code=404,
+                                          message='The requested url does not exist')
 
         flask_app.run(host=self.host, port=self.port, debug=not is_production())

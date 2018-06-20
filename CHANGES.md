@@ -7,3 +7,4 @@
 - 2016/12/17 -- Generate template, docker
 - 2017/03/20 -- Using pika for rabbitMQ
 - 2017/03/22 -- Support branching
+- 2018/06/20 -- Refactor, edit example

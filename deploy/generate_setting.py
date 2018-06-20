@@ -1,23 +1,22 @@
 __author__ = 'sunary'
 
 
-import yaml
-from utilities import my_deploy, my_helper
+from utils import naming_services, config_handle, logger
 
 
 class GenerateSetting(object):
-    '''
+    """
     Generate settings.yml template
-    '''
+    """
 
     def __init__(self):
-        self.logger = my_helper.init_logger(self.__class__.__name__)
+        self.logger = logger.init_logger(self.__class__.__name__)
 
         self.setting_parameters = {}
 
     def process(self):
         try:
-            self.service_loader = my_deploy.loader('services.yml', 'services')
+            self.service_loader = config_handle.load('services.yml', 'services')
         except IOError:
             self.logger.error('IOError: file \'services.yml\' not found')
             raise IOError('file \'services.yml\' not found')
@@ -26,7 +25,7 @@ class GenerateSetting(object):
             raise KeyError('services')
 
         try:
-            chain_loader = my_deploy.loader('services.yml', 'chains')
+            chain_loader = config_handle.load('services.yml', 'chains')
         except KeyError:
             self.logger.error('KeyError: \'chains\'')
             raise KeyError('chains')
@@ -40,7 +39,7 @@ class GenerateSetting(object):
 
         # read old settings
         try:
-            setting_loader = my_deploy.loader('settings.yml', 'parameters')
+            setting_loader = config_handle.load('settings.yml', 'parameters')
         except IOError:
             self.logger.error('IOError: file \'settings.yml\' not found')
             raise IOError('settings.yml not found')
@@ -52,14 +51,12 @@ class GenerateSetting(object):
             if self.setting_parameters.get(key, '') is None:
                 self.setting_parameters[key] = value
 
-        output = yaml.dump({'parameters': self.setting_parameters}, default_flow_style=False)
-        with open('_settings.yml', 'w') as of:
-            of.write(output)
+        output = config_handle.save('_settings.yml', 'parameters', self.setting_parameters)
 
         return output
 
     def from_object(self, argument):
-        argument = my_deploy.normalize_service_argument(argument)
+        argument = naming_services.normalize_service_argument(argument)
         if argument[-1] == 'dict':
             for key, value in argument[0].items():
                 if value[-1] == 'object':
