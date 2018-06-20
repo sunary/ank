@@ -10,6 +10,15 @@ except ImportError:
 class Mongodb(object):
 
     def __init__(self, db, col, host='127.0.0.1', port=27017, username=None, password=None):
+        """
+            Args:
+                db (string): mongo database name
+                col (string): mongo collection name
+                host (string): mongo host, default '127.0.0.1'
+                port (int): mongo port, default 27017
+                username (string): mongo username, default None
+                password (string): mongo password, default None
+        """
         if username and password:
             self._client = MongoClient('mongodb://{0}:{1}@{2}:{3}/{4}?authMechanism=SCRAM-SHA-1'.format(
                     username, password, host, port, db))

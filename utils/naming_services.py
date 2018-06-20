@@ -1,15 +1,6 @@
 __author__ = 'sunary'
 
 
-import yaml
-
-
-def loader(file_name, object_name):
-    with open(file_name, 'r') as fo:
-        service_loader = yaml.load(fo)
-        return service_loader[object_name]
-
-
 def normalize_service_argument(argument):
     """
     normalize service name and set type: $object, $variable$
