@@ -1,61 +1,89 @@
-# -*- coding: utf-8 -*-
 __author__ = 'sunary'
 
 
-from base_apps.pipe_app import PipeApp
-try:
-    import tweepy
-    from tweepy.streaming import StreamListener, json
-except ImportError:
-    raise ImportError('No module named tweepy')
+from ank.base_apps.pipe_app import PipeApp
 
 
-class TwitterSpout(PipeApp):
+class FirstApp(PipeApp):
 
-    def init_app(self, key):
-        self.key = key
+    def init_app(self, mongo=None, redis=None, range_from=0, range_to=0):
+        self.mongo = mongo
+        self.redis = redis
+        self.range_from = range_from
+        self.range_to = range_to
 
-        self.listener = StreamListener()
-        self.listener.on_data = self.on_messages_received
-        self.listener.on_error = self.on_error
 
     def start(self):
-        auth = tweepy.OAuthHandler(self.key['consumer_key'], self.key['consumer_secret'])
-        auth.set_access_token(self.key['access_token'], self.key['access_token_secret'])
+        redis_key = 'redis_key'
+        self.redis.set(redis_key, 'hello world')
+        print('Message from redis: {}'.format(self.redis.get(redis_key)))
 
-        self.stream_engine = tweepy.Stream(auth, self.listener)
-        self.filter()
+        print('Start chain')
+        for i in range(self.range_from, self.range_to):
+            print('---start')
+            self.chain_process({'content': i})
+            print('---end')
 
-    def on_messages_received(self, messages):
-        messages = json.loads(messages)
-        self.chain_process(messages)
+    def process(self, message=None):
+        print('start app {}'.format(message))
+        return message
 
-        return True
 
-    def on_error(self, status_code):
-        if status_code == 88:
-            self.logger.info('code 88, Rate limit exceeded')
-            self.get_engine()
-        elif status_code == 401:
-            self.logger.info('code 401, Unauthorized')
-            if self.twitter_key.report():
-                self.get_engine()
+class PrintApp(PipeApp):
+
+    def init_app(self, *args):
+        pass
+
+    def run(self, process=None):
+        print('From print app')
+
+    def process(self, message=None):
+        print('print only {}'.format(message))
+        return message
+
+
+class ConditionalApp(PipeApp):
+
+    def init_app(self, *args):
+        pass
+
+    def run(self, process=None):
+        print('From conditional app')
+
+    def process(self, message=None):
+        print('condition check {}'.format(message))
+
+        if message['content'] % 2:
+            message.update({'flags': [False, True]})
         else:
-            self.logger.info('code %s' % status_code)
+            message.update({'flags': [True, False]})
 
-    def filter(self):
-        '''
-        Filter tweet
-        '''
-        user_ids = ['111489227']
-        self.stream_engine.filter(follow=user_ids)
+        return message
 
-    def user_stream(self):
-        '''
-        User stream
-        '''
-        self.stream_engine.userstream()
 
-    def process(self, messages=None):
+class OddApp(PipeApp):
 
-        return messages
+    def init_app(self, *agrs):
+        pass
+
+    def run(self, process=None):
+        print('From odd app')
+
+    def process(self, message=None):
+        print('odd {}'.format(message))
+        message['content'] = (message['content'] + 1)/2
+        return message
+
+
+class EvenApp(PipeApp):
+
+    def init_app(self, *args):
+        pass
+
+    def run(self, process=None):
+        print('From even app')
+
+    def process(self, message=None):
+        print('even {}'.format(message))
+        message['content'] /= 2
+        return message

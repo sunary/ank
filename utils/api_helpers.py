@@ -2,7 +2,10 @@ __author__ = 'sunary'
 
 
 from datetime import timedelta
-from flask import make_response, request, current_app, json
+try:
+    from flask import make_response, request, current_app, json
+except ImportError:
+    raise ImportError('flask not found')
 from functools import update_wrapper
 
 
@@ -91,6 +94,7 @@ def failed(return_json={}, status_code=400, message=None):
     return_json['message'] = message or STATUS_CODE.get(status_code)
 
     return json.jsonify(return_json)
+
 
 def success(return_json={}, status_code=200, message=None):
     return_json['ok'] = True

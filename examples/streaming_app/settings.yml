@@ -1,6 +1,14 @@
 parameters:
 
-  consumer_key: 'CONSUMER_KEY'
-  consumer_secret: 'CONSUMER_SECRET'
-  access_token: 'ACCESS_TOKEN'
-  access_token_secret: 'ACCESS_TOKEN_SECRET'
+  mongo_db: music
+  mongo_col: songs
+  mongo_host: localhost
+  mongo_port: 27017
+
+  redis_host: localhost
+  redis_port: 6379
+
+  range_from: 20
+  range_to: 100
+
+  batch_size: 2

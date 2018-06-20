@@ -1,7 +1,6 @@
 __author__ = 'sunary'
 
 
-import os.path
 import yaml
 
 
@@ -12,14 +11,14 @@ def loader(file_name, object_name):
 
 
 def normalize_service_argument(argument):
-    '''
+    """
     normalize service name and set type: $object, $variable$
     Examples:
         >>> normalize_service_argument('$Mongodb')
         ['Mongodb', 'object']
         >>> normalize_service_argument('%batch_size%')
         ['batch_size', 'variable']
-    '''
+    """
     if isinstance(argument, dict):
         dict_argument = {}
 
@@ -40,12 +39,12 @@ def normalize_service_argument(argument):
 
 
 def class_name_extract(class_full_name):
-    '''
+    """
     extract class name to write import
     Examples:
         >>> class_name_extract('redis.client.StrictRedis')
         ('redis.client', 'StrictRedis')
-    '''
+    """
     class_split = class_full_name.split('.')
     module_name = '.'.join(class_split[:-1])
     class_name = class_split[-1]
@@ -54,12 +53,12 @@ def class_name_extract(class_full_name):
 
 
 def get_deliver_from_class(class_name):
-    '''
+    """
     Create deliver name from Class Name
     Examples:
         >>> get_deliver_from_class('DemoApp')
         '_demo_app'
-    '''
+    """
     import string
 
     split_text = []

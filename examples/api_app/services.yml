@@ -5,8 +5,8 @@ services:
     arguments: [$Mongodb]
 
   Mongodb:
-    class: utilities.my_mongo.Mongodb
-    arguments: ['%mongo_db%', '%mongo_col%', '%mongo_host%', '%mongo_port%']
+    class: ank.utils.my_mongo.Mongodb
+    arguments: ['%mongo_db%', '%mongo_col%']
 
 chains:
   - ExampleApp

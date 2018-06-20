@@ -1,7 +1,4 @@
 parameters:
 
-  mongo_db: raw_data
-  mongo_col: twitter
-
-  mongo_host: localhost
-  mongo_port: 27017
+  mongo_db: music
+  mongo_col: songs

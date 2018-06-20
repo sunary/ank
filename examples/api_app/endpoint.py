@@ -1,8 +1,8 @@
 __author__ = 'sunary'
 
 
-from base_apps.api_app import APIApp
-from utilities import my_api
+from ank.base_apps.api_app import APIApp
+from ank.utils import api_helpers
 
 
 class ExampleAPI(APIApp):
@@ -10,12 +10,14 @@ class ExampleAPI(APIApp):
     def init_app(self, host='localhost', port=5372):
         pass
 
+    # path: host:port/api/add?a=1&b=2
     def add(self, params):
         a = int(params.get('a'))
         b = int(params.get('b'))
-        return my_api.success(message=str(a + b))
+        return api_helpers.success(message=str(a + b))
 
+    # path: host:port/api/sub?x=105&y=17
     def sub(self, params):
-        a = int(params.get('a'))
-        b = int(params.get('b'))
-        return my_api.success(message=str(a - b))
+        x = int(params.get('x'))
+        y = int(params.get('y'))
+        return api_helpers.success(message=str(x - y))

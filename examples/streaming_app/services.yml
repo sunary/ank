@@ -1,17 +1,53 @@
+
 services:
 
-  TwitterSpout:
-    class: processor.TwitterSpout
-    arguments:
-      consumer_key: '%consumer_key%'
-      consumer_secret: '%consumer_secret%'
-      access_token: '%access_token%'
-      access_token_secret: '%access_token_secret%'
+  FirstApp:
+    class: processor.FirstApp
+    arguments: [$Mongodb, $Redis, '%range_from%', '%range_to%']
 
-  LogHandle:
-    class: apps.log_app.LogApp
+  Mongodb:
+    class: ank.utils.my_mongo.Mongodb
+    arguments: ['%mongo_db%', '%mongo_col%', '%mongo_host%', '%mongo_port%']
+
+  Redis:
+    class: redis.client.StrictRedis
+    arguments: ['%redis_host%', '%redis_port%']
+
+  PrintApp:
+    class: processor.PrintApp
     arguments: ~
 
+  ConditionalApp:
+    class: processor.ConditionalApp
+    arguments: ~
+
+  OddApp:
+    class: processor.OddApp
+    arguments: ~
+
+  EvenApp:
+    class: processor.EvenApp
+    arguments: ~
+
+  LogApp:
+    class: ank.apps.log_app.LogApp
+    arguments: ~
+
+  JoinApp:
+    class: ank.apps.join_app.JoinApp
+    arguments: '%batch_size%'
+
+  SplitApp:
+    class: ank.apps.split_app.SplitApp
+    arguments: ~
+
+
 chains:
-  - TwitterSpout
-  - LogHandle
+  - FirstApp
+#  - LogApp
+  - JoinApp
+#  - LogApp
+  - SplitApp
+  - ConditionalApp
+  - [EvenApp, OddApp]
+  - PrintApp

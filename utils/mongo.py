@@ -1,7 +1,10 @@
 __author__ = 'sunary'
 
 
-from pymongo import MongoClient, ReturnDocument
+try:
+    from pymongo import MongoClient, ReturnDocument
+except ImportError:
+    raise ImportError('pymongo not found')
 
 
 class Mongodb(object):
