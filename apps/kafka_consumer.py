@@ -5,16 +5,16 @@ from base_apps.pipe_app import PipeApp
 
 
 class KafkaAnkConsumer(PipeApp):
-    '''
+    """
     Message was received from consumer.subscribe
-    '''
+    """
 
     def ini_app(self, consumer=None, topic=None):
-        '''
+        """
         Args:
-            consumer: kafka.KafkaConsumer
-            topic: subscriber topic
-        '''
+            consumer (kafka.KafkaConsumer): kafka consumer
+            topic (string): kafka subscriber topic
+        """
         self.consumer = consumer
         self.topic = topic
 

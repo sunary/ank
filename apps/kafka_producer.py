@@ -5,16 +5,16 @@ from base_apps.pipe_app import PipeApp
 
 
 class KafkaAnkProducer(PipeApp):
-    '''
+    """
     Push message to queue
-    '''
+    """
 
-    def init_app(self, producer, topic):
-        '''
+    def init_app(self, producer=None, topic=''):
+        """
         Args:
-            producer: kafka.KafkaProducer
-            topic: subscriber topic
-        '''
+            producer (kafka.KafkaProducer): kafka producer
+            topic (string): kafka subscriber topic
+        """
         self.producer = producer
         self.topic = topic
 

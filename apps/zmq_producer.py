@@ -5,15 +5,21 @@ from base_apps.pipe_app import PipeApp
 try:
     import zmq
 except ImportError:
-    raise ImportError('No module named zmq')
+    raise ImportError('pyzmq not found')
 
 
 class ZeroMqProducer(PipeApp):
-    '''
+    """
     Push message to queue
-    '''
+    """
 
-    def init_app(self, uri=None, topic=None):
+    def init_app(self, uri='', topic=''):
+        """
+            Args:
+                uri (string): connection uri
+                topic (string): topic name
+        """
+
         context = zmq.Context()
 
         self.sock = context.socket(zmq.PUSH)

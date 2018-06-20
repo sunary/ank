@@ -2,24 +2,27 @@ __author__ = 'sunary'
 
 
 from base_apps.pipe_app import PipeApp
-import pika
+try:
+    import pika
+except ImportError:
+    raise ImportError('pika not found')
 
 
 class RabbitmqProducer(PipeApp):
-    '''
+    """
     Push message to queue
-    '''
-    def init_app(self, uri=None, exchange=None, routing_key=None):
-        '''
+    """
+    def init_app(self, uri='', exchange='', routing_key=''):
+        """
         Args:
-            uri: uri connections.
-            exchange: exchange name.
-            routing_key: routing key.
+            uri (string): connection uri
+            exchange (string): exchange name
+            routing_key (string): routing key
         Examples:
             >>> RabbitmqProducer(uri='amqp://username:password@host:5672',
             ... exchange='ExampleExchange',
             ... routing_key='ExchangeToQueue')
-        '''
+        """
         self.exchange = exchange
         self.routing_key = routing_key
         self.connection = pika.BlockingConnection(pika.URLParameters(uri))
