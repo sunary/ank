@@ -2,10 +2,10 @@ __author__ = 'sunary'
 
 
 from endpoint import ExampleAPI
-from ank.base_apps.pipe_app import BaseApp
+from ank.base_apps.pipe_app import PipeApp
 
 
-class ExampleApp(BaseApp):
+class ExampleApp(PipeApp):
 
     def __init__(self, agrs, **kwagrs):
         super(ExampleApp, self).__init__()

@@ -1,4 +1,4 @@
-from ank.apps.app import BaseApp
+from ank.base_app.app import BaseApp
 
 
 class {0}(BaseApp):

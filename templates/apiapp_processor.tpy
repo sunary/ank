@@ -1,8 +1,8 @@
 from endpoint import {0}Endpoint
-from ank.apps.app import BaseApp
+from ank.base_app.pipe_app import PipeApp
 
 
-class {0}(BaseApp):
+class {0}(PipeApp):
 
     def __init__(self, agrs, **kwagrs):
         super({0}, self).__init__()

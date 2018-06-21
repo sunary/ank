@@ -1,4 +1,4 @@
-from ank.apps.api_app import APIApp
+from ank.base_app.api_app import APIApp
 
 
 class {0}Endpoint(APIApp):
