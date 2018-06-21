@@ -3,11 +3,7 @@ services:
 
   FirstApp:
     class: processor.FirstApp
-    arguments: [$Mongodb, $Redis, '%range_from%', '%range_to%']
-
-  Mongodb:
-    class: ank.utils.my_mongo.Mongodb
-    arguments: ['%mongo_db%', '%mongo_col%', '%mongo_host%', '%mongo_port%']
+    arguments: [$Redis, '%range_from%', '%range_to%']
 
   Redis:
     class: redis.client.StrictRedis

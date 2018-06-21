@@ -1,5 +1,4 @@
 from ank.apps.api_app import APIApp
-from ank.utilities import my_api
 
 
 class {0}Endpoint(APIApp):
@@ -10,4 +9,4 @@ class {0}Endpoint(APIApp):
     def hello(self, params):
         # host:port/hello?name=YourInput
         your_input = params.get('name')
-        return my_api.success(message='Hello: %s' % (your_input))
+        return {'message': 'Hello: %s' % (your_input)}

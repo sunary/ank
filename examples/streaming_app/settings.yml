@@ -1,10 +1,5 @@
 parameters:
 
-  mongo_db: music
-  mongo_col: songs
-  mongo_host: localhost
-  mongo_port: 27017
-
   redis_host: localhost
   redis_port: 6379
 

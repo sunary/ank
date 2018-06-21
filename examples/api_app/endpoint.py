@@ -6,7 +6,9 @@ from ank.base_apps.api_app import APIApp
 
 class ExampleAPI(APIApp):
 
-    def init_app(self, host='localhost', port=5372, mongo_client=None, mongo_db=''):
+    def __init__(self, host='localhost', port=5372, mongo_client=None, mongo_db=''):
+        super(ExampleAPI, self).__init__(host=host, port=port)
+
         self.db = mongo_client[mongo_db]
 
     # path: host:port/api/add?a=1&b=2

@@ -21,7 +21,7 @@ class APIApp(PipeApp):
     Add function to extend class to create new API
     """
 
-    def init_app(self, host='localhost', port=API_DEFAULT_PORT, **kwargs):
+    def init_app(self, host='localhost', port=API_DEFAULT_PORT):
         """
         Args:
              host (string): RestAPI host, default 'localhost'
