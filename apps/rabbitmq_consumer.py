@@ -22,14 +22,15 @@ class RabbitmqConsumer(PipeApp):
             >>> RabbitmqConsumer(uri='amqp://username:password@host:5672',
             ... queue='ExampleQueue')
         """
-        connection = pika.BlockingConnection(pika.URLParameters(uri))
-        channel = connection.channel()
-        channel.basic_consume(self.call_back, queue=queue, no_ack=True)
-
-        channel.start_consuming()
+        self.connection = pika.BlockingConnection(pika.URLParameters(uri))
+        self.queue = queue
 
     def start(self):
         self.logger.info('Start {}'.format(self.__class__.__name__))
+        channel = self.connection.channel()
+        channel.basic_consume(self.call_back, queue=self.queue, no_ack=True)
+
+        channel.start_consuming()
 
     def call_back(self, ch, method, properties, message):
         return self.process(message)

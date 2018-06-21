@@ -23,9 +23,11 @@ class ZeroMqConsumer(PipeApp):
 
         self.sock = context.socket(zmq.PULL)
         self.sock.bind(uri)
-        self.sock.setsockopt(zmq.PULL, topic)
+        self.topic = topic
 
     def start(self):
+        self.logger.info('Start {}'.format(self.__class__.__name__))
+        self.sock.setsockopt(zmq.PULL, self.topic)
         while True:
             message = self.sock.recv()
             self.chain_process(message)
