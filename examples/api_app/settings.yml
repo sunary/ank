@@ -1,4 +1,4 @@
 parameters:
 
-  mongo_db: music
-  mongo_col: songs
+  mongo_host: localhost
+  mongo_port: 27017

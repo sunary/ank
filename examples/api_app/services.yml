@@ -2,11 +2,11 @@ services:
 
   ExampleApp:
     class: processor.ExampleApp
-    arguments: [$Mongodb]
+    arguments: [$MongoClient]
 
-  Mongodb:
-    class: ank.utils.my_mongo.Mongodb
-    arguments: ['%mongo_db%', '%mongo_col%']
+  MongoClient:
+    class: pymongo.MongoClient
+    arguments: ['%mongo_host%', '%mongo_port%']
 
 chains:
   - ExampleApp

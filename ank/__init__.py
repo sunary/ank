@@ -7,7 +7,5 @@ API_DEFAULT_PORT = '5372'
 
 from base_apps import pipe_app, api_app, schedule_app
 from apps import join_app, split_app, log_app
-from apps import kafka_consumer, kafka_producer, rabbitmq_consumer, rabbitmq_producer, zmq_consumer, zmq_producer
-from deploy import chain_processor
-# from deploy import dependency_injection, generate_processor, generate_setting
-from utils import cmd_helpers, api_helpers, naming_services, logger, mongo
+from apps import redis_subscribe, kafka_consumer, rabbitmq_consumer, zmq_consumer
+from apps import kafka_producer, rabbitmq_producer, zmq_producer

@@ -15,7 +15,7 @@ class PipeApp(object):
 
         self.init_app(*args, **kwargs)
 
-    def init_app(self):
+    def init_app(self, *args, **kwargs):
         pass
 
     def run(self, process=None):

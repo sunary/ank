@@ -14,7 +14,6 @@ with open('LICENSE') as fo:
 
 reqs = ['pyyaml==3.12',
         'flask==1.0.2',
-        'pymongo==3.4.0',
         'redis==2.10.5',
         'pika==0.10.0',
         'pyzmq==16.0.2',
