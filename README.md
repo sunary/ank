@@ -195,3 +195,15 @@
 * **SplitApp:** Split message.
 * **---Consumer:** Get message from queue.
 * **---Producer:** Push message to queue.
+
+
+### TODO
+
+[x] base apps: Base, API, Schedule
+[x] supported chain: join, split
+[x] supported consumer/producer: redis, kafka, zmq, rabbitmq
+[x] generate: processor.py, settings.yml
+[ ] management/admin
+[ ] build/deploy
+[x] sample: PipeApp, ScheduleApp, APIApp
+[x] test

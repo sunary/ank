@@ -1,10 +1,8 @@
-[x] base apps
-[x] dependency injection
-[x] chain process
-[x] implement services
-[x] streaming
-[x] build project
-[x] docker
-[ ] monitor
-[ ] services management
+[x] base apps: Base, API, Schedule
+[x] supported chain: join, split
+[x] supported consumer/producer: redis, kafka, zmq, rabbitmq
+[x] generate: processor.py, settings.yml
+[ ] management/admin
+[ ] build/deploy
+[x] sample: PipeApp, ScheduleApp, APIApp
 [x] test
