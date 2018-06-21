@@ -151,7 +151,7 @@ def main(options=None):
     parser.add_argument('-t', '--test', dest='test', action='count',
                         help='test your service')
     parser.add_argument('-f', '--file', dest='file_setting', type=str,
-                        help='test with setting file, default is settings.yml')
+                        help='test with setting_file (default is settings.yml)')
 
     parser.add_argument('-r', '--run', dest='run', action='count',
                         help='start/restart your service')
