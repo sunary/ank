@@ -3,12 +3,12 @@ __author__ = 'sunary'
 
 import os
 from ank import API_DEFAULT_PORT
-from base_apps.pipe_app import PipeApp
+from ank.base_apps.pipe_app import PipeApp
 try:
     from flask import Flask
 except ImportError:
     ImportError('flask not found')
-from utils import api_helpers
+from ank.utils import api_helpers
 
 
 def is_production():

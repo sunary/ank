@@ -1,7 +1,7 @@
 __author__ = 'sunary'
 
 
-from base_apps.pipe_app import PipeApp
+from ank.base_apps.pipe_app import PipeApp
 
 
 class KafkaAnkProducer(PipeApp):

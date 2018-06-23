@@ -2,9 +2,9 @@ __author__ = 'sunary'
 
 
 import time
-from base_apps.pipe_app import PipeApp
+from ank.base_apps.pipe_app import PipeApp
 from datetime import datetime
-from utils.crontab_time import CrontabTimeReader
+from ank.utils.crontab_time import CrontabTimeReader
 
 
 class ScheduleApp(PipeApp):

@@ -2,9 +2,9 @@ __author__ = 'sunary'
 
 
 import unittest
-from deploy.dependency_injection import DependencyInjection
-from deploy.generate_processor import GenerateProcessor
-from deploy.generate_setting import GenerateSetting
+from ank.deploy.dependency_injection import DependencyInjection
+from ank.deploy.generate_processor import GenerateProcessor
+from ank.deploy.generate_setting import GenerateSetting
 
 
 class TestDeploy(unittest.TestCase):

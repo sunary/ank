@@ -6,9 +6,9 @@ import sys
 sys.path.append(os.getcwd())
 
 import importlib
-from deploy.chain_processor import ChainProcessor
-from deploy.daemon import Daemon
-from utils import naming_services, logger, config_handle
+from ank.deploy.chain_processor import ChainProcessor
+from ank.deploy.daemon import Daemon
+from ank.utils import naming_services, logger, config_handle
 
 
 class DependencyInjection(object):

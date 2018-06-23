@@ -1,16 +1,16 @@
 __author__ = 'sunary'
 
 
-from base_apps.pipe_app import PipeApp
+from ank.base_apps.pipe_app import PipeApp
 try:
     import zmq
 except ImportError:
-    raise ImportError('pyzqm not found')
+    raise ImportError('pyzmq not found')
 
 
-class ZeroMqConsumer(PipeApp):
+class ZeroMqProducer(PipeApp):
     """
-    Message was received from sock.recv
+    Push message to queue
     """
 
     def init_app(self, uri='', topic=''):
@@ -19,18 +19,17 @@ class ZeroMqConsumer(PipeApp):
                 uri (string): connection uri
                 topic (string): topic name
         """
+
         context = zmq.Context()
 
-        self.sock = context.socket(zmq.PULL)
+        self.sock = context.socket(zmq.PUSH)
         self.sock.bind(uri)
-        self.topic = topic
+        self.sock.setsockopt(zmq.PULL, topic)
 
     def start(self):
         self.logger.info('Start {}'.format(self.__class__.__name__))
-        self.sock.setsockopt(zmq.PULL, self.topic)
-        while True:
-            message = self.sock.recv()
-            self.chain_process(message)
 
     def process(self, message=None):
+        self.sock.send(message)
+
         return message

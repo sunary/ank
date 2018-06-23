@@ -1,7 +1,7 @@
 __author__ = 'sunary'
 
 
-from utils import logger
+from ank.utils import logger
 import copy
 
 

@@ -1,7 +1,7 @@
 __author__ = 'sunary'
 
 
-from utils import naming_services, config_handle, logger
+from ank.utils import naming_services, config_handle, logger
 
 
 class GenerateSetting(object):
