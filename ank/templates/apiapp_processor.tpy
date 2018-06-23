@@ -1,0 +1,12 @@
+from endpoint import {0}Endpoint
+from ank.base_app.pipe_app import PipeApp
+
+
+class {0}(PipeApp):
+
+    def __init__(self, agrs, **kwagrs):
+        super({0}, self).__init__()
+
+    def run(self, process=None):
+        api_app = {0}Endpoint(host='localhost', port={1})
+        api_app.run()

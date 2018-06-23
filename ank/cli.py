@@ -6,7 +6,7 @@ import os
 from argparse import ArgumentParser
 from deploy import generate_processor, generate_setting, dependency_injection
 from ank import VERSION, API_DEFAULT_PORT
-from utilities import my_cmd
+from utils import cmd_helpers
 
 
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -131,14 +131,14 @@ def run():
 
 
 def build():
-    print my_cmd.run_cmd(['docker', 'build', '.'])['message']
+    print cmd_helpers.run_cmd(['docker', 'build', '.'])['message']
 
 
 def main(options=None):
-    parser = ArgumentParser(prog='Ank Microservices')
+    parser = ArgumentParser(prog='Ank Streaming System')
 
     parser.add_argument('-c', '--create', dest='create', type=str,
-                        help='create new microservice with a name, should be a ClassName in code conventions')
+                        help='create new service with a name, should be a ClassName in code conventions')
     parser.add_argument('-a', '--app', dest='app', type=str,
                         help='app template, default is BaseApp')
 
@@ -149,15 +149,15 @@ def main(options=None):
                         help='generate _processor.py')
 
     parser.add_argument('-t', '--test', dest='test', action='count',
-                        help='test your microservice')
+                        help='test your service')
     parser.add_argument('-f', '--file', dest='file_setting', type=str,
-                        help='test with setting file, default is settings.yml')
+                        help='test with setting_file (default is settings.yml)')
 
     parser.add_argument('-r', '--run', dest='run', action='count',
-                        help='start/restart your microservice')
+                        help='start/restart your service')
 
     parser.add_argument('-b', '--build', dest='build', action='count',
-                        help='build your microservice')
+                        help='build your service')
 
     args = parser.parse_args()
 
@@ -170,7 +170,7 @@ def main(options=None):
 
         create(args.create, baseapp)
     elif args.app:
-        print('Using command: "ank -c NameApp -a BaseApp" to create new microservice')
+        print('Using command: "ank -c NameApp -a BaseApp" to create new service')
     elif args.setting:
         create_setting()
     elif args.processor:

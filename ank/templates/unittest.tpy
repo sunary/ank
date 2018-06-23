@@ -1,0 +1,33 @@
+import os
+import unittest
+from ank.deploy import dependency_injection
+from processor import {0}
+
+
+class TestService(unittest.TestCase):
+
+    def test_something(self):
+        self.assertEqual(True, False)
+
+    def test_function(self):
+        service = {0}()
+
+        message = None # Need initialize variable
+        expected_result = None # Need initialize variable
+
+        output_service = service.process(message)
+
+        self.assertEqual(output_service, expected_result)
+
+    def test_chain_processor(self):
+        if os.path.exists('_processor.py'):
+            import _processor
+        else:
+            print('generate _processor.py before run this test')
+
+    def test_chain(self):
+        dependency_injection.main('settings.yml') # TODO replace by your file setting
+
+
+if __name__ == '__main__':
+    unittest.main()

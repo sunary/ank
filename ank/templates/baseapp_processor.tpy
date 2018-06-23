@@ -1,0 +1,13 @@
+from ank.base_app.app import BaseApp
+
+
+class {0}(BaseApp):
+
+    def __init__(self, agrs, **kwagrs):
+        super({0}, self).__init__()
+
+    def run(self, process=None):
+        super({0}, self).run(process)
+
+    def process(message=None):
+        return message

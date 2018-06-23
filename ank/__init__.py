@@ -1,13 +1,23 @@
 __author__ = 'sunary'
 
 
-VERSION = '1.4.4'
+VERSION = '1.5.1'
 API_DEFAULT_PORT = '5372'
 
 
-from base_apps import pipe_app, api_app, schedule_app
-from apps import join_app, split_app, log_app
-from apps import kafka_consumer, kafka_producer, rabbitmq_consumer, rabbitmq_producer, zmq_consumer, zmq_producer
-from deploy import chain_processor
-# from deploy import dependency_injection, generate_processor, generate_setting
-from utilities import my_cmd, my_api, my_deploy, my_helper, my_mongo
+from base_apps.pipe_app import PipeApp
+from base_apps.api_app import APIApp
+from base_apps.schedule_app import ScheduleApp
+
+from apps.join_app import JoinApp
+from apps.split_app import SplitApp
+from apps.log_app import LogApp
+
+from apps.redis_subscribe import RedisSubscribe
+from apps.kafka_consumer import KafkaAnkConsumer
+from apps.rabbitmq_consumer import RabbitmqConsumer
+from apps.zmq_consumer import ZeroMqConsumer
+
+from apps.kafka_producer import KafkaAnkProducer
+from apps.rabbitmq_producer import RabbitmqProducer
+from apps.zmq_producer import ZeroMqProducer

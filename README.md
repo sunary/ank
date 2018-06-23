@@ -66,7 +66,7 @@
 * **Edit app (processor.py):**
     * *Example:*
     ```python
-    from base_apps.pipe_app import PipeApp
+    from ank.base_apps.pipe_app import PipeApp
 
     class ExampleApp(PipeApp):
     
@@ -98,7 +98,7 @@
         - arguments: [$Object, %variable%] 
       
       AnkChain2:
-        - class: apps.module_name.BuildinApps
+        - class: ank.apps.module_name.BuildinApps
         - arguments: ~
         
     chains:
@@ -110,11 +110,11 @@
     services:
       StartApp:
         class: processor.StartApp
-        arguments: [$Mongodb, $Redis, '%batch_size%']
+        arguments: [$MongoClient, $Redis, '%batch_size%']
     
       Mongodb:
-        class: utilities.my_mongo.Mongodb
-        arguments: ['%mongo_db%', '%mongo_col%', '%mongo_host%', '%mongo_port%']
+        class: pymongo.MongoClient
+        arguments: ['%mongo_host%', '%mongo_port%']
     
       Redis:
         class: redis.client.StrictRedis
@@ -146,8 +146,6 @@
     parameters:
       mongo_host: localhost
       mongo_port: 27017
-      mongo_db: crawl_db
-      mongo_col: twitter
       
       redis_host: localhost
       redis_port: 6379
@@ -195,3 +193,15 @@
 * **SplitApp:** Split message.
 * **---Consumer:** Get message from queue.
 * **---Producer:** Push message to queue.
+
+
+### TODO
+
+[x] base apps: Base, API, Schedule
+[x] supported chain: join, split
+[x] supported consumer/producer: redis, kafka, zmq, rabbitmq
+[x] generate: processor.py, settings.yml
+[ ] management/admin
+[ ] build/deploy
+[x] sample: PipeApp, ScheduleApp, APIApp
+[x] test

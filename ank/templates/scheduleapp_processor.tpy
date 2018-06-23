@@ -1,0 +1,14 @@
+from ank.base_app.schedule_app import ScheduleApp
+from datetime import datetime
+
+
+class {0}(ScheduleApp):
+
+    def __init__(self, crontab_time='', start_now=False, **kwargs):
+        super({0}, self).__init__(crontab_time=crontab_time, start_now=start_now)
+
+    def run(self, process=None):
+        super(ScheduleApp, self).run(process)
+
+    def process(self, message=None):
+        print('Now is %s' % (datetime.now()))

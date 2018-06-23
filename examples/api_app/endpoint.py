@@ -1,21 +1,32 @@
 __author__ = 'sunary'
 
 
-from base_apps.api_app import APIApp
-from utilities import my_api
+from ank.base_apps.api_app import APIApp
 
 
 class ExampleAPI(APIApp):
 
-    def init_app(self, host='localhost', port=5372):
-        pass
+    def __init__(self, host='localhost', port=5372, mongo_client=None, mongo_db=''):
+        super(ExampleAPI, self).__init__(host=host, port=port)
 
+        self.db = mongo_client[mongo_db]
+
+    # path: host:port/api/add?a=1&b=2
     def add(self, params):
         a = int(params.get('a'))
         b = int(params.get('b'))
-        return my_api.success(message=str(a + b))
+        result = a + b
 
+        collection = self.db['add']
+        collection.insert({'param1': a, 'param2': b, 'result': result})
+        return {'result': result}
+
+    # path: host:port/api/sub?a=105&b=17
     def sub(self, params):
         a = int(params.get('a'))
         b = int(params.get('b'))
-        return my_api.success(message=str(a - b))
+        result = a - b
+
+        collection = self.db['sub']
+        collection.insert({'param1': a, 'param2': b, 'result': result})
+        return {'result': result}

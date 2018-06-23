@@ -3,11 +3,7 @@ services:
 
   FirstApp:
     class: processor.FirstApp
-    arguments: [$Redis, '%range_from%', '%range_to%']
-
-  Redis:
-    class: redis.client.StrictRedis
-    arguments: ['%redis_host%', '%redis_port%']
+    arguments: ['%range_from%', 'range_to']
 
   PrintApp:
     class: processor.PrintApp
@@ -26,15 +22,15 @@ services:
     arguments: ~
 
   LogApp:
-    class: ank.apps.log_app.LogApp
+    class: apps.log_app.LogApp
     arguments: ~
 
   JoinApp:
-    class: ank.apps.join_app.JoinApp
+    class: apps.join_app.JoinApp
     arguments: '%batch_size%'
 
   SplitApp:
-    class: ank.apps.split_app.SplitApp
+    class: apps.split_app.SplitApp
     arguments: ~
 
 

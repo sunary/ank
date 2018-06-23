@@ -1,7 +1,7 @@
 __author__ = 'sunary'
 
 
-from base_apps.schedule_app import ScheduleApp
+from ank.base_apps.schedule_app import ScheduleApp
 from datetime import datetime
 
 
