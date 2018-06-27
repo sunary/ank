@@ -2,7 +2,7 @@
 
 
 ### Overview: ###
- Python Microservices Streaming, REST-API and Schedule task using queue message(rabbitMQ, zeroMQ, kafka)
+ Python Streaming system, REST-API and Schedule task using queue message(rabbitMQ, zeroMQ, kafka)
  Each processor is a chain, put it together to make a pipeline.
  
  
@@ -184,7 +184,7 @@
 ### Base Apps: ###
 * **PipeApp:** Pipeline App.
 * **APIApp:** REST-API interface using flask.
-* **ScheduleApp:** Using crontab-time format to set schedule.
+* **ScheduleApp:** Using crondtab-time format to set schedule.
 
 
 ### Build in Apps: ###

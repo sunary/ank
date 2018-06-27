@@ -1,7 +1,7 @@
 __author__ = 'sunary'
 
 
-VERSION = '1.5.1'
+VERSION = '1.5.4'
 API_DEFAULT_PORT = '5372'
 
 
