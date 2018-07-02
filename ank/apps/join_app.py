@@ -2,7 +2,7 @@ __author__ = 'sunary'
 
 
 from ank.base_apps.pipe_app import PipeApp
-from ank.deploy.chain_processor import CONTENT_KEY
+from ank.chain_process import CONTENT_KEY
 
 
 class JoinApp(PipeApp):

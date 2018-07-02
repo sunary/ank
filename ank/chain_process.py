@@ -9,7 +9,7 @@ CONTENT_KEY = 'content'
 FLAGS_KEY = 'flags'
 
 
-class ChainProcessor(object):
+class ChainProcess(object):
     """
     Run chain processors
     Output of a processor will be input of the next processor

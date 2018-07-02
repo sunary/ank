@@ -3,10 +3,11 @@ __author__ = 'sunary'
 
 import sys
 import os
-from argparse import ArgumentParser
-from deploy import generate_processor, generate_setting, dependency_injection
+import argparse
+import pprint
+import generate_processor, generate_setting, head_process
 from ank import VERSION, API_DEFAULT_PORT
-from utils import cmd_helpers
+from ank.utils import cmd_helpers
 
 
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -113,77 +114,68 @@ def readme_template(prj_name):
         return of.read().format(prj_name)
 
 
-def create_setting():
-    generate_setting.main()
+def create_setting(file_setting):
+    generate_setting.main(file_setting)
 
 
 def create_processor(file_setting):
     generate_processor.main(file_setting)
 
 
-def test():
-    # print my_cmd.run_cmd(['python', '-m', 'unittest', 'test_service'])['message']
-    pass
+def test_service():
+    print(cmd_helpers.run_cmd(['python', '-m', 'unittest', 'test_service'])['message'])
 
 
-def run():
-    dependency_injection.main()
+def run_service(file_setting):
+    head_process.main(file_setting=file_setting)
 
 
-def build():
-    print cmd_helpers.run_cmd(['docker', 'build', '.'])['message']
+def build_service():
+    print(cmd_helpers.run_cmd(['docker', 'build', '.'])['message'])
 
 
-def main(options=None):
-    parser = ArgumentParser(prog='Ank Streaming System')
+def parse_args(args):
+    parser = argparse.ArgumentParser(prog='Ank Streaming system')
+    subparsers = parser.add_subparsers(dest='subparser')
 
-    parser.add_argument('-c', '--create', dest='create', type=str,
-                        help='create new service with a name, should be a ClassName in code conventions')
-    parser.add_argument('-a', '--app', dest='app', type=str,
-                        help='app template, default is BaseApp')
+    create_parser = subparsers.add_parser('create',
+                                          help='Create new service')
+    create_parser.add_argument('-c', '--class', help='App class: [default=`BaseApp`, `APIApp`, `ScheduleApp`]')
 
-    parser.add_argument('-s', '--setting', dest='setting', action='count',
-                        help='generate settings.yml template')
+    gen_setting_parser = subparsers.add_parser('gen_setting', help='Generate `setting.yml` file')
+    gen_setting_parser.add_argument('-fs', '--file_setting', help='Setting file, default `_setting.yml`')
 
-    parser.add_argument('-p', '--processor', dest='processor', action='count',
-                        help='generate _processor.py')
+    gen_processor_parser = subparsers.add_parser('gen_processor', help='Generate `_processor.py` file')
+    gen_processor_parser.add_argument('-fs', '--file_setting', help='Setting file, default `setting.yml`')
 
-    parser.add_argument('-t', '--test', dest='test', action='count',
-                        help='test your service')
-    parser.add_argument('-f', '--file', dest='file_setting', type=str,
-                        help='test with setting_file (default is settings.yml)')
+    test_parser = subparsers.add_parser('test', help='Test service')
 
-    parser.add_argument('-r', '--run', dest='run', action='count',
-                        help='start/restart your service')
+    run_parser = subparsers.add_parser('run', help='Run service')
+    run_parser.add_argument('-fs', '--file_setting', help='Setting file, default `setting.yml`')
 
-    parser.add_argument('-b', '--build', dest='build', action='count',
-                        help='build your service')
+    build_parser = subparsers.add_parser('build', help='Build service')
 
-    args = parser.parse_args()
-
-    file_setting = args.file_setting if args.file_setting else 'settings.yml'
-
-    if args.create:
-        baseapp = 'BaseApp'
-        if args.app and args.app in ['BaseApp', 'APIApp', 'ScheduleApp']:
-            baseapp = args.app
-
-        create(args.create, baseapp)
-    elif args.app:
-        print('Using command: "ank -c NameApp -a BaseApp" to create new service')
-    elif args.setting:
-        create_setting()
-    elif args.processor:
-        create_processor(file_setting)
-    elif args.test:
-        test()
-    elif args.run:
-        run()
-    elif args.build:
-        build()
-    else:
-        parser.print_help()
+    return parser.parse_args(args)
 
 
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    args = parse_args(sys.argv[1:])
+
+    pprint.pprint(args)
+    if args.subparser_name == 'create':
+        if args.c and args.c in ['BaseApp', 'APIApp', 'ScheduleApp']:
+            baseapp = args.app
+        else:
+            baseapp = 'BaseApp'
+
+        create(args.create, baseapp)
+    elif args.subparser_name == 'gen_setting':
+        create_setting(args.fs or '_settings.yml')
+    elif args.subparser_name == 'gen_processor':
+        create_processor(args.fs or 'setting.yml')
+    elif args.subparser_name == 'test':
+        test_service()
+    elif args.subparser_name == 'run':
+        run_service(args.fs or 'setting.yml')
+    elif args.subparser_name == 'build':
+        build_service()

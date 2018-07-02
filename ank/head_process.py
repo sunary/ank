@@ -6,12 +6,12 @@ import sys
 sys.path.append(os.getcwd())
 
 import importlib
-from ank.deploy.chain_processor import ChainProcessor
-from ank.deploy.daemon import Daemon
+from ank.factory.chain_process import ChainProcess
+from ank.factory.daemon import Daemon
 from ank.utils import naming_services, logger, config_handle
 
 
-class DependencyInjection(object):
+class HeadProcess(object):
 
     def __init__(self):
         self.logger = logger.init_logger(self.__class__.__name__)
@@ -20,7 +20,7 @@ class DependencyInjection(object):
         self.service_loader = config_handle.load('services.yml', 'services')
         self.setting_loader = config_handle.load(file_setting, 'parameters')
 
-        chain_processor = ChainProcessor()
+        chain_processor = ChainProcess()
         chain_loader = config_handle.load('services.yml', 'chains')
 
         for process_name in chain_loader:
@@ -92,8 +92,8 @@ def main(file_setting=None):
     daemon = Daemon('daemon.pid')
     daemon.start()
     print(os.getpid())
-    di = DependencyInjection()
-    print(di.start(file_setting))
+    head = HeadProcess()
+    print(head.start(file_setting))
 
 
 if __name__ == '__main__':
