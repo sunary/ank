@@ -23,5 +23,4 @@ class KafkaAnkProducer(PipeApp):
 
     def process(self, message=None):
         self.producer.send(self.topic, message)
-
         return message

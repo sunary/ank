@@ -3,7 +3,7 @@ __author__ = 'sunary'
 
 import os
 from ank import API_DEFAULT_PORT
-from ank.base_apps.pipe_app import PipeApp
+from ank.apps.pipe_app import PipeApp
 try:
     from flask import Flask
 except ImportError:

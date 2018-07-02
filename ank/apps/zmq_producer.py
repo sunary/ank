@@ -31,5 +31,4 @@ class ZeroMqProducer(PipeApp):
 
     def process(self, message=None):
         self.sock.send(message)
-
         return message

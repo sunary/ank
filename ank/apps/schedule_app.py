@@ -36,5 +36,4 @@ class ScheduleApp(PipeApp):
             self.process()
 
     def process(self, message=None):
-
         return message

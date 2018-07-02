@@ -35,5 +35,5 @@ class RabbitmqConsumer(PipeApp):
     def call_back(self, ch, method, properties, message):
         return self.process(message)
 
-    def process(self, message):
+    def process(self, message=None):
         return message
