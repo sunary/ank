@@ -1,5 +1,5 @@
 from endpoint import {0}Endpoint
-from ank.base_app.pipe_app import PipeApp
+from ank.apps.pipe_app import PipeApp
 
 
 class {0}(PipeApp):

@@ -1,6 +1,6 @@
 import os
 import unittest
-from ank.deploy import dependency_injection
+from ank import head_process
 from processor import {0}
 
 
@@ -26,7 +26,7 @@ class TestService(unittest.TestCase):
             print('generate _processor.py before run this test')
 
     def test_chain(self):
-        dependency_injection.main('settings.yml') # TODO replace by your file setting
+        head_process.main('settings.yml') # TODO replace by your file setting
 
 
 if __name__ == '__main__':

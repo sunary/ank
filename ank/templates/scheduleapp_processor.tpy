@@ -1,4 +1,4 @@
-from ank.base_app.schedule_app import ScheduleApp
+from ank.apps.schedule_app import ScheduleApp
 from datetime import datetime
 
 

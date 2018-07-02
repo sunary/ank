@@ -215,4 +215,4 @@
 - [ ] management/admin
 - [ ] build/deploy
 - [x] sample: PipeApp, ScheduleApp, APIApp
-- [x] test
+- [ ] test

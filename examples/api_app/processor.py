@@ -2,7 +2,7 @@ __author__ = 'sunary'
 
 
 from endpoint import ExampleAPI
-from ank.base_apps.pipe_app import PipeApp
+from ank.apps.pipe_app import PipeApp
 
 
 class ExampleApp(PipeApp):

@@ -6,8 +6,8 @@ import sys
 sys.path.append(os.getcwd())
 
 import importlib
-from ank.factory.chain_process import ChainProcess
-from ank.factory.daemon import Daemon
+from ank.chain_process import ChainProcess
+from ank.daemon import Daemon
 from ank.utils import naming_services, logger, config_handle
 
 
@@ -88,7 +88,7 @@ class HeadProcess(object):
         return _class(*parameters)
 
 
-def main(file_setting=None):
+def main(file_setting='settings.yml'):
     daemon = Daemon('daemon.pid')
     daemon.start()
     print(os.getpid())

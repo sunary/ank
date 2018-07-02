@@ -1,13 +1,13 @@
 __author__ = 'sunary'
 
 
-VERSION = '1.5.4'
+VERSION = '1.5.5'
 API_DEFAULT_PORT = '5372'
 
 
-from base_apps.pipe_app import PipeApp
-from base_apps.api_app import APIApp
-from base_apps.schedule_app import ScheduleApp
+from apps.pipe_app import PipeApp
+from apps.api_app import APIApp
+from apps.schedule_app import ScheduleApp
 
 from apps.join_app import JoinApp
 from apps.split_app import SplitApp

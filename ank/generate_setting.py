@@ -14,7 +14,7 @@ class GenerateSetting(object):
 
         self.setting_parameters = {}
 
-    def process(self):
+    def process(self, file_setting='_settings.yml'):
         try:
             self.service_loader = config_handle.load('services.yml', 'services')
         except IOError:
@@ -51,7 +51,7 @@ class GenerateSetting(object):
             if self.setting_parameters.get(key, '') is None:
                 self.setting_parameters[key] = value
 
-        output = config_handle.save('_settings.yml', 'parameters', self.setting_parameters)
+        output = config_handle.save(file_setting, 'parameters', self.setting_parameters)
 
         return output
 
@@ -75,10 +75,10 @@ class GenerateSetting(object):
         [self.from_object(x) for x in object_arguments]
 
 
-def main():
+def main(file_setting='_settings.yml'):
     generate_setting = GenerateSetting()
-    print(generate_setting.process())
+    print(generate_setting.process(file_setting))
 
 
 if __name__ == '__main__':
-    main()
+    main(file_setting='_settings.yml')

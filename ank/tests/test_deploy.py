@@ -2,9 +2,9 @@ __author__ = 'sunary'
 
 
 import unittest
-from ank.deploy.dependency_injection import DependencyInjection
-from ank.deploy.generate_processor import GenerateProcessor
-from ank.deploy.generate_setting import GenerateSetting
+from ank.head_process import HeadProcess
+from ank.generate_processor import GenerateProcessor
+from ank.generate_setting import GenerateSetting
 
 
 class TestDeploy(unittest.TestCase):
@@ -13,9 +13,9 @@ class TestDeploy(unittest.TestCase):
     """
 
     def test_di(self):
-        di = DependencyInjection()
-        print('\n\n## Dependency Injection:')
-        di.start()
+        head = HeadProcess()
+        print('\n\n## Head Dependency Injection:')
+        head.start()
 
     def test_gen_processor(self):
         generate_processor = GenerateProcessor()

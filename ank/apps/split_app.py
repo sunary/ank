@@ -1,7 +1,7 @@
 __author__ = 'sunary'
 
 
-from ank.base_apps.pipe_app import PipeApp
+from ank.apps.pipe_app import PipeApp
 
 
 class SplitApp(PipeApp):
