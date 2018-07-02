@@ -211,6 +211,7 @@
 - [x] base apps: Base, API, Schedule
 - [x] supported chain: join, split
 - [x] supported consumer/producer: redis, kafka, zmq, rabbitmq
+- [ ] supported callback success/fail
 - [x] generate: processor.py, settings.yml
 - [ ] management/admin
 - [ ] build/deploy
