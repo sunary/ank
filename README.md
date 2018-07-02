@@ -1,4 +1,4 @@
-## ANK - Python Microservices ##
+## ANK - Python Streaming system ##
 
 
 ### Overview: ###
@@ -66,7 +66,7 @@
 * **Edit app (processor.py):**
     * *Example:*
     ```python
-    from ank.base_apps.pipe_app import PipeApp
+    from ank.apps.pipe_app import PipeApp
 
     class ExampleApp(PipeApp):
     
@@ -98,7 +98,7 @@
         - arguments: [$Object, %variable%] 
       
       AnkChain2:
-        - class: ank.apps.module_name.BuildinApps
+        - class: ank.apps.module_name.XXXApps
         - arguments: ~
         
     chains:
@@ -138,10 +138,13 @@
     ANK will read top-down `chains`, find correspond `services` and get parameters from `settings.yml`.
     
 * **Generate and edit setting (settings.yml):**
+
      ```shell
-     $ ank -s
+     $ ank create -c BaseApp
      ```
+
     * *Example:*
+
     ```yaml
     parameters:
       mongo_host: localhost
@@ -156,29 +159,37 @@
       
       batch_size: 100
     ```
+
     Help you create `settings` template file. Just rename from `_settings.yml` to `settings.yml` and fill in values.
     
-* **Build Service (create docker image):**
+* **Build Service (create docker image) and run:**
 
     ```shell
-    $ ank -b
-    $ docker run --entrypoint /bin/sh docker_image_id
+    $ ank build
+    $ docker run --entrypoint /bin/sh $docker_image_id
     ```
     
 * **Generate processor (_processor.py):**
     
     ```shell
-    $ ank -p
+    $ ank gen_processor -fs settings.yml
     ```
-* **Edit and test Service (test_service.py):**
+* **Generate setting (_setting.yml):**
 
     ```shell
-    $ ank -t -f test-settings.yml
+    $ ank gen_setting -fs _setting.yml
     ```
 * **Run Service:**
 
+    ```python
+    from ank import head_process
+    head_process.main(file_setting='settings.yml')
+    ```
+
+    or
+
     ```shell
-    $ ank -r
+    $ ank run -fs settings.yml
     ```
     
 ### Base Apps: ###
