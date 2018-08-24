@@ -2,7 +2,7 @@ __author__ = 'sunary'
 
 
 import time
-from ank.apps.pipe_app import PipeApp
+from ank.components.pipe_app import PipeApp
 from datetime import datetime
 from ank.utils.crontab_time import CrontabTimeReader
 

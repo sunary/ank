@@ -11,10 +11,12 @@ from ank.daemon import Daemon
 from ank.utils import naming_services, logger, config_handle
 
 
-class HeadProcess(object):
+class ProgramLoader(object):
 
     def __init__(self):
         self.logger = logger.init_logger(self.__class__.__name__)
+        self.service_loader = {}
+        self.setting_loader = {}
 
     def start(self, file_setting='settings.yml'):
         self.service_loader = config_handle.load('services.yml', 'services')
@@ -92,8 +94,8 @@ def main(file_setting='settings.yml'):
     daemon = Daemon('daemon.pid')
     daemon.start()
     print(os.getpid())
-    head = HeadProcess()
-    print(head.start(file_setting))
+    loader = ProgramLoader()
+    print(loader.start(file_setting))
 
 
 if __name__ == '__main__':

@@ -66,7 +66,7 @@
 * **Edit app (processor.py):**
     * *Example:*
     ```python
-    from ank.apps.pipe_app import PipeApp
+    from ank.components.pipe_app import PipeApp
 
     class ExampleApp(PipeApp):
     
@@ -98,7 +98,7 @@
         - arguments: [$Object, %variable%] 
       
       AnkChain2:
-        - class: ank.apps.module_name.XXXApps
+        - class: ank.components.module_name.XXXApps
         - arguments: ~
         
     chains:
@@ -125,7 +125,7 @@
         arguments: ~
     
       LogApp:
-        class: apps.log_app.LogApp
+        class: components.log_app.LogApp
         arguments: ~
     
     chains:
@@ -182,8 +182,8 @@
 * **Run Service:**
 
     ```python
-    from ank import head_process
-    head_process.main(file_setting='settings.yml')
+    from ank import program_loader
+    program_loader.main(file_setting='settings.yml')
     ```
 
     or
@@ -198,7 +198,7 @@
 * **ScheduleApp:** Using crondtab-time format to set schedule.
 
 
-### Build in Apps: ###
+### Component Apps: ###
 * **LogApp:** Log every messages.
 * **JoinApp:** Join messages into one.
 * **SplitApp:** Split message.

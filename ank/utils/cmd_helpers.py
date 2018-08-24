@@ -5,7 +5,7 @@ import os
 import subprocess
 
 
-class chdir():
+class chdir(object):
 
     def __init__(self, path):
         self.path = path

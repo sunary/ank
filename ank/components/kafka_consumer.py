@@ -1,7 +1,7 @@
 __author__ = 'sunary'
 
 
-from ank.apps.pipe_app import PipeApp
+from ank.components.pipe_app import PipeApp
 
 
 class KafkaAnkConsumer(PipeApp):

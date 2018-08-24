@@ -1,10 +1,10 @@
 __author__ = 'sunary'
 
 
-from ank.apps.pipe_app import PipeApp
+from ank.components.pipe_app import PipeApp
 
 
-class SplitApp(PipeApp):
+class LogApp(PipeApp):
 
     def init_app(self):
         pass
@@ -13,4 +13,5 @@ class SplitApp(PipeApp):
         self.logger.info('Start {}'.format(self.__class__.__name__))
 
     def process(self, message=None):
+        self.logger.info(message)
         return message

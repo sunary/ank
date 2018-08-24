@@ -5,7 +5,7 @@ import sys
 import os
 import argparse
 import pprint
-import generate_processor, generate_setting, head_process
+import generate_processor, generate_setting, program_loader
 from ank import VERSION, API_DEFAULT_PORT
 from ank.utils import cmd_helpers
 
@@ -127,7 +127,7 @@ def test_service():
 
 
 def run_service(file_setting):
-    head_process.main(file_setting=file_setting)
+    program_loader.main(file_setting=file_setting)
 
 
 def build_service():

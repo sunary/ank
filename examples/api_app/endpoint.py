@@ -1,7 +1,7 @@
 __author__ = 'sunary'
 
 
-from ank.apps.api_app import APIApp
+from ank.components.api_app import APIApp
 
 
 class ExampleAPI(APIApp):

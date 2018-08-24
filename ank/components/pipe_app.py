@@ -13,6 +13,7 @@ class PipeApp(object):
     def __init__(self, *args, **kwargs):
         self.logger = logger.init_logger(self.__class__.__name__)
 
+        self.chain_process = None
         self.init_app(*args, **kwargs)
 
     def init_app(self, *args, **kwargs):
