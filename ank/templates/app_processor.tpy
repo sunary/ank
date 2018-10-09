@@ -9,5 +9,5 @@ class {0}(BaseApp):
     def run(self, process=None):
         super({0}, self).run(process)
 
-    def process(message=None):
+    def execute(message=None):
         return message

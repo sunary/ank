@@ -10,6 +10,9 @@ class GenerateProcessor(object):
     """
 
     def __init__(self):
+        self.service_loader = None
+        self.setting_loader = None
+
         self.import_libs = ['from deploy.chain_processor import ChainProcessor']
         self.implement_classes = ['chain_processor = ChainProcessor()']
 

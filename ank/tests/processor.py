@@ -1,10 +1,14 @@
 __author__ = 'sunary'
 
 
-from ank.components.pipe_app import PipeApp
+from ank.core.app import App
 
 
-class FirstApp(PipeApp):
+class ConsumerApp(App):
+
+    def __init__(self):
+        self.range_from = 0
+        self.range_to = 0
 
     def init_app(self, range_from=0, range_to=0):
         self.range_from = range_from
@@ -13,70 +17,23 @@ class FirstApp(PipeApp):
     def start(self):
         print('Start chain')
         for i in range(self.range_from, self.range_to):
-            print('---start')
-            self.chain_process({'content': i})
-            print('---end')
-
-    def process(self, message=None):
-        print('start app {}'.format(message))
-        return message
+            self.execute(i)
 
 
-class PrintApp(PipeApp):
+class AdditionApp(App):
 
     def init_app(self, *args):
         pass
 
-    def run(self, process=None):
-        print('From print app')
-
-    def process(self, message=None):
-        print('print only {}'.format(message))
-        return message
+    def execute(self, message):
+        return message + 5
 
 
-class ConditionalApp(PipeApp):
+class PrintApp(App):
 
     def init_app(self, *args):
         pass
 
-    def run(self, process=None):
-        print('From conditional app')
-
-    def process(self, message=None):
-        print('condition check {}'.format(message))
-
-        if message['content'] % 2:
-            message.update({'flags': [False, True]})
-        else:
-            message.update({'flags': [True, False]})
-
-        return message
-
-
-class OddApp(PipeApp):
-
-    def init_app(self, *agrs):
-        pass
-
-    def run(self, process=None):
-        print('From odd app')
-
-    def process(self, message=None):
-        print('odd {}'.format(message))
-        message['content'] = (message['content'] + 1)/2
-        return message
-
-
-class EvenApp(PipeApp):
-
-    def init_app(self, *args):
-        pass
-
-    def run(self, process=None):
-        print('From even app')
-
-    def process(self, message=None):
-        print('even {}'.format(message))
-        message['content'] /= 2
+    def execute(self, message):
+        print(message)
         return message

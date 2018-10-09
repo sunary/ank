@@ -1,13 +1,17 @@
 __author__ = 'sunary'
 
 
-from ank.components.pipe_app import PipeApp
+from ank.core.app import App
 
 
-class KafkaAnkProducer(PipeApp):
+class KafkaProducer(App):
     """
     Push message to queue
     """
+
+    def __init__(self):
+        self.producer = None
+        self.topic = None
 
     def init_app(self, producer=None, topic=''):
         """

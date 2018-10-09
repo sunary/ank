@@ -6,12 +6,13 @@ import sys
 sys.path.append(os.getcwd())
 
 import importlib
-from ank.chain_process import ChainProcess
 from ank.core.daemon import Daemon
+from ank.core.dependency_processor import DependencyProcessor
+from ank.chain_process import ChainProcess
 from ank.utils import naming_services, logger, config_handle
 
 
-class ProgramLoader(object):
+class WorkerLoader(object):
 
     def __init__(self):
         self.logger = logger.init_logger(self.__class__.__name__)
@@ -26,19 +27,10 @@ class ProgramLoader(object):
         chain_loader = config_handle.load('services.yml', 'chains')
 
         for process_name in chain_loader:
-            if isinstance(process_name, list):
-                self.logger.info('processors: [{}]'.format(', '.join(process_name)))
+            self.logger.info('processor: {}'.format(process_name))
 
-                processors = []
-                for proc in process_name:
-                    processors.append(self.get_class(proc))
-
-                chain_processor.add_processor(processors)
-            else:
-                self.logger.info('processor: {}'.format(process_name))
-
-                processor = self.get_class(process_name)
-                chain_processor.add_processor(processor)
+            processor = self.get_class(process_name)
+            chain_processor.add_processor(DependencyProcessor(processor))
 
         chain_processor.methods[0][0].run(chain_processor.process)
 
@@ -94,7 +86,7 @@ def main(file_setting='settings.yml'):
     daemon = Daemon('daemon.pid')
     daemon.start()
     print(os.getpid())
-    loader = ProgramLoader()
+    loader = WorkerLoader()
     print(loader.start(file_setting))
 
 

@@ -10,6 +10,8 @@ class GenerateSetting(object):
     """
 
     def __init__(self):
+        self.service_loader = None
+
         self.logger = logger.init_logger(self.__class__.__name__)
 
         self.setting_parameters = {}

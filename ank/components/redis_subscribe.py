@@ -1,15 +1,19 @@
 __author__ = 'sunary'
 
 
-from ank.components.pipe_app import PipeApp
+from ank.core.app import App
 
 
-class RedisSubscribe(PipeApp):
+class RedisSubscribe(App):
     """
-    Subscribe message from redis pubsub
+    Subscribe message from redis pub/sub
     """
 
-    def ini_app(self, redis=None, topic=''):
+    def __init__(self):
+        self.redis = None
+        self.topic = None
+
+    def ini_app(self, redis, topic):
         """
         Args:
             redis (redis.StrictRedis): redis client

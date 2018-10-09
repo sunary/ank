@@ -1,18 +1,19 @@
 __author__ = 'sunary'
 
 
-from ank.components.pipe_app import PipeApp
-from ank.chain_process import CONTENT_KEY
+from ank.core.app import App
 
 
-class JoinApp(PipeApp):
+class JoinApp(App):
     """
     Join messages from previous processor
     """
 
+    def __init__(self):
+        self.batch_size = 0
+
     def init_app(self, batch_size=None):
         self.batch_size = batch_size
-        self.stored_messages = {CONTENT_KEY: []}
 
     def start(self):
         self.logger.info('Start {}'.format(self.__class__.__name__))

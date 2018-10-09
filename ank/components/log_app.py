@@ -1,10 +1,10 @@
 __author__ = 'sunary'
 
 
-from ank.components.pipe_app import PipeApp
+from ank.core.app import App
 
 
-class LogApp(PipeApp):
+class LogApp(App):
 
     def init_app(self):
         pass

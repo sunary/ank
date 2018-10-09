@@ -1,13 +1,17 @@
 __author__ = 'sunary'
 
 
-from ank.components.pipe_app import PipeApp
+from ank.core.app import App
 
 
-class KafkaAnkConsumer(PipeApp):
+class KafkaConsumer(App):
     """
     Message was received from consumer.subscribe
     """
+
+    def __init__(self):
+        self.consumer = None
+        self.topic = None
 
     def ini_app(self, consumer=None, topic=None):
         """
