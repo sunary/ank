@@ -1,6 +1,6 @@
 pyyaml==5.4
 flask==1.0.2
-redis==2.10.5
+redis==4.5.3
 pika==0.10.0
 pyzmq==16.0.2
 kafka-python==0.9.5
