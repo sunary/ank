@@ -1,0 +1,29 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.py[cod]
+*.egg-info
+*.egg
+.eggs
+dist
+build
+venv
+env
+
+# IDE
+.idea
+.vscode
+*.swp
+
+# Test/generated
+TestBaseApp
+TestAPIApp
+TestScheduleApp
+VerifyApp
+*.log
+
+# Examples (not needed for ank CLI image)
+examples

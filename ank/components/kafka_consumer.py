@@ -9,7 +9,7 @@ class KafkaAnkConsumer(PipeApp):
     Message was received from consumer.subscribe
     """
 
-    def ini_app(self, consumer=None, topic=None):
+    def init_app(self, consumer=None, topic=None):
         """
         Args:
             consumer (kafka.KafkaConsumer): kafka consumer

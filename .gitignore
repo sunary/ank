@@ -14,6 +14,16 @@ dist/*
 *.log
 examples/*/worker/*
 
+# Generated files
+_processor.py
+_settings.yml
+
+# Generated test apps
+TestBaseApp/
+TestAPIApp/
+TestScheduleApp/
+VerifyApp/
+
 # Python egg metadata, regenerated from source files by setuptools.
 *.egg-info
 *.egg

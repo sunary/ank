@@ -3,7 +3,7 @@ services:
 
   FirstApp:
     class: processor.FirstApp
-    arguments: ['%range_from%', 'range_to']
+    arguments: ['%range_from%', '%range_to%']
 
   PrintApp:
     class: processor.PrintApp
@@ -22,15 +22,15 @@ services:
     arguments: ~
 
   LogApp:
-    class: apps.log_app.LogApp
+    class: ank.components.log_app.LogApp
     arguments: ~
 
   JoinApp:
-    class: apps.join_app.JoinApp
+    class: ank.components.join_app.JoinApp
     arguments: '%batch_size%'
 
   SplitApp:
-    class: apps.split_app.SplitApp
+    class: ank.components.split_app.SplitApp
     arguments: ~
 
 

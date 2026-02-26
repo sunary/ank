@@ -6,7 +6,7 @@ import yaml
 
 def load(file_name, object_name):
     with open(file_name, 'r') as fo:
-        service_loader = yaml.load(fo)
+        service_loader = yaml.safe_load(fo)
         return service_loader[object_name]
 
 

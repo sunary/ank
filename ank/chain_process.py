@@ -2,6 +2,7 @@ __author__ = 'sunary'
 
 
 from ank.utils import logger
+from ank.constants import JOIN_APP, SPLIT_APP
 import copy
 
 
@@ -79,7 +80,7 @@ class ChainProcess(object):
                 self.logger.info('Run processor: {}'.format(processor_name))
 
                 try:
-                    if processor_name == 'JoinApp':
+                    if processor_name == JOIN_APP:
                         current_processor.stored_messages[CONTENT_KEY].append(_message[CONTENT_KEY])
 
                         # get chunk batch_size
@@ -89,7 +90,7 @@ class ChainProcess(object):
                         else:
                             return None
 
-                    elif processor_name == 'SplitApp':
+                    elif processor_name == SPLIT_APP:
                         for msg in _message[CONTENT_KEY]:
                             self.process({CONTENT_KEY: msg}, chain_methods=chain_methods[i + 1:])
 

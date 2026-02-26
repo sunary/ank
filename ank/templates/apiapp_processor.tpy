@@ -4,9 +4,10 @@ from ank.components.pipe_app import PipeApp
 
 class {0}(PipeApp):
 
-    def __init__(self, agrs, **kwagrs):
-        super({0}, self).__init__()
+    def init_app(self, host='localhost', port={1}):
+        self.host = host
+        self.port = port
 
-    def run(self, process=None):
-        api_app = {0}Endpoint(host='localhost', port={1})
+    def start(self):
+        api_app = {0}Endpoint(host=self.host, port=self.port)
         api_app.run()

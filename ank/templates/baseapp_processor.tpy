@@ -1,13 +1,11 @@
-from ank.components.app import BaseApp
+from ank.components.pipe_app import PipeApp
 
 
-class {0}(BaseApp):
+class {0}(PipeApp):
 
-    def __init__(self, agrs, **kwagrs):
-        super({0}, self).__init__()
+    def start(self):
+        for i in range(10):
+            self.chain_process(dict(content=i))
 
-    def run(self, process=None):
-        super({0}, self).run(process)
-
-    def process(message=None):
+    def process(self, message=None):
         return message

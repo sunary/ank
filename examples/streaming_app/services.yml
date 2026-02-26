@@ -6,7 +6,7 @@ services:
     arguments: [$Redis, '%range_from%', '%range_to%']
 
   Redis:
-    class: redis.client.StrictRedis
+    class: redis.Redis
     arguments: ['%redis_host%', '%redis_port%']
 
   PrintApp:

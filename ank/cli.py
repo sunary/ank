@@ -4,114 +4,24 @@ __author__ = 'sunary'
 import sys
 import os
 import argparse
-import pprint
-import generate_processor, generate_setting, program_loader
+from ank import generate_processor, generate_setting, program_loader
 from ank import VERSION, API_DEFAULT_PORT
+from ank.constants import BASE_APP, API_APP, SCHEDULE_APP
 from ank.utils import cmd_helpers
-
-
-CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
+from ank.template_loader import render_app
 
 
 def create(prj_name, baseapp):
+    """Create new app from templates."""
     if not os.path.exists(prj_name):
         os.makedirs(prj_name)
 
-    with open('{}/__init__.py'.format(prj_name), 'w') as create_file:
-        create_file.write('')
+    files = render_app(baseapp, prj_name, API_DEFAULT_PORT, VERSION)
 
-    with open('{}/processor.py'.format(prj_name), 'w') as create_file:
-        create_file.write(processor_template(prj_name, baseapp))
-
-    with open('{}/test_service.py'.format(prj_name), 'w') as create_file:
-        create_file.write(unittest_template(prj_name))
-
-    with open('{}/requirements.txt'.format(prj_name), 'w') as create_file:
-        create_file.write('ank=={}'.format(VERSION))
-
-    with open('{}/Dockerfile'.format(prj_name), 'w') as create_file:
-        create_file.write(docker_template(prj_name))
-
-    with open('{}/services.yml'.format(prj_name), 'w') as create_file:
-        create_file.write(services_template(prj_name, baseapp))
-
-    with open('{}/settings.yml'.format(prj_name), 'w') as create_file:
-        create_file.write(settings_template(baseapp))
-
-    with open('{}/README.md'.format(prj_name), 'w') as create_file:
-        create_file.write(readme_template(prj_name))
-
-
-def processor_template(prj_name, baseapp):
-    if baseapp == 'BaseApp':
-        with open(os.path.join(CURRENT_PATH, '../templates/baseapp_processor.tpy'), 'r') as of:
-            return of.read().format(prj_name)
-
-    elif baseapp == 'APIApp':
-        with open(os.path.join(CURRENT_PATH, '../templates/apiapp_endpoint.tpy'), 'r') as of:
-            endpoint_content = of.read().format(prj_name, API_DEFAULT_PORT)
-
-        with open(os.path.join(CURRENT_PATH, '{}/endpoint.py'.format(prj_name)), 'w') as create_file:
-            create_file.write(endpoint_content)
-
-        with open(os.path.join(CURRENT_PATH, '../templates/apiapp_processor.tpy'), 'r') as of:
-            return of.read().format(prj_name, API_DEFAULT_PORT)
-
-    elif baseapp == 'ScheduleApp':
-        with open(os.path.join(CURRENT_PATH, '../templates/scheduleapp_processor.tpy'), 'r') as of:
-            return of.read().format(prj_name)
-
-    else:
-        raise Exception('{} not found'.format(baseapp))
-
-
-def unittest_template(prj_name):
-    with open(os.path.join(CURRENT_PATH, '../templates/unittest.tpy'), 'r') as of:
-        return of.read().format(prj_name).format(prj_name)
-
-
-def docker_template(prj_name):
-    with open(os.path.join(CURRENT_PATH, '../templates/docker.tpy'), 'r') as of:
-        return of.read().format(prj_name).format(prj_name)
-
-
-def services_template(prj_name, baseapp):
-    if baseapp == 'BaseApp':
-        with open(os.path.join(CURRENT_PATH, '../templates/baseapp_services.tpy'), 'r') as of:
-            return of.read().format(prj_name)
-
-    elif baseapp == 'APIApp':
-        with open(os.path.join(CURRENT_PATH, '../templates/apiapp_services.tpy'), 'r') as of:
-            return of.read().format(prj_name)
-
-    elif baseapp == 'ScheduleApp':
-        with open(os.path.join(CURRENT_PATH, '../templates/scheduleapp_services.tpy'), 'r') as of:
-            return of.read().format(prj_name)
-
-    else:
-        raise Exception('{} not found'.format(baseapp))
-
-
-def settings_template(baseapp):
-    if baseapp == 'BaseApp':
-        with open(os.path.join(CURRENT_PATH, '../templates/baseapp_settings.tpy'), 'r') as of:
-            return of.read()
-
-    elif baseapp == 'APIApp':
-        with open(os.path.join(CURRENT_PATH, '../templates/apiapp_settings.tpy'), 'r') as of:
-            return of.read().format(API_DEFAULT_PORT)
-
-    elif baseapp == 'ScheduleApp':
-        with open(os.path.join(CURRENT_PATH, '../templates/scheduleapp_settings.tpy'), 'r') as of:
-            return of.read()
-
-    else:
-        raise Exception('{} not found'.format(baseapp))
-
-
-def readme_template(prj_name):
-    with open(os.path.join(CURRENT_PATH, '../templates/readme.tpy'), 'r') as of:
-        return of.read().format(prj_name)
+    for filename, content in files.items():
+        path = os.path.join(prj_name, filename)
+        with open(path, 'w') as f:
+            f.write(content)
 
 
 def create_setting(file_setting):
@@ -123,11 +33,11 @@ def create_processor(file_setting):
 
 
 def test_service():
-    print(cmd_helpers.run_cmd(['python', '-m', 'unittest', 'test_service'])['message'])
+        print(cmd_helpers.run_cmd([sys.executable, '-m', 'unittest', 'test_service'])['message'])
 
 
-def run_service(file_setting):
-    program_loader.main(file_setting=file_setting)
+def run_service(file_setting, daemon=False):
+    program_loader.main(file_setting=file_setting, daemon=daemon)
 
 
 def build_service():
@@ -135,47 +45,90 @@ def build_service():
 
 
 def parse_args(args):
-    parser = argparse.ArgumentParser(prog='Ank Streaming system')
-    subparsers = parser.add_subparsers(dest='subparser')
+    parser = argparse.ArgumentParser(
+        prog='ank',
+        description='ANK - Python streaming system for pipelines, REST APIs, and message queues.',
+        epilog='Examples:\n'
+               '  ank create myapp -c APIApp\n'
+               '  ank run -fs settings.yml\n'
+               '  ank run -d',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + VERSION)
+    subparsers = parser.add_subparsers(dest='subparser', metavar='command')
 
-    create_parser = subparsers.add_parser('create',
-                                          help='Create new service')
-    create_parser.add_argument('-c', '--class', help='App class: [default=`BaseApp`, `APIApp`, `ScheduleApp`]')
+    create_parser = subparsers.add_parser(
+        'create',
+        help='Create a new project from templates',
+        description='Scaffold a new ANK project with processor, services, and settings.',
+    )
+    create_parser.add_argument('name', help='Project directory name')
+    create_parser.add_argument('-c', '--class', dest='app_class',
+                               choices=[BASE_APP, API_APP, SCHEDULE_APP],
+                               default=BASE_APP,
+                               help='App type: BaseApp (pipeline), APIApp (REST API), ScheduleApp (cron) (default: %(default)s)')
 
-    gen_setting_parser = subparsers.add_parser('gen_setting', help='Generate `setting.yml` file')
-    gen_setting_parser.add_argument('-fs', '--file_setting', help='Setting file, default `_setting.yml`')
+    gen_setting_parser = subparsers.add_parser(
+        'gen_setting',
+        help='Generate settings file from services.yml',
+        description='Create or update settings.yml with parameters from services.yml.',
+    )
+    gen_setting_parser.add_argument('-fs', '--file_setting', metavar='FILE',
+                                   help='Output settings file (default: _settings.yml)')
 
-    gen_processor_parser = subparsers.add_parser('gen_processor', help='Generate `_processor.py` file')
-    gen_processor_parser.add_argument('-fs', '--file_setting', help='Setting file, default `setting.yml`')
+    gen_processor_parser = subparsers.add_parser(
+        'gen_processor',
+        help='Generate processor module from settings',
+        description='Create _processor.py with processor classes from settings.yml.',
+    )
+    gen_processor_parser.add_argument('-fs', '--file_setting', metavar='FILE',
+                                     help='Settings file to read (default: setting.yml)')
 
-    test_parser = subparsers.add_parser('test', help='Test service')
+    test_parser = subparsers.add_parser(
+        'test',
+        help='Run unit tests',
+        description='Execute test_service.py with unittest.',
+    )
 
-    run_parser = subparsers.add_parser('run', help='Run service')
-    run_parser.add_argument('-fs', '--file_setting', help='Setting file, default `setting.yml`')
+    run_parser = subparsers.add_parser(
+        'run',
+        help='Run the service pipeline',
+        description='Load services.yml and settings, then run the configured chain.',
+    )
+    run_parser.add_argument('-fs', '--file_setting', metavar='FILE',
+                           help='Settings file (default: setting.yml)')
+    run_parser.add_argument('-d', '--daemon', action='store_true',
+                           help='Run in background (daemon mode)')
 
-    build_parser = subparsers.add_parser('build', help='Build service')
+    build_parser = subparsers.add_parser(
+        'build',
+        help='Build Docker image',
+        description='Run docker build in the current directory.',
+    )
 
     return parser.parse_args(args)
 
 
-if __name__ == '__main__':
+def main():
     args = parse_args(sys.argv[1:])
 
-    pprint.pprint(args)
-    if args.subparser_name == 'create':
-        if args.c and args.c in ['BaseApp', 'APIApp', 'ScheduleApp']:
-            baseapp = args.app
-        else:
-            baseapp = 'BaseApp'
+    if args.subparser is None:
+        parse_args(['--help'])
+        return
 
-        create(args.create, baseapp)
-    elif args.subparser_name == 'gen_setting':
+    if args.subparser == 'create':
+        create(args.name, args.app_class)
+    elif args.subparser == 'gen_setting':
         create_setting(args.fs or '_settings.yml')
-    elif args.subparser_name == 'gen_processor':
+    elif args.subparser == 'gen_processor':
         create_processor(args.fs or 'setting.yml')
-    elif args.subparser_name == 'test':
+    elif args.subparser == 'test':
         test_service()
-    elif args.subparser_name == 'run':
-        run_service(args.fs or 'setting.yml')
-    elif args.subparser_name == 'build':
+    elif args.subparser == 'run':
+        run_service(args.fs or 'setting.yml', daemon=args.daemon)
+    elif args.subparser == 'build':
         build_service()
+
+
+if __name__ == '__main__':
+    main()

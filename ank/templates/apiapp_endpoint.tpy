@@ -3,10 +3,7 @@ from ank.components.api_app import APIApp
 
 class {0}Endpoint(APIApp):
 
-    def __init__(self, host='localhost', port={1}):
-        super({0}Endpoint, self).__init__(host=host, port=port)
-
     def hello(self, params):
         # host:port/hello?name=YourInput
         your_input = params.get('name')
-        return {'message': 'Hello: %s' % (your_input)}
+        return dict(message='Hello: %s' % (your_input or 'World'))

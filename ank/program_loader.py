@@ -7,7 +7,6 @@ sys.path.append(os.getcwd())
 
 import importlib
 from ank.chain_process import ChainProcess
-from ank.daemon import Daemon
 from ank.utils import naming_services, logger, config_handle
 
 
@@ -84,16 +83,17 @@ class ProgramLoader(object):
 
         _class = getattr(module, class_name)
 
-        if parameters[0] is None:
+        if not parameters or parameters[0] is None:
             return _class()
 
         return _class(*parameters)
 
 
-def main(file_setting='settings.yml'):
-    daemon = Daemon('daemon.pid')
-    daemon.start()
-    print(os.getpid())
+def main(file_setting='settings.yml', daemon=False):
+    if daemon:
+        from ank.utils.daemon import daemonize
+        daemonize()
+
     loader = ProgramLoader()
     print(loader.start(file_setting))
 

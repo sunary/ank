@@ -18,7 +18,7 @@ class ExampleAPI(APIApp):
         result = a + b
 
         collection = self.db['add']
-        collection.insert({'param1': a, 'param2': b, 'result': result})
+        collection.insert_one({'param1': a, 'param2': b, 'result': result})
         return {'result': result}
 
     # path: host:port/api/sub?a=105&b=17
@@ -28,5 +28,5 @@ class ExampleAPI(APIApp):
         result = a - b
 
         collection = self.db['sub']
-        collection.insert({'param1': a, 'param2': b, 'result': result})
+        collection.insert_one({'param1': a, 'param2': b, 'result': result})
         return {'result': result}

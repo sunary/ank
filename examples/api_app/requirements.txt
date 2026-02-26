@@ -1,2 +1,2 @@
-ank>=1.5.5
+ank>=2.0.0
 pymongo

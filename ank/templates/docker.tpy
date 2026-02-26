@@ -1,17 +1,18 @@
-FROM alpine:3.3
-MAINTAINER Developer "name@company.com"
+FROM alpine:3.18
+LABEL maintainer="Developer <name@company.com>"
 
-#addition apk for image
-RUN apk --update add py-pip libffi-dev openssl-dev
-RUN apk --update add gettext gcc libpq python-dev git && rm -rf /var/cache/apk/*
+# Build deps: py3-pip, gcc, python3-dev for Python packages
+# libffi-dev, openssl-dev for cryptography/cffi
+# zeromq-dev for pyzmq (ZeroMQ)
+# gettext, libpq-dev optional (i18n, PostgreSQL)
+RUN apk --no-cache add py3-pip gcc python3-dev libffi-dev openssl-dev zeromq-dev gettext libpq-dev git
 
-RUN pip install --upgrade pip
+RUN pip3 install --upgrade pip
 
-RUN mkdir -p /srv/logs
-RUN mkdir -p /srv/{0}
+RUN mkdir -p /srv/logs /srv/{0}
 ADD . /srv/{0}
 WORKDIR /srv/{0}
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 ENTRYPOINT []
 CMD []

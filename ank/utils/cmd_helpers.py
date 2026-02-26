@@ -21,7 +21,7 @@ class chdir(object):
 
 def run_cmd(cmd, **kwargs):
     try:
-        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
         return_code = process.wait()
         result = 'returned {0}'.format(return_code)
         result += ' ' + process.stdout.read()

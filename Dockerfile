@@ -1,17 +1,23 @@
+# ANK - Python streaming system
+# Build: docker build -t ank .
+# Run:   docker run --rm -v $(pwd):/workspace -w /workspace ank create MyApp
 
-FROM sunary/python-2.7-alpine:0.1
-MAINTAINER Nhat Vo Van "v2nhat@gmail.com"
+FROM python:3.11-alpine
 
-#addition apk for image
-RUN apk --update add py-pip libffi-dev openssl-dev
-RUN apk --update add gettext gcc libpq python-dev git && rm -rf /var/cache/apk/*
+LABEL maintainer="Sunary <v2nhat@gmail.com>"
+LABEL description="ANK - Python streaming system for pipelines, REST APIs, and message queues"
 
-RUN pip install --upgrade pip
+# Build deps for Python packages (pyzmq, cryptography, etc.)
+RUN apk --no-cache add gcc python3-dev libffi-dev openssl-dev zeromq-dev libpq-dev git
 
-RUN mkdir -p /srv/logs
-WORKDIR /srv/ank
-RUN pip install -r requirements.txt
+WORKDIR /app
 
-ADD . ./
-ENTRYPOINT []
-CMD []
+# Copy and install ank
+COPY requirements.txt setup.py README.md LICENSE CHANGES.md ./
+COPY ank ./ank
+
+RUN pip install --no-cache-dir .
+
+WORKDIR /workspace
+ENTRYPOINT ["ank"]
+CMD ["--help"]

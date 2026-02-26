@@ -61,7 +61,7 @@ class ConditionalApp(PipeApp):
 
 class OddApp(PipeApp):
 
-    def init_app(self, *agrs):
+    def init_app(self, *args):
         pass
 
     def run(self, process=None):

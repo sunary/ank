@@ -9,7 +9,7 @@ class RedisSubscribe(PipeApp):
     Subscribe message from redis pubsub
     """
 
-    def ini_app(self, redis=None, topic=''):
+    def init_app(self, redis=None, topic=''):
         """
         Args:
             redis (redis.StrictRedis): redis client

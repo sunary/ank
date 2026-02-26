@@ -10,8 +10,8 @@ class GenerateProcessor(object):
     """
 
     def __init__(self):
-        self.import_libs = ['from deploy.chain_processor import ChainProcessor']
-        self.implement_classes = ['chain_processor = ChainProcessor()']
+        self.import_libs = ['from ank.chain_process import ChainProcess']
+        self.implement_classes = ['chain_processor = ChainProcess()']
 
     def process(self, file_setting='settings.yml'):
         self.service_loader = config_handle.load('services.yml', 'services')
